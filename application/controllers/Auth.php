@@ -4,10 +4,10 @@ Class Auth extends CI_Controller{
     
     
     function index(){
-        $this->load->view('auth/login');
+        $this->load->view('Auth/login');
     }
     
-    function cheklogin(){
+    public function cheklogin(){
         $email      = $this->input->post('email');
         //$password   = $this->input->post('password');
         $password = $this->input->post('password',TRUE);
@@ -32,17 +32,17 @@ Class Auth extends CI_Controller{
                 }
                 
             }else{
-                redirect('auth');
+                redirect('Auth');
             }
         }else{
             $this->session->set_flashdata('status_login','email atau password yang anda input salah');
-            redirect('auth');
+            redirect('Auth');
         }
     }
     
     function logout(){
         $this->session->sess_destroy();
         $this->session->set_flashdata('status_login','Anda sudah berhasil keluar dari aplikasi');
-        redirect('auth');
+        redirect('Auth');
     }
 }

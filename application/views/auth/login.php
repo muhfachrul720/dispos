@@ -52,7 +52,7 @@
                 <p class="login-box-msg"><?php echo $message; ?></p>
 
                 <!--<form action="<?php echo base_url(); ?>/adminlte/index2.html" method="post">-->
-                <?php echo form_open('auth/cheklogin'); ?>
+                <?php echo form_open('Auth/cheklogin'); ?>
                 <div class="form-group has-feedback">
                     <input type="email" class="form-control" name="email" placeholder="Email">
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>

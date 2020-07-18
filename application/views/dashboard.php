@@ -1,11 +1,11 @@
 <?php 
     // nilai awal harus 0 ;) 
-    $nilai_total = 0;
-    foreach($totalkan_penyerapan as $item=>$value)
-      {
-        // simpan nilai harga ke variabel $harga_total
-        $nilai_total +=$value['nilai_uang_kegiatan'];
-      }
+    // $nilai_total = 0;
+    // foreach($totalkan_penyerapan as $item=>$value)
+    //   {
+    //     // simpan nilai harga ke variabel $harga_total
+    //     $nilai_total +=$value['nilai_uang_kegiatan'];
+    //   }
  ?>
 
 
@@ -26,7 +26,7 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Verifikasi Realisasi</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $totalkan_v_realisasi; ?></div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><!-- <?php echo $totalkan_v_realisasi; ?> --></div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -43,7 +43,7 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Total Penyerapan Anggaran</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo rupiah ($nilai_total); ?></div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><!-- <?php echo rupiah ($nilai_total); ?> --></div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -62,7 +62,7 @@
                       <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Alarm Anggaran</div>
                       <div class="row no-gutters align-items-center">
                         <div class="col-auto">
-                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?php echo $totalkan_alarm ?> alarm</div>
+                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><!-- <?php echo $totalkan_alarm ?> alarm< --></div>
                         </div>
                         
                       </div>
@@ -82,7 +82,7 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Jumlah Lembaga / Fakultas</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $totalkan_lembaga; ?></div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><!-- <?php echo $totalkan_lembaga; ?> --></div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-comments fa-2x text-gray-300"></i>
