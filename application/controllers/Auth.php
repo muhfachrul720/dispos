@@ -17,7 +17,7 @@ Class Auth extends CI_Controller{
         $this->db->where('email',$email);
         //$this->db->where('password',  $test);
         $users       = $this->db->get('tbl_user');
-
+        
         if($users->num_rows()>0){
             $user = $users->row_array();
             if(password_verify($password,$user['password'])){

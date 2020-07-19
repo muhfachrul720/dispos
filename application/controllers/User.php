@@ -21,7 +21,10 @@ class User extends CI_Controller
     
     public function json() {
         header('Content-Type: application/json');
-        echo $this->User_model->json();
+
+        $hello = $this->User_model->json();
+        echo $hello;
+        // var_dump($hello);
     }
 
     public function read($id) 

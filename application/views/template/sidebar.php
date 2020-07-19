@@ -51,6 +51,9 @@
 
         $main_menu = $this->db->query($sql_menu)->result();
         
+        // var_dump($main_menu);
+        // die;
+
         foreach ($main_menu as $menu){
             // chek is have sub menu
             $this->db->where('is_main_menu',$menu->id_menu);
