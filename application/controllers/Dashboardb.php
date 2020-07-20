@@ -35,7 +35,8 @@ class Dashboardb extends CI_Controller {
 		// print_r($data['data_alarm']	);
 		// die;
 
-		$this->template->load('template', 'dashboard_bendahara');	
+		// $this->template->load('template', 'dashboard_bendahara');	
+		$this->template->load('template', 'dashboard_staff');	
 		// $this->template->load('template', 'dashboard_bendahara', $data);	
 	}
 

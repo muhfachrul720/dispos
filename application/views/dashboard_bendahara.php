@@ -1,41 +1,41 @@
 <!-- Hitung Perencanaan Anggaran -->
 <?php 
     // nilai awal harus 0 ;) 
-    $nilai_total_perencanaan = 0;
-    foreach($total_perencanaan_anggaran as $item=>$value)
-      {
-        // simpan nilai harga ke variabel $harga_total
-        $nilai_total_perencanaan +=$value['nilai_uang_kegiatan'];
-      }
+    // $nilai_total_perencanaan = 0;
+    // foreach($total_perencanaan_anggaran as $item=>$value)
+    //   {
+    //     // simpan nilai harga ke variabel $harga_total
+    //     $nilai_total_perencanaan +=$value['nilai_uang_kegiatan'];
+    //   }
  ?>
 
  <!-- Hitung Realisasi Anggaran -->
 <?php 
     // nilai awal harus 0 ;) 
-    $nilai_total_realisasi = 0;
-    foreach($total_realisasi_anggaran as $item=>$value)
-      {
-        // simpan nilai harga ke variabel $harga_total
-        $nilai_total_realisasi +=$value['nilai_uang_kegiatan'];
-      }
+    // $nilai_total_realisasi = 0;
+    // foreach($total_realisasi_anggaran as $item=>$value)
+    //   {
+    //     // simpan nilai harga ke variabel $harga_total
+    //     $nilai_total_realisasi +=$value['nilai_uang_kegiatan'];
+    //   }
  ?>
 
 
   <!-- Waktu Sekarang -->
              <?php
-             $tgl=gmdate("Y-m-d H:i:s", time()+60*60*8);
+            //  $tgl=gmdate("Y-m-d H:i:s", time()+60*60*8);
              ?>
             
 
               
             <!-- Menghitung selisih waktu -->
             <?php
-              $awal  = date_create($data_alarm['batas_waktu_periode']); //Batas W
+              // $awal  = date_create($data_alarm['batas_waktu_periode']); //Batas W
 
               // print_r($awal);
               // die;
-              $akhir = date_create(); // waktu sekarang
-              $diff  = date_diff( $awal, $akhir );
+              // $akhir = date_create(); // waktu sekarang
+              // $diff  = date_diff( $awal, $akhir );
 
               
               // Output: Selisih waktu: 28 tahun, 5 bulan, 9 hari, 13 jam, 7 menit, 7 detik

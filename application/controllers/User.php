@@ -80,7 +80,6 @@ class User extends CI_Controller
 		'full_name'     => $this->input->post('full_name',TRUE),
 		'email'         => $this->input->post('email',TRUE),
 		'password'      => $hashPassword,
-        'id_lembaga'    => $this->input->post('id_lembaga',TRUE),
 		'images'        => $foto['file_name'],
 		'id_user_level' => $this->input->post('id_user_level',TRUE),
 		'is_aktif'      => $this->input->post('is_aktif',TRUE),
@@ -193,7 +192,6 @@ class User extends CI_Controller
 	$this->form_validation->set_rules('email', 'email', 'trim|required');
 	//$this->form_validation->set_rules('password', 'password', 'trim|required');
 	//$this->form_validation->set_rules('images', 'images', 'trim|required');
-	$this->form_validation->set_rules('id_lembaga', 'id Lembaga', 'trim|required');
     $this->form_validation->set_rules('id_user_level', 'id user level', 'trim|required');
 	$this->form_validation->set_rules('is_aktif', 'is aktif', 'trim|required');
 
