@@ -1,183 +1,315 @@
--- --------------------------------------------------------
--- Host:                         127.0.0.1
--- Server version:               5.7.24 - MySQL Community Server (GPL)
--- Server OS:                    Win64
--- HeidiSQL Version:             10.2.0.5599
--- --------------------------------------------------------
+-- phpMyAdmin SQL Dump
+-- version 4.9.0.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Jul 20, 2020 at 02:15 PM
+-- Server version: 10.3.16-MariaDB
+-- PHP Version: 7.2.20
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET NAMES utf8 */;
-/*!50503 SET NAMES utf8mb4 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
+--
+-- Database: `db_sisfak`
+--
 
--- Dumping database structure for db_sisfak
-CREATE DATABASE IF NOT EXISTS `db_sisfak` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `db_sisfak`;
+-- --------------------------------------------------------
 
--- Dumping structure for table db_sisfak.tbl_hak_akses
-CREATE TABLE IF NOT EXISTS `tbl_hak_akses` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+--
+-- Table structure for table `tbl_hak_akses`
+--
+
+CREATE TABLE `tbl_hak_akses` (
+  `id` int(11) NOT NULL,
   `id_user_level` int(11) NOT NULL,
-  `id_menu` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;
+  `id_menu` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table db_sisfak.tbl_hak_akses: ~15 rows (approximately)
-DELETE FROM `tbl_hak_akses`;
-/*!40000 ALTER TABLE `tbl_hak_akses` DISABLE KEYS */;
+--
+-- Dumping data for table `tbl_hak_akses`
+--
+
 INSERT INTO `tbl_hak_akses` (`id`, `id_user_level`, `id_menu`) VALUES
-	(28, 2, 4),
-	(29, 2, 2),
-	(30, 2, 3),
-	(31, 2, 10),
-	(32, 2, 20),
-	(35, 2, 15),
-	(36, 2, 16),
-	(37, 2, 17),
-	(38, 2, 18),
-	(40, 1, 12),
-	(41, 1, 13),
-	(42, 1, 14),
-	(43, 2, 19),
-	(44, 3, 18),
-	(46, 3, 3);
-/*!40000 ALTER TABLE `tbl_hak_akses` ENABLE KEYS */;
+(47, 2, 2),
+(48, 2, 3),
+(49, 2, 4),
+(50, 2, 42),
+(51, 4, 21),
+(52, 4, 22),
+(53, 4, 23),
+(54, 4, 24),
+(55, 4, 25),
+(56, 4, 43),
+(57, 5, 26),
+(58, 5, 27),
+(59, 5, 28),
+(60, 5, 29),
+(61, 5, 30),
+(62, 5, 31),
+(63, 5, 32),
+(64, 6, 33),
+(65, 6, 34),
+(66, 6, 35),
+(67, 6, 36),
+(68, 7, 22),
+(69, 7, 33),
+(70, 7, 34),
+(71, 7, 35),
+(72, 7, 36),
+(73, 8, 33),
+(74, 8, 34),
+(75, 8, 35),
+(76, 8, 36),
+(77, 9, 37),
+(78, 9, 38),
+(79, 9, 39),
+(80, 9, 40),
+(81, 9, 41);
 
--- Dumping structure for table db_sisfak.tbl_lembaga
-CREATE TABLE IF NOT EXISTS `tbl_lembaga` (
-  `id_lembaga` int(11) NOT NULL AUTO_INCREMENT,
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_lembaga`
+--
+
+CREATE TABLE `tbl_lembaga` (
+  `id_lembaga` int(11) NOT NULL,
   `nama_lembaga` varchar(100) NOT NULL,
-  `keterangan` text NOT NULL,
-  PRIMARY KEY (`id_lembaga`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+  `keterangan` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table db_sisfak.tbl_lembaga: ~19 rows (approximately)
-DELETE FROM `tbl_lembaga`;
-/*!40000 ALTER TABLE `tbl_lembaga` DISABLE KEYS */;
+--
+-- Dumping data for table `tbl_lembaga`
+--
+
 INSERT INTO `tbl_lembaga` (`id_lembaga`, `nama_lembaga`, `keterangan`) VALUES
-	(1, 'FT', 'Fakultas Teknik'),
-	(2, 'FISIP', 'Fakultas Ilmu Sosial dan Ilmu Politik'),
-	(3, 'FEB', 'Fakultas Ekonomi dan Bisnis'),
-	(4, 'Universitas', 'Bendahara Universitas'),
-	(5, 'FTIK', 'Fakultas Teknologi dan Ilmu Kebumian'),
-	(6, 'FKIP', 'Fakutas Keguruan dan Ilmu Pendidikan'),
-	(7, 'FP', 'Fakutas Pertanian'),
-	(8, 'FMIPA', 'Fakutas Matematika dan Ilmu Pengetahuan Alam'),
-	(9, 'FH', 'Fakutas Hukum'),
-	(10, 'FPIK', 'Fakutas Perikanan dan Ilmu Kelautan'),
-	(11, 'FIB', 'Fakutas Ilmu Budaya'),
-	(12, 'FPt', 'Fakutas Peternakan'),
-	(13, 'FKM', 'Fakutas Kesehatan Masyarakat'),
-	(14, 'FHIL', 'Fakutas Kehutanan dan Ilmu Lingkungan'),
-	(15, 'FK', 'Fakutas Kedokteran'),
-	(16, 'FF', 'Fakutas Farmasi'),
-	(17, 'PVokasi', 'Pendidikan Vokasi'),
-	(18, 'PPS', 'Pendidkan Program Pascasarjana'),
-	(19, 'BUK', 'Biro Umum dan Kepegawaian');
-/*!40000 ALTER TABLE `tbl_lembaga` ENABLE KEYS */;
+(1, 'FT', 'Fakultas Teknik'),
+(2, 'FISIP', 'Fakultas Ilmu Sosial dan Ilmu Politik'),
+(3, 'FEB', 'Fakultas Ekonomi dan Bisnis'),
+(4, 'Universitas', 'Bendahara Universitas'),
+(5, 'FTIK', 'Fakultas Teknologi dan Ilmu Kebumian'),
+(6, 'FKIP', 'Fakutas Keguruan dan Ilmu Pendidikan'),
+(7, 'FP', 'Fakutas Pertanian'),
+(8, 'FMIPA', 'Fakutas Matematika dan Ilmu Pengetahuan Alam'),
+(9, 'FH', 'Fakutas Hukum'),
+(10, 'FPIK', 'Fakutas Perikanan dan Ilmu Kelautan'),
+(11, 'FIB', 'Fakutas Ilmu Budaya'),
+(12, 'FPt', 'Fakutas Peternakan'),
+(13, 'FKM', 'Fakutas Kesehatan Masyarakat'),
+(14, 'FHIL', 'Fakutas Kehutanan dan Ilmu Lingkungan'),
+(15, 'FK', 'Fakutas Kedokteran'),
+(16, 'FF', 'Fakutas Farmasi'),
+(17, 'PVokasi', 'Pendidikan Vokasi'),
+(18, 'PPS', 'Pendidkan Program Pascasarjana'),
+(19, 'BUK', 'Biro Umum dan Kepegawaian');
 
--- Dumping structure for table db_sisfak.tbl_menu
-CREATE TABLE IF NOT EXISTS `tbl_menu` (
-  `id_menu` int(11) NOT NULL AUTO_INCREMENT,
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_menu`
+--
+
+CREATE TABLE `tbl_menu` (
+  `id_menu` int(11) NOT NULL,
   `title` varchar(50) NOT NULL,
   `url` varchar(30) NOT NULL,
   `icon` varchar(30) NOT NULL,
   `is_main_menu` int(11) NOT NULL,
-  `is_aktif` enum('y','n') NOT NULL COMMENT 'y=yes,n=no',
-  PRIMARY KEY (`id_menu`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+  `is_aktif` enum('y','n') NOT NULL COMMENT 'y=yes,n=no'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table db_sisfak.tbl_menu: ~13 rows (approximately)
-DELETE FROM `tbl_menu`;
-/*!40000 ALTER TABLE `tbl_menu` DISABLE KEYS */;
+--
+-- Dumping data for table `tbl_menu`
+--
+
 INSERT INTO `tbl_menu` (`id_menu`, `title`, `url`, `icon`, `is_main_menu`, `is_aktif`) VALUES
-	(1, 'Kelola Menu', 'Kelolamenu', 'fas fa-fw fa-tachometer-alt', 0, 'y'),
-	(2, 'Kelola Pengguna', 'User', 'fas fa-fw fa-users', 0, 'y'),
-	(3, 'Lembaga / Fakultas', 'Lembaga', 'fas fa-fw fa-university', 0, 'y'),
-	(4, 'Level Pengguna', 'Userlevel', 'fas fa-fw fa-layer-group', 0, 'y'),
-	(12, 'Perencanaan Kegiatan', 'Perencanaan', 'fas fa-fw fa-pencil-ruler', 0, 'y'),
-	(13, 'Realisasi Kegiatan', 'Realisasi', 'far fa-fw fa-calendar-check', 0, 'y'),
-	(14, 'Monitoring Kegiatan', 'Monitoring/mon_bendahara', 'fas fa-fw fa-desktop', 0, 'y'),
-	(15, 'Verifikasi Perencanaan', 'Verifikasi_perencanaan', 'fas fa-fw fa-tasks', 0, 'y'),
-	(16, 'Verifikasi Realisasi', 'Verifikasi_realisasi', 'fas fa-fw fa-calendar-check', 0, 'y'),
-	(17, 'Monitoring Realisasi', 'Monitoring/mon_admin', 'fas fa-fw fa-desktop', 0, 'y'),
-	(18, 'Monitoring Alarm', 'Alarm', 'fas fa-fw fa-bell', 0, 'y'),
-	(19, 'Report', 'Report', 'far fa-fw fa-clipboard', 0, 'y'),
-	(20, 'Verifikasi Triwulan', 'Verifikasi_triwulan', 'far fa-fw fa-calendar-check', 0, 'y');
-/*!40000 ALTER TABLE `tbl_menu` ENABLE KEYS */;
+(1, 'Kelola Menu', 'Kelolamenu', 'fas fa-fw fa-tachometer-alt', 0, 'y'),
+(2, 'Kelola Pengguna', 'User', 'fas fa-fw fa-users', 0, 'y'),
+(3, 'Lembaga / Fakultas', 'Lembaga', 'fas fa-fw fa-university', 0, 'y'),
+(4, 'Level Pengguna', 'Userlevel', 'fas fa-fw fa-layer-group', 0, 'y'),
+(21, 'Verifikasi Berkas Alumni', '', 'fas fa-fw fa-users', 0, 'y'),
+(22, 'Data Jadwal Mengajar', '', 'fas fa-fw fa-users', 0, 'y'),
+(23, 'Verifikasi Aktif Kuliah', '', 'fas fa-fw fa-users', 0, 'y'),
+(24, 'Verifikasi Penelitian ', '', 'fas fa-fw fa-users', 0, 'y'),
+(25, 'Verifikasi Proposal ', '', 'fas fa-fw fa-users', 0, 'y'),
+(26, 'DUK (Data Induk Kepegawaian)', '', 'fas fa-fw fa-users', 0, 'y'),
+(27, 'Data Pangkat/Golongan', '', 'fas fa-fw fa-users', 0, 'y'),
+(28, 'Data Pensiun', '', 'fas fa-fw fa-users', 0, 'y'),
+(29, 'Verifikasi Kenaikan Pangkat', '', 'fas fa-fw fa-users', 0, 'y'),
+(30, 'Verifikasi Pensiun', '', 'fas fa-fw fa-users', 0, 'y'),
+(31, 'Monitoring Pegawai', '', 'fas fa-fw fa-users', 0, 'y'),
+(32, 'Verifikasi Cuti', '', 'fas fa-fw fa-users', 0, 'y'),
+(33, 'Ajuan Kenaikan Pangkat', '', 'fas fa-fw fa-users', 0, 'y'),
+(34, 'Ajuan Pensiun', '', 'fas fa-fw fa-users', 0, 'y'),
+(35, 'Pengisian DUK Pegawai', '', 'fas fa-fw fa-users', 0, 'y'),
+(36, 'Pengajuan Cuti', '', 'fas fa-fw fa-users', 0, 'y'),
+(37, 'Data Mahasiswa', '', 'fas fa-fw fa-users', 0, 'y'),
+(38, 'Pengajuan Aktif Kuliah', '', 'fas fa-fw fa-users', 0, 'y'),
+(39, 'Pengajuan Penelitian', '', 'fas fa-fw fa-users', 0, 'y'),
+(40, 'Pengajuan Proposal', '', 'fas fa-fw fa-users', 0, 'y'),
+(41, 'Pengajuan Skripsi', '', 'fas fa-fw fa-users', 0, 'y'),
+(42, 'User Jabatan', '', 'fas fa-fw fa users', 0, 'y'),
+(43, 'Verifikasi Skripsi', '', 'fas fa-fw fa-users', 0, 'y');
 
--- Dumping structure for table db_sisfak.tbl_setting
-CREATE TABLE IF NOT EXISTS `tbl_setting` (
-  `id_setting` int(11) NOT NULL AUTO_INCREMENT,
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_setting`
+--
+
+CREATE TABLE `tbl_setting` (
+  `id_setting` int(11) NOT NULL,
   `nama_setting` varchar(50) NOT NULL,
-  `value` varchar(40) NOT NULL,
-  PRIMARY KEY (`id_setting`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  `value` varchar(40) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table db_sisfak.tbl_setting: ~0 rows (approximately)
-DELETE FROM `tbl_setting`;
-/*!40000 ALTER TABLE `tbl_setting` DISABLE KEYS */;
+--
+-- Dumping data for table `tbl_setting`
+--
+
 INSERT INTO `tbl_setting` (`id_setting`, `nama_setting`, `value`) VALUES
-	(1, 'Tampil Menu', 'ya');
-/*!40000 ALTER TABLE `tbl_setting` ENABLE KEYS */;
+(1, 'Tampil Menu', 'ya');
 
--- Dumping structure for table db_sisfak.tbl_user
-CREATE TABLE IF NOT EXISTS `tbl_user` (
-  `id_users` int(11) NOT NULL AUTO_INCREMENT,
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_user`
+--
+
+CREATE TABLE `tbl_user` (
+  `id_users` int(11) NOT NULL,
   `full_name` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
   `id_lembaga` int(11) NOT NULL,
   `images` text NOT NULL,
   `id_user_level` int(11) NOT NULL,
-  `is_aktif` enum('y','n') NOT NULL,
-  PRIMARY KEY (`id_users`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
+  `is_aktif` enum('y','n') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table db_sisfak.tbl_user: ~20 rows (approximately)
-DELETE FROM `tbl_user`;
-/*!40000 ALTER TABLE `tbl_user` DISABLE KEYS */;
+--
+-- Dumping data for table `tbl_user`
+--
+
 INSERT INTO `tbl_user` (`id_users`, `full_name`, `email`, `password`, `id_lembaga`, `images`, `id_user_level`, `is_aktif`) VALUES
-	(3, 'Admin', 'admin_keu@uho.ac.id', '$2y$04$FCqeaxUCf9XJdBhH1M49l.Uty.Q/SVcoASbLUjZrvb8c5jYOZxx/i', 4, '', 2, 'y'),
-	(6, 'Bendahara FKIP', 'fkip@uho.ac.id', '$2y$04$FCqeaxUCf9XJdBhH1M49l.Uty.Q/SVcoASbLUjZrvb8c5jYOZxx/i', 6, '', 1, 'y'),
-	(7, 'Bendahara FEB', 'feb@uho.ac.id', '$2y$04$FCqeaxUCf9XJdBhH1M49l.Uty.Q/SVcoASbLUjZrvb8c5jYOZxx/i', 3, '', 1, 'y'),
-	(8, 'Bendahara FISIP', 'fisip@uho.ac.id', '$2y$04$8sc9hdBPeYAktYknapM5P.NimNJXzmxtSp57TnTx4k9PnUXL3rNUe', 2, '', 1, 'y'),
-	(9, 'Bendahara FPertanian', 'fp@uho.ac.id', '$2y$04$bml7VKtvYkysKSbQaE7EVuaMoe4WtM0fmgHb1DY1b6zhKU2jW8kda', 7, '', 1, 'y'),
-	(10, 'Bendahara FMIPA', 'fmipa@uho.ac.id', '$2y$04$GO.kHpgBtd/xLh8HgDEGeeK.y5tarf7oM5Ud4KciF72OSQdgndSvK', 8, '', 1, 'y'),
-	(11, 'Bendahara FTeknik', 'ft@uho.ac.id', '$2y$04$UV5Q3fTcMMW1VkzmTmyHduNzgU9U.AlavbmorrfP4r09f9AVQbOGq', 1, '', 1, 'y'),
-	(12, 'Bendahara FHukum', 'fh@uho.ac.id', '$2y$04$QFxJnedV7MAJQYJz1DkhIen/Mwaf7UsqbYkd1YD8knL.B72Qd0I6u', 9, '', 1, 'y'),
-	(13, 'Bendahara FPIK', 'fpik@uho.ac.id', '$2y$04$vtsD97nRD5yJP0NOd.ul4exOJu2SsjSlrgiL6NSAeOtltl57TjwNi', 10, '', 1, 'y'),
-	(14, 'Bendahara FIB', 'fib@uho.ac.id', '$2y$04$7kSNLque.3wRcbAU/6/5ku.Li3OGpWa50SMokWhgxYLi59qMoTsBC', 11, '', 1, 'y'),
-	(15, 'Bendahara FPeternakan', 'fpt@uho.ac.id', '$2y$04$DWYMOXF8kujsuFMhJ8C/p.VQOfWO1MA8YRdENrw82if6PGsE.PXt2', 12, '', 1, 'y'),
-	(16, 'Bendahara FKM', 'fkm@uho.ac.id', '$2y$04$ZpE48UwsNXldL.oynS8RLu3CA1DJqpRLiAB/IPbR88jC3XSDW.gCu', 13, '', 1, 'y'),
-	(17, 'Bendahara FHIL', 'fhil@uho.ac.id', '$2y$04$d1MMEma2rtElk.SJiSk76uCkQrltILrI8U.9s.lz24qBy0xQ69Mx.', 14, '', 1, 'y'),
-	(18, 'Bendahara FKedokteran', 'fk@uho.ac.id', '$2y$04$6xPvqib4H1mYcnUUCBaoT.busfi83NLl9Vxjdk.t5iKQu2WJFrpQ6', 15, '', 1, 'y'),
-	(19, 'Bendahara FFarmasi', 'ff@uho.ac.id', '$2y$04$/AfCClaY3aiHmzKXkXY4deeZSH4v9EOfG/y/oebdIkwAtiam.AP5.', 16, '', 1, 'y'),
-	(20, 'Bendahara FTIK', 'ftik@uho.ac.id', '$2y$04$BvNReFyeKtCyZ/TFYkJ5bOwTdjqejAnEeI2EKfPTAxtVlMIcQEZiO', 5, '', 1, 'y'),
-	(21, 'Bendahara Pend. Vokasi', 'pvokasi@uho.ac.id', '$2y$04$2P/ggkiFzHUJ1PJGQnCEcuko7uGjTPSdaQpSwFYCtdFPcyNjh60j2', 17, '', 1, 'y'),
-	(22, 'Bendahara Program Pascasarjana', 'pps@uho.ac.id', '$2y$04$WhO05mN5gofeULChnzxhdufOiuxN7le8qfEtsBWs2aXZosvsv88u.', 18, '', 1, 'y'),
-	(23, 'Bendahara BUK', 'buk@uho.ac.id', '$2y$04$asOx8EGQTYJuzMIZdsSqY.6gbSc7whD.qvuhWGxuiA/GmAlKREyhW', 19, '', 1, 'y'),
-	(24, 'rektor', 'rektor@uho.ac.id', '$2y$04$Le9JNZfRAPjDbMw3yxDF/OtwgiWcH7wGKnq5cZepnbqPpW6gRg5E.', 4, '', 3, 'y');
-/*!40000 ALTER TABLE `tbl_user` ENABLE KEYS */;
+(3, 'Admin', 'admin_keu@uho.ac.id', '$2y$04$FCqeaxUCf9XJdBhH1M49l.Uty.Q/SVcoASbLUjZrvb8c5jYOZxx/i', 4, '', 2, 'y');
 
--- Dumping structure for table db_sisfak.tbl_user_level
-CREATE TABLE IF NOT EXISTS `tbl_user_level` (
-  `id_user_level` int(11) NOT NULL AUTO_INCREMENT,
-  `nama_level` varchar(30) NOT NULL,
-  PRIMARY KEY (`id_user_level`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+-- --------------------------------------------------------
 
--- Dumping data for table db_sisfak.tbl_user_level: ~3 rows (approximately)
-DELETE FROM `tbl_user_level`;
-/*!40000 ALTER TABLE `tbl_user_level` DISABLE KEYS */;
+--
+-- Table structure for table `tbl_user_level`
+--
+
+CREATE TABLE `tbl_user_level` (
+  `id_user_level` int(11) NOT NULL,
+  `nama_level` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_user_level`
+--
+
 INSERT INTO `tbl_user_level` (`id_user_level`, `nama_level`) VALUES
-	(1, 'User'),
-	(2, 'Admin'),
-	(3, 'rektor');
-/*!40000 ALTER TABLE `tbl_user_level` ENABLE KEYS */;
+(1, 'User'),
+(2, 'Super Admin'),
+(3, 'rektor'),
+(4, 'admin_akademik'),
+(5, 'admin_pegawai'),
+(6, 'dekan'),
+(7, 'dosen'),
+(8, 'staff'),
+(9, 'mahasiswa');
 
-/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
-/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `tbl_hak_akses`
+--
+ALTER TABLE `tbl_hak_akses`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_lembaga`
+--
+ALTER TABLE `tbl_lembaga`
+  ADD PRIMARY KEY (`id_lembaga`);
+
+--
+-- Indexes for table `tbl_menu`
+--
+ALTER TABLE `tbl_menu`
+  ADD PRIMARY KEY (`id_menu`);
+
+--
+-- Indexes for table `tbl_setting`
+--
+ALTER TABLE `tbl_setting`
+  ADD PRIMARY KEY (`id_setting`);
+
+--
+-- Indexes for table `tbl_user`
+--
+ALTER TABLE `tbl_user`
+  ADD PRIMARY KEY (`id_users`);
+
+--
+-- Indexes for table `tbl_user_level`
+--
+ALTER TABLE `tbl_user_level`
+  ADD PRIMARY KEY (`id_user_level`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `tbl_hak_akses`
+--
+ALTER TABLE `tbl_hak_akses`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
+
+--
+-- AUTO_INCREMENT for table `tbl_lembaga`
+--
+ALTER TABLE `tbl_lembaga`
+  MODIFY `id_lembaga` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT for table `tbl_menu`
+--
+ALTER TABLE `tbl_menu`
+  MODIFY `id_menu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+
+--
+-- AUTO_INCREMENT for table `tbl_setting`
+--
+ALTER TABLE `tbl_setting`
+  MODIFY `id_setting` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `tbl_user`
+--
+ALTER TABLE `tbl_user`
+  MODIFY `id_users` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
+-- AUTO_INCREMENT for table `tbl_user_level`
+--
+ALTER TABLE `tbl_user_level`
+  MODIFY `id_user_level` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

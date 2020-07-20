@@ -25,15 +25,6 @@
                             <td>
                                 <input type="text" class="form-control" name="password" id="password" placeholder="Masukkan Password" value="<?php echo $password; ?>" /></td>
                         </tr>
-                    
-
-
-                    <tr>
-                        <td width='200'>Fakultas / Lembaga <?php echo form_error('id_lembaga') ?></td>
-                        <td>
-                            <?php echo cmb_dinamis('id_lembaga', 'tbl_lembaga', 'nama_lembaga', 'id_lembaga', $id_user_level,'DESC') ?>
-                        </td>
-                    </tr>
 
                     <tr>
                         <td width='200'>Level User <?php echo form_error('id_user_level') ?></td>

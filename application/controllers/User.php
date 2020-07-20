@@ -51,7 +51,7 @@ class User extends CI_Controller
     {
         $data = array(
             'button'        => 'Create',
-            'action'        => site_url('user/create_action'),
+            'action'        => site_url ('user/create_action'),
 	    'id_users'      => set_value('id_users'),
 	    'full_name'     => set_value('full_name'),
 	    'email'         => set_value('email'),
@@ -69,6 +69,7 @@ class User extends CI_Controller
         $this->_rules();
         $foto = $this->upload_foto();
         if ($this->form_validation->run() == FALSE) {
+            // echo "Gagal";
             $this->create();
         } else {
             $password       = $this->input->post('password',TRUE);
