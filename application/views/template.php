@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Alarm Penyerapan Anggaran Universitas Halu Oleo</title>
+  <title>Sistem Informasi Data Fisip (SIDASIP)</title>
 
   <!-- Custom fonts for this template-->
   <link href="<?php echo base_url(); ?>assets/assets-sbadmin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -108,7 +108,7 @@
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Alarm Penyerapan Anggaran Universitas Halu Oleo</span>
+            <span>Copyright &copy; Sistem Informasi Data FISIP</span>
           </div>
         </div>
       </footer>

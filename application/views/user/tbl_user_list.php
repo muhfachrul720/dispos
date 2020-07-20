@@ -21,7 +21,6 @@
                       <th width="30px">No</th>
                       <th>Nama Lengkap</th>
                       <th>Email</th>
-                      <th>Fakultas / Lembaga</th>
                       <th>Nama Level</th>
                       <th>Status</th>
                       <th width="100px">Aksi</th>
@@ -90,7 +89,6 @@
                             "orderable": false
                         },{"data": "full_name"},
                           {"data": "email"},
-                          {"data": "nama_lembaga"},
                           {"data": "nama_level"},
                           {"data": "is_aktif"},
 
