@@ -27,75 +27,79 @@
         <!-- Google Font -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     </head>
-    <body class="hold-transition image-login">
-        <div class="login-box">
-            <div class="img-fluid text-center">
-                <img src="<?php echo base_url(); ?>assets/alarm/logo-login.png" width="90%" style="margin: center;" alt="">
-            </div>
-            <br>
-            <!-- <div class="login-logo">
-                <div class="font-weight-bold">
-                <b>APA-UHO</b>
-                <h3 class="text-white font-weight-bold">Alarm Penyerapan Anggaran</h3>
+    <body class="hold-transition image-login" style="overflow:hidden">
+        <div class="overlay-container">
+        <!-- Modificate -->
+            <div class="login-box" style="margin-top:24vh">
+                <div class="img-fluid text-center">
+                    <h1 style="font-size:50px; font-weight:bold; color:white; margin:0; padding:0;">SIDASIP</h1>
+                    <!-- <img src="<?php echo base_url(); ?>assets/alarm/logo-login.png" width="90%" style="margin: center;" alt=""> -->
                 </div>
-            </div> -->
-            <!-- /.login-logo -->
-            <div class="login-bc mt-1">
-                <?php
-                $status_login = $this->session->userdata('status_login');
-                if (empty($status_login)) {
-                    $message = "Silahkan login untuk masuk ke aplikasi";
-                } else {
-                    $message = $status_login;
-                }
-                ?>
-                <p class="login-box-msg"><?php echo $message; ?></p>
-
-                <!--<form action="<?php echo base_url(); ?>/adminlte/index2.html" method="post">-->
-                <?php echo form_open('Auth/cheklogin'); ?>
-                <div class="form-group has-feedback">
-                    <input type="email" class="form-control" name="email" placeholder="Email">
-                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                </div>
-                <div class="form-group has-feedback">
-                    <input type="password" class="form-control" name="password" placeholder="Password">
-                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <button type="submit" class="btn btn-danger btn-block btn-flat"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</button>
+                <br>
+                <!-- <div class="login-logo">
+                    <div class="font-weight-bold">
+                    <b>APA-UHO</b>
+                    <h3 class="text-white font-weight-bold">Alarm Penyerapan Anggaran</h3>
                     </div>
-                    <!-- <div class="col-xs-6">
-                        <?php echo anchor('#', '<i class="fa fa-eye-slash" aria-hidden="true"></i> Lupa Password', array('class' => 'btn btn-primary btn-block btn-flat')); ?>
-                    </div> -->
-                </div>
-                <!-- /.col -->
-
-
-                <!-- /.col -->
-                <!-- <div class="row" style="margin-top: 20px;">
-                    <div class="col-xs-12">
-                        <div class="callout callout-info">
-                            <h4>Level Super Admin</h4>
-
-                            <p><b>Email</b> : admin_keu@uho.ac.id</p>
-                            <p><b>Password</b> : password</p>
-                            <hr>
-                            <h4>Level Admin</h4>
-
-                            <p><b>Email</b> : bendahara_keu@uho.ac.id</p>
-                            <p><b>Password</b> : password</p>
-                        </div>
-                    </div>
-
                 </div> -->
-                </form>
+                <!-- /.login-logo -->
+                <div class="login-bc mt-1">
+                    <?php
+                    $status_login = $this->session->userdata('status_login');
+                    if (empty($status_login)) {
+                        $message = "Silahkan login untuk masuk ke aplikasi";
+                    } else {
+                        $message = $status_login;
+                    }
+                    ?>
+                    <p class="login-box-msg"><?php echo $message; ?></p>
+
+                    <!--<form action="<?php echo base_url(); ?>/adminlte/index2.html" method="post">-->
+                    <?php echo form_open('Auth/cheklogin'); ?>
+                    <div class="form-group has-feedback">
+                        <input type="email" class="form-control" style="border-radius:6px" name="email" placeholder="Email">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input type="password" class="form-control" style="border-radius:6px" name="password" placeholder="Password">
+                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <button type="submit" class="btn btn-danger btn-block btn-flat"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</button>
+                        </div>
+                        <!-- <div class="col-xs-6">
+                            <?php echo anchor('#', '<i class="fa fa-eye-slash" aria-hidden="true"></i> Lupa Password', array('class' => 'btn btn-primary btn-block btn-flat')); ?>
+                        </div> -->
+                    </div>
+                    <!-- /.col -->
+
+
+                    <!-- /.col -->
+                    <!-- <div class="row" style="margin-top: 20px;">
+                        <div class="col-xs-12">
+                            <div class="callout callout-info">
+                                <h4>Level Super Admin</h4>
+
+                                <p><b>Email</b> : admin_keu@uho.ac.id</p>
+                                <p><b>Password</b> : password</p>
+                                <hr>
+                                <h4>Level Admin</h4>
+
+                                <p><b>Email</b> : bendahara_keu@uho.ac.id</p>
+                                <p><b>Password</b> : password</p>
+                            </div>
+                        </div>
+
+                    </div> -->
+                    </form>
 
 
 
 
+                </div>
+                <!-- /.login-box-body -->
             </div>
-            <!-- /.login-box-body -->
         </div>
         <!-- /.login-box -->
     </body>
