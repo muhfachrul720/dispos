@@ -103,7 +103,6 @@ class User extends CI_Controller
 		'full_name'     => set_value('full_name', $row->full_name),
 		'email'         => set_value('email', $row->email),
 		'password'      => set_value('password', $row->password),
-        'id_lembaga'    => set_value('id_lembaga', $row->id_lembaga),
 		'images'        => set_value('images', $row->images),
 		'id_user_level' => set_value('id_user_level', $row->id_user_level),
 		'is_aktif'      => set_value('is_aktif', $row->is_aktif),
@@ -132,7 +131,6 @@ class User extends CI_Controller
 		'full_name'     => $this->input->post('full_name',TRUE),
 		'email'         => $this->input->post('email',TRUE),
         'password'      => $hashPassword,
-        'id_lembaga'    => $this->input->post('id_lembaga',TRUE),
 		'id_user_level' => $this->input->post('id_user_level',TRUE),
 		'is_aktif'      => $this->input->post('is_aktif',TRUE));
             }else{
@@ -145,7 +143,6 @@ class User extends CI_Controller
 		'full_name'     => $this->input->post('full_name',TRUE),
 		'email'         => $this->input->post('email',TRUE),
         'password'      => $hashPassword,
-        'id_lembaga'    => $this->input->post('id_lembaga',TRUE),
         'images'        =>$foto['file_name'],
 		'id_user_level' => $this->input->post('id_user_level',TRUE),
 		'is_aktif'      => $this->input->post('is_aktif',TRUE));

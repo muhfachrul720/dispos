@@ -6,10 +6,10 @@
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
         <div class="sidebar-brand-icon rotate-n-15">
           <!-- <i class="fas fa-laugh-wink"></i> -->
-          <i class="fas fa-business-time"></i>
+          <i class="fas fa-"></i>
           <!-- <i class="fas fa-alarm-clock"></i> -->
         </div>
-        <div class="sidebar-brand-text mx-3">APA <sup>UHO</sup></div>
+        <div class="sidebar-brand-text mx-3">SIDASIP</div>
       </a>
 
       <hr class="sidebar-divider my-0">
