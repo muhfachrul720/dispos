@@ -22,13 +22,13 @@ Class Auth extends CI_Controller{
             $user = $users->row_array();
             if(password_verify($password,$user['password'])){
                 // retrive user data to session
-                $this->session->set_userdata($user);
+                $this->session->set_userdata($user); 
                 if ($user['id_user_level'] == 2) {
                     # code...
                     redirect('Dashboard');
-                } else {
+                } else if ($user['id_user_level'] == 7){
                     # code...
-                    redirect('Dashboardb');
+                    redirect('Dashboard_p');
                 }
                 
             }else{

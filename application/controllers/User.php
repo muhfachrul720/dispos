@@ -10,6 +10,7 @@ class User extends CI_Controller
         parent::__construct();
         // is_login();
         $this->load->model('User_model');
+        $this->load->model('m_pegawai');
         $this->load->library('form_validation');        
 	$this->load->library('datatables');
     }
@@ -85,7 +86,16 @@ class User extends CI_Controller
 		'is_aktif'      => $this->input->post('is_aktif',TRUE),
 	    );
 
-            $this->User_model->insert($data);
+            $last_id = $this->User_model->insert($data);
+
+            var_dump($last_id);
+
+            $datainfo = array(
+                'info_pegawai_iduser' => $last_id,
+            );
+
+            $this->m_pegawai->insert($datainfo);
+
             $this->session->set_flashdata('message', 'Create Record Success');
             redirect(site_url('user'));
         }

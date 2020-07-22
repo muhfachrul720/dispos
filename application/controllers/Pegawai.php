@@ -3,8 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Pegawai extends CI_Controller {
 
-	public function index()
-	{
+	public function index(){
 		
 	}
 
@@ -35,7 +34,6 @@ class Pegawai extends CI_Controller {
 	public function data_duk(){
 
 	}
-
 
 }
 
