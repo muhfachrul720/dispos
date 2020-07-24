@@ -8,7 +8,9 @@ class Dashboard_p extends CI_Controller {
 		parent::__construct();
 		$this->load->library('form_validation');
         $this->load->model('m_pegawai');
-        $this->load->model('user_model');
+		$this->load->model('user_model');
+		
+		$this->load->library('datatables');
 	}
 
 	function upload_foto($id){
@@ -34,6 +36,7 @@ class Dashboard_p extends CI_Controller {
 				'id'				=> set_value('id', $result->id),
 				'name'				=> set_value('name', $result->full_name),
 				'email' 			=> set_value('email', $result->email),
+				'birthdate' 		=> set_value('birthdate', $result->info_pegawai_tanggallahir),
 			);
 		};
 
@@ -43,21 +46,21 @@ class Dashboard_p extends CI_Controller {
 	public function index()
 	{
 		$data = $this->getDuk();
-		$this->template->load('template', 'dashboard_pegawai', $data);	
+		$this->template->load('template', 'pegawai/duk/dashboard_pegawai', $data);	
 	}
 	
 	public function form_duk()
 	{
 		$data = $this->getDuk();
+		$data['action'] = base_url('pegawai/dashboard_p/update_duk');
 		$data['button'] = 'Save';
-		$data['action'] = base_url('dashboard_p/update_duk');
 
 		$this->template->load('template', 'pegawai/duk/form_duk_pegawai', $data);	
 	}
 
 	public function detail_duk()
 	{
-		
+		$this->template->load('template', 'pegawai/duk/detail_duk_pegawai');
 	}
 
 	public function update_duk()
@@ -117,15 +120,76 @@ class Dashboard_p extends CI_Controller {
 
 	}
 
-	public function ajukan_pensiun(){
+	// Ajuan Pensiun
+	public function json_pensiun(){
+		// header('Content-Type: application/json');
+		$id = $this->input->post('id');
 
+        $data = $this->m_pegawai->json_pensiun_individual($id);
+		echo $data;
 	}
 
-	public function ajukan_kenaikan_pangkat(){
+	// public function getAjuanPensiun()
+	// {
+	// 	$result = $this->m_pegawai->get_pensiun_individual();
+
+	// 	if($r)
+	// }
+
+	public function ajuan_pensiun(){
 		
+		$status = $this->m_pegawai->get_pensiun_status($this->session->userdata('id_users'));
+
+		$data['status'] = 3;
+
+		if($status) {
+			$data = array(
+				'status' => set_value('status', $status->status),
+			);
+		}
+
+		$this->template->load('template', 'pegawai/ajuan_pensiun/dashboard_ajuan_pensiun', $data);	
 	}
 
+	public function form_ajuan_pensiun()
+	{	
+		$data = array(
+			'action' 	=> base_url('dashboard_p/create_ajuan_pensiun'),
+			'button' 	=> 'Create',
+			'input1' 	=> set_value('input1'),
+			'id' 	 	=> set_value('id')
+		);
+
+		$this->template->load('template', 'pegawai/ajuan_pensiun/form_ajuan_pensiun', $data);	
+	}
+
+	public function create_ajuan_pensiun()
+	{	
+		$post = $this->input->post();
+
+		if($post){
+			$data = array(
+				'ajuan_pensiun_tulisan' => $post['input1'],
+				'ajuan_pensiun_status'  => 3,
+				'ajuan_pensiun_iduser' 	=> $this->session->userdata('id_users'),
+			);
+
+			if($this->m_pegawai->insert($data, 'tbl_ajuan_pensiun')){
+				$this->session->set_flashdata('Message', 'Silahkan Menunggu Verifikasi');
+				$this->ajuan_pensiun();
+			}
+			else {
+				$this->session->set_flashdata('Message', 'Gsagal Mengajukan Ajuan, Silahkan mengisi dengan baik dan benar');
+				$this->ajuan_pensiun();
+			};
+		}
+		else {
+			$this->form_ajuan_pensiun();
+		}
+	}
 }
+
+// 
 
 /* End of file dashboard_d.php */
 /* Location: ./application/controllers/dashboard_d.php */
