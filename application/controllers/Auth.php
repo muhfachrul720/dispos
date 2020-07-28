@@ -26,7 +26,10 @@ Class Auth extends CI_Controller{
                 if ($user['id_user_level'] == 2) {
                     # code...
                     redirect('Dashboard');
-                } else if ($user['id_user_level'] == 7){
+                } else if ($user['id_user_level'] == 5){
+                    # code...
+                    redirect('Pegawai');
+                } else if ($user['id_user_level'] == 10){
                     # code...
                     redirect('Dashboard_p');
                 }

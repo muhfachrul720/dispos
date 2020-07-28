@@ -87,14 +87,37 @@ class User extends CI_Controller
 	    );
 
             $last_id = $this->User_model->insert($data);
-
-            var_dump($last_id);
-
+            
             $datainfo = array(
-                'info_pegawai_iduser' => $last_id,
+                'id_user' => $last_id,
+                'nama_tanpa_gelar_peg' => $this->input->post('full_name',TRUE),
             );
-
-            $this->m_pegawai->insert($datainfo);
+            
+            if($pegid= $this->m_pegawai->insert($datainfo, 'tbl_pegawai')){
+                $idpeg = array(
+                    'id_pegawai' => $pegid,   
+                );
+                
+                $dataid = array(
+                    'id_gelar' => $this->m_pegawai->insert($idpeg, 'tbl_gelar'),
+                    'id_cpns' => $this->m_pegawai->insert($idpeg, 'tbl_cpns'),
+                    'id_pmk' => $this->m_pegawai->insert($idpeg, 'tbl_pmk'),
+                    'id_kgb' => $this->m_pegawai->insert($idpeg, 'tbl_kgb'),
+                    'id_impassing' => $this->m_pegawai->insert($idpeg, 'tbl_impassing'),
+                    'id_pangkat_terakhir' => $this->m_pegawai->insert($idpeg, 'tbl_pangkat_terakhir'),
+                    'id_jab_fungsional' => $this->m_pegawai->insert($idpeg, 'tbl_jab_fungsional'),
+                    'id_tgs_tambahan_dosen' => $this->m_pegawai->insert($idpeg, 'tbl_tgs_tambahan_dosen'),
+                    'id_peter' => $this->m_pegawai->insert($idpeg, 'tbl_pendidikan_terakhir'),
+                    'id_user' => $last_id,
+                    'id_diklat' => $this->m_pegawai->insert($idpeg, 'tbl_diklat_pelatihan'),
+                    'id_keluarga' => $this->m_pegawai->insert($idpeg, 'tbl_keluarga'),
+                );
+                
+                $this->m_pegawai->update('tbl_pegawai', array('id_pegawai' => $pegid), $dataid);
+                
+                $this->User_model->update($last_id, $idpeg);
+                
+            };
 
             $this->session->set_flashdata('message', 'Create Record Success');
             redirect(site_url('user'));
