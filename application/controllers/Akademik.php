@@ -20,10 +20,6 @@ class Akademik extends CI_Controller {
 		
 	}
 
-	public function verifikasi_penelitian(){
-		
-	}
-
 	public function data_jadwal_mengajar(){
 		
 	}

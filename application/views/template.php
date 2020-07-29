@@ -18,8 +18,20 @@
   <!-- Custom styles for this template-->
   <link href="<?php echo base_url(); ?>assets/assets-sbadmin/css/sb-admin-2.css" rel="stylesheet">
 
+  <link rel="stylesheet" href="<?= base_url(); ?>assets/custom-css.css">
+
   <script src="<?php echo base_url(); ?>assets/assets-sbadmin/vendor/jquery/jquery.min.js"></script>
 
+  <!-- Yearpicker script -->
+  <script src="<?= base_url(); ?>assets/plugin-yearpicker/yearpicker.js" async></script>
+
+
+  <!-- Data tables -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+
+  <!-- Year Picker -->
+  <link rel="stylesheet" href="<?= base_url(); ?>assets/plugin-yearpicker/yearpicker.css">
 
 </head>
 
@@ -160,6 +172,20 @@
   <!-- Page level custom scripts -->
   <script src="<?php echo base_url(); ?>assets/assets-sbadmin/js/demo/chart-area-demo.js"></script>
   <script src="<?php echo base_url(); ?>assets/assets-sbadmin/js/demo/chart-pie-demo.js"></script>
+
+  <!-- Datatables -->
+  <!-- Page level plugins -->
+  <script src="<?php echo base_url(); ?>assets/assets-sbadmin/vendor/datatables/jquery.dataTables.min.js"></script>
+  <script src="<?php echo base_url(); ?>assets/assets-sbadmin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+  <!-- Page level custom scripts -->
+  <script src="<?php echo base_url(); ?>assets/assets-sbadmin/js/demo/datatables-demo.js"></script>
+  <script>
+    // function alert(){
+    //   var id = document.getElementById("delete").value;
+
+    // }
+  </script>
 
 </body>
 
