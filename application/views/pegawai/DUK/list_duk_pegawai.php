@@ -1,27 +1,33 @@
+<div class="container-fluid">
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Data Induk Pegawai</h1>
+</div>
+
 <div class="card shadow mb-4">
-            <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">List Data Induk Pegawai</h6>
-            </div>
-            <div class="card-body">
-              <div class="table-responsive">
-             
-                <table id="example" style="font-size:12px; width:100%" class="table table-striped table-bordered table-sm text-center" style="width:100%">
-                  <thead>
-                    <tr>
-                      <th width="5px">No</th>
-                      <th>Nama Pegawai</th>
-                      <th width="5">Status Pegawai</th>
-                      <th>TMT Pensiun Pegawai</th>
-                      <th>Gaji Pokok Pegawai</th>
-                      <th>Tanggal Meninggal Dunia</th>
-                      <th width="15px">Aksi</th>
-                    </tr>
-                  </thead>
-                </table>
-           
-            </div>
+    <div class="card-header" style="background-color:#4e73df; color:white;font-weight:bold">
+        List Data Induk Pegawai
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+        
+        <table id="example" style="font-size:12px; width:100%" class="table table-striped table-bordered table-sm text-center" style="width:100%">
+            <thead>
+            <tr>
+                <th width="5px">No</th>
+                <th>Nama Pegawai</th>
+                <th width="5">Status Pegawai</th>
+                <th>TMT Pensiun Pegawai</th>
+                <th>Gaji Pokok Pegawai</th>
+                <th>Tanggal Meninggal Dunia</th>
+                <th width="100px">Aksi</th>
+            </tr>
+            </thead>
+        </table>
+    
         </div>
     </div>
+</div>
 
     <script type="text/javascript">
             $(document).ready(function() {
@@ -65,7 +71,7 @@
                         {
                             "data": "id_peg",
                             "render" : function(data, type, row){
-                                return '<a href="<?=base_url()?>pegawai/form_data_pegawai/'+data+'" class="btn btn-sm btn-warning"><i class="far fa-edit"></i></a>';
+                                return '<a href="<?=base_url()?>pegawai/form_data_pegawai/'+data+'" class="btn btn-sm btn-warning"><i class="far fa-edit"></i></a> <a href="<?=base_url()?>pegawai/form_data_pegawai/'+data+'" class="btn btn-sm btn-success"><i class="far fa-file-excel"></i></a>';
                             },
                         },
                     ],
@@ -86,3 +92,5 @@
     $('#example').DataTable();
 } );
 </script>
+
+</div>

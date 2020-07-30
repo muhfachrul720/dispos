@@ -17,6 +17,7 @@
                     <a class="dropdown-item" href="<?=base_url()?>dashboard_p/form_data_cpns">Update Data CPNS</a>
                     <a class="dropdown-item" href="<?=base_url()?>dashboard_p/form_data_pmk">Update Data PMK</a>
                     <a class="dropdown-item" href="<?=base_url()?>dashboard_p/form_data_kgb">Update Data KGB</a>
+                    <a class="dropdown-item" href="<?=base_url()?>dashboard_p/form_data_uker">Update Data Unit Kerja</a>
                     <a class="dropdown-item" href="<?=base_url()?>dashboard_p/form_data_impassing">Update Data Impassing</a>
                     <a class="dropdown-item" href="<?=base_url()?>dashboard_p/form_data_panghir">Update Data Pangkat Terakhir</a>
                     <a class="dropdown-item" href="<?=base_url()?>dashboard_p/form_d">Update Data Jabatan Fungsional</a>
@@ -157,6 +158,35 @@
                     <div class="col-5 p-0 border-bottom">
                         <label for=""><small style="font-weight:bold">Diberikan Oleh :</small></label>
                         <p style="margin-bottom:10px;"><?= $oleh_pejabat_pmk?></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Unit Kerja -->
+        <div class="card mb-4">
+            <div class="card-header" style="background-color:#4e73df; color:white;font-weight:bold">
+                Data Unit Kerja
+            </div>
+            <div class="card-body">
+                <div class="row mb-3 px-3 justify-content-between">
+                    <div class="col-3 p-0 border-bottom"> 
+                        <label for=""><small style="font-weight:bold">Program Studi :</small></label>
+                        <p style="margin-bottom:10px;"><?= $program_studi_uker?></p>
+                    </div>
+                    <div class="col-3 p-0 border-bottom">
+                        <label for=""><small style="font-weight:bold">Home Base :</small></label>
+                        <p style="margin-bottom:10px;"><?= $homebase_uker?></p>
+                    </div>
+                    <div class="col-3 p-0 border-bottom">
+                        <label for=""><small style="font-weight:bold">Full Fakultas :</small></label>
+                        <p style="margin-bottom:10px;"><?= $full_fakultas_uker?></p>
+                    </div>
+                </div>
+                <div class="row mb-3 px-3 justify-content-between">
+                    <div class="col-5 p-0 border-bottom">
+                        <label for=""><small style="font-weight:bold">Singkat Fakultas :</small></label>
+                        <p style="margin-bottom:10px;"><?= $singkat_fakultas_uker?></p>
                     </div>
                 </div>
             </div>

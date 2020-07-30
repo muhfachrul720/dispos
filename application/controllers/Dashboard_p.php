@@ -28,7 +28,7 @@ class Dashboard_p extends CI_Controller {
 
 	}
 
-	// Duk Pegawai
+	// ================================ Duk Pegawai =====================================
 	public function index()
 	{
 		$data = $this->m_pegawai->getinfo_pegawai_individual($this->session->userdata('id_users'));
@@ -134,7 +134,7 @@ class Dashboard_p extends CI_Controller {
 
 		$dataanak['id_kel'] = $data = $this->m_pegawai->get_dataother('tbl_keluarga', $this->session->userdata('id_pegawai'), 'id_keluarga')['id_keluarga'];
 
-		if($this->m_pegawai->insert('tbl_anak', $dataanak)){
+		if($this->m_pegawai->insert($dataanak, 'tbl_anak')){
 			$this->session->set_flashdata('msg', 'Berhasil Menambah Data');
 			redirect('dashboard_p/form_data_keluarga');
 		}
@@ -423,6 +423,36 @@ class Dashboard_p extends CI_Controller {
 	}	
 
 	// =====================================================
+	public function form_data_uker()
+	{
+		$data = $this->m_pegawai->get_dataother('tbl_unit_kerja',$this->session->userdata('id_pegawai'));
+		$data['action'] = base_url('dashboard_p/update_datauker');
+		
+		$this->template->load('template', 'pegawai/duk/form_data_unit_kerja', $data);
+	}
+
+	public function update_datauker()
+	{
+		$post = $this->input->post();
+		
+		$datauker = array(
+			'program_studi_uker' => $post['progstu'],
+			'homebase_uker' => $post['hmbs'],
+			'full_fakultas_uker' => $post['fkfull'],
+			'singkat_fakultas_uker' => $post['fkpart'],
+		);
+
+		if($this->m_pegawai->update('tbl_unit_kerja', array('id_pegawai' => $this->session->userdata('id_pegawai')), $datauker)){
+			$this->session->set_flashdata('msg', 'Berhasil Mengupdate Data');
+			redirect('dashboard_p');
+		}
+		else {
+			$this->session->set_flashdata('msg', 'Gagal Mengupdate Data');
+			redirect('dashboard_p/form_data_pegawai');
+		}
+	}
+
+	// =====================================================
 	public function form_data_cpns()
 	{
 		$data = $this->m_pegawai->get_dataother('tbl_cpns',$this->session->userdata('id_pegawai'));
@@ -453,8 +483,18 @@ class Dashboard_p extends CI_Controller {
 			'pangkat_cpns' 			=> get_pangkatcpns($post['cpnsgol'], $post['cpnsruang']).'/'.$post['cpnsgol'].'/'.$post['cpnsruang'],
 			'tmt_real_cpns' 		=> $post['cpnstmt'],
 			'mks_thn_cpns' 			=> $date->y,
-			'bln_thn_cpns' 			=> $date->m,
+			'mks_bln_cpns' 			=> $date->m,
 		);
+
+		$tmt = $this->m_pegawai->get_tmtpeg($this->session->userdata('id_pegawai'));
+		$date2 = date_diff(date_create($tmt['tmt_pensiun_peg']), date_create($post['cpnstmt']));
+
+		$masakerjapeg = array(
+			'thn_masa_kerja_pensiun_peg' => $date2->y,
+			'bln_masa_kerja_pensiun_peg' => $date2->m,
+		);
+
+		$this->m_pegawai->update('tbl_pegawai', array('id_pegawai' => $this->session->userdata('id_pegawai')), $masakerjapeg);
 
 		if($this->m_pegawai->update('tbl_cpns', array('id_pegawai' => $this->session->userdata('id_pegawai')), $datacpns)){
 			$this->session->set_flashdata('msg', 'Berhasil Mengupdate Data');
@@ -539,8 +579,14 @@ class Dashboard_p extends CI_Controller {
 			}
 	}
 
-	// Ajuan Pensiun
-	public function json_pensiun(){
+	// ======================================================== Ajuan Pensiun =====================================
+	public function ajukan_pensiun()
+	{
+		$this->template->load('template', 'pegawai/ajuan_pensiun/dashboard_ajuan_pensiun');	
+	}
+
+	public function json_pensiun_individual()
+	{
 		header('Content-Type: application/json');
 		$id = $this->input->post('id');
 
@@ -548,66 +594,100 @@ class Dashboard_p extends CI_Controller {
 		echo $data;
 	}
 
-	// public function getAjuanPensiun()
-	// {
-	// 	$result = $this->m_pegawai->get_pensiun_individual();
-
-	// 	if($r)
-	// }
-
-	public function ajukan_pensiun(){
-		
-		$status = $this->m_pegawai->get_pensiun_status($this->session->userdata('id_users'));
-
-		$data['status'] = 3;
-
-		if($status) {
-			$data = array(
-				'status' => set_value('status', $status->status),
-			);
-		}
-
-		$this->template->load('template', 'pegawai/ajuan_pensiun/dashboard_ajuan_pensiun', $data);	
-	}
-
-	public function form_ajuan_pensiun()
-	{	
-		$data = array(
-			'action' 	=> base_url('dashboard_p/create_ajuan_pensiun'),
-			'button' 	=> 'Create',
-			'input1' 	=> set_value('input1'),
-			'id' 	 	=> set_value('id')
-		);
-
-		$this->template->load('template', 'pegawai/ajuan_pensiun/form_ajuan_pensiun', $data);	
-	}
-
 	public function create_ajuan_pensiun()
 	{	
 		$post = $this->input->post();
- 
-		if($post){
-			$data = array(
-				'ajuan_pensiun_tulisan' => $post['input1'],
-				'ajuan_pensiun_status'  => 3,
-				'ajuan_pensiun_iduser' 	=> $this->session->userdata('id_users'),
-			);
 
-			if($this->m_pegawai->insert($data, 'tbl_ajuan_pensiun')){
-				$this->session->set_flashdata('Message', 'Silahkan Menunggu Verifikasi');
-				$this->ajuan_pensiun();
-			}
-			else {
-				$this->session->set_flashdata('Message', 'Gsagal Mengajukan Ajuan, Silahkan mengisi dengan baik dan benar');
-				$this->ajuan_pensiun();
-			};
-		}
+		$data_ajpen = array(
+			'id_pegawai' => $post['idpeg'],
+			'waktu_pengajuan_pensiun' => date('Y-m-d h:m:s'),
+		);
+
+		if($this->m_pegawai->insert($data_ajpen, 'tbl_pengajuan_pensiun')){
+			$this->session->set_flashdata('msg', 1);
+			redirect('dashboard_p/ajukan_pensiun');
+		} 
 		else {
-			$this->form_ajuan_pensiun();
+			$this->session->set_flashdata('msg', 2);
+			redirect('dashboard_p/ajukan_pensiun');
 		}
+
 	}
 
-	// Ajuan Kenaikan Pangkat
+	// ======================================================= Ajuan Cuti ==============================================
+	public function pengajuan_cuti()
+	{
+		$data = $this->m_pegawai->get_datapeg_cuti($this->session->userdata('id_pegawai'));
+
+		$this->template->load('template', 'pegawai/ajuan_cuti/dashboard_ajuan_cuti', $data);	
+	}
+
+	public function json_cuti_individual()
+	{
+		header('Content-Type: application/json');
+		$id = $this->input->post('id');
+
+		$data = $this->m_pegawai->json_cuti_individual($id);
+		echo $data;
+	}
+
+	public function cuti_rules($post)
+	{
+		foreach($post as $p){
+			$this->form_validation->set_rules(key($post), key($post), 'required|trim');
+			next($post);
+		}	
+	}
+
+	public function create_ajuan_cuti()
+	{
+		$post = $this->input->post();
+
+		$this->cuti_rules($post);
+		$this->form_validation->set_error_delimiters('<small class="text-danger">', '</small>');
+
+		if($this->form_validation->run() == FALSE){
+			$this->pengajuan_cuti();
+		}
+		else {
+			$date = date_diff(date_create($post['startdate']), date_create($post['enddate']));
+			$thn = null;
+
+			if(isset($post['thncuti'])){
+				$thn = $post['thncuti'];
+				
+				if($thn == 1)$thn = date('Y');
+				else if($thn == 2)$thn = date('Y', strtotime("-1 year"));
+				else $thn = date('Y', strtotime("-2 year"));
+
+			}
+
+			$data_ajcuti = array(
+				'id_pegawai' => $this->session->userdata('id_pegawai'),
+				'jenis_pengajuan_cuti' => $post['jeniscuti'],
+				'tahun_pengajuan_cuti' => $thn,
+				'alasan_pengajuan_cuti' => $post['alasancuti'],
+				'alamat_pengajuan_cuti' => $post['addresscuti'],
+				'telepon_pengajuan_cuti' => $post['phonecuti'],
+				'tgl_cuti' => $post['startdate'],
+				'jml_thn_cuti' => $date->y,
+				'jml_bln_cuti' => $date->m,
+				'jml_hari_cuti' => $date->d,
+				'waktu_pengajuan_cuti' => date('Y-m-d h:m:s'),
+			);
+	
+			if($this->m_pegawai->insert($data_ajcuti, 'tbl_pengajuan_cuti')){
+				$this->session->set_flashdata('msg', 1);
+				redirect('dashboard_p/pengajuan_cuti');
+			} 
+			else {
+				$this->session->set_flashdata('msg', 2);
+				redirect('dashboard_p/pengajuan_cuti');
+			}
+
+		}
+
+	}
 
 }
 
