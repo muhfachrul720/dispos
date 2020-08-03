@@ -20,132 +20,82 @@
     </li>
     </ul>
     <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active border border-top-0 p-5" style="background-color:white; font-size:14px" id="home" role="tabpanel" aria-labelledby="home-tab">
-            <div class="header mb-5">
-                <h3 class="mb-2">Ajukan Pensiun </h3>
-                <p>Silahkan Mengisi Form Dibawah Untuk Mengajukan Pensiun, Pastikan untuk mengisi secara Keseluruhan dengan data yang benar</p>
-            </div>
-            <?= form_open('dashboard_p/create_ajuan_pensiun')?>
-            <div class="body">
-                <?= form_hidden('idpeg', $this->session->userdata('id_pegawai'))?>
+    <div class="tab-pane fade show active mb-4" style="font-size:14px" id="home" role="tabpanel" aria-labelledby="home-tab">
 
-                <div class="row form-group">
-                    <div class="col-lg-4 col-md-6 col-sm-6">
-                        Surat Pengantar PPK :
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-6">
-                        <input type="file" class="">
-                    </div>
-                    <div class="col-lg-4 col-md-12 col-sm-12">
-                        Error
-                    </div>
-                </div>
-                <div class="row form-group">
-                    <div class="col-lg-4 col-md-6 col-sm-6">
-                        Surat Permohonan Pensiun :
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-6">
-                        <input type="file" class="">
-                    </div>
-                    <div class="col-lg-4 col-md-12 col-sm-12">
-                        Error
-                    </div>
-                </div>
-                <div class="row form-group">
-                    <div class="col-lg-4 col-md-6 col-sm-6">
-                        Fotokopi Surat Keterangan SK CPNS :
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-6">
-                        <input type="file" class="">
-                    </div>
-                    <div class="col-lg-4 col-md-12 col-sm-12">
-                        Error
-                    </div>
-                </div>
-                <div class="row form-group">
-                    <div class="col-lg-4 col-md-6 col-sm-6">
-                        Fotokopi Sah Surat Keputusan Pangkat Terakhir :
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-6">
-                        <input type="file" class="">
-                    </div>
-                    <div class="col-lg-4 col-md-12 col-sm-12">
-                        Error
-                    </div>
-                </div>
-                <div class="row form-group">
-                    <div class="col-lg-4 col-md-6 col-sm-6">
-                        Fotokopi Sah Surat Nikah :
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-6">
-                        <input type="file" class="">
-                    </div>
-                    <div class="col-lg-4 col-md-12 col-sm-12">
-                        Error
-                    </div>
-                </div>
-                <div class="row form-group">
-                    <div class="col-lg-4 col-md-6 col-sm-6">
-                        Fotokopi Sah Surat Keputusan Akte Kelahiran :
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-6">
-                        <input type="file" class="">
-                    </div>
-                    <div class="col-lg-4 col-md-12 col-sm-12">
-                        Error
-                    </div>
-                </div>
-                <div class="row form-group">
-                    <div class="col-lg-4 col-md-6 col-sm-6">
-                        Surat Keterangan Kematian :
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-6">
-                        <input type="file" class="">
-                    </div>
-                    <div class="col-lg-4 col-md-12 col-sm-12">
-                        Error
-                    </div>
-                </div>
-                <div class="row form-group">
-                    <div class="col-lg-4 col-md-6 col-sm-6">
-                        Surat Keterangan Janda/Duda :
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-6">
-                        <input type="file" class="">
-                    </div>
-                    <div class="col-lg-4 col-md-12 col-sm-12">
-                        Error
-                    </div>
-                </div>
-                <div class="row form-group">
-                    <div class="col-lg-4 col-md-6 col-sm-6">
-                        Fotokopi Sah Daftar Keluarga :
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-6">
-                        <input type="file" class="">
-                    </div>
-                    <div class="col-lg-4 col-md-12 col-sm-12">
-                        Error
-                    </div>
-                </div>
-                <div class="row form-group">
-                    <div class="col-lg-4 col-md-6 col-sm-6">
-                        Pas Foto :
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-6">
-                        <input type="file" class="">
-                    </div>
-                    <div class="col-lg-4 col-md-12 col-sm-12">
-                        Error
+        <div class="card border border-top-0">
+            <div class="card-body px-5 pt-5 pb-4">
+                <h2>Form Ajukan Pensiun</h2>
+                <p>Silahkan Mengupload Berkas Berkas Persyaratan Untuk Pensiun Secara Lengkap dan benar</p>
+            </div>
+        </div>
+
+        <?= form_open_multipart('dashboard_p/create_ajuan_pensiun')?>
+
+        <div class="row">
+            <div class="col-7">
+                <div class="card border mt-3">
+                    <div class="card-body px-5">
+                        <div style="text-align:center; border:4px dashed rgba(0,0,0,0.3); padding:283px 40px">
+                            <p>Tekan Dibawah Untuk Mengupload Berkas</p>
+                            <label for="fileUpload" class="btn btn-primary btn-sm m-0" style="font-size:12px">Upload File</label>
+                            <input id="fileUpload" type="file" multiple="" name="images[]" style="display:none">
+                        </div>
                     </div>
                 </div>
             </div>
-            <hr class="mt-5">
-            <div class="footer">
-                <input type="submit" class="btn btn-success" value="Ajukan">
-                <span class="ml-4">Dengan ini saya mengajukan Pensiun</span>
+            <div class="col">
+                <div class="card border mt-3">
+                    <div class="card-body">
+                        <p>Berkas Yang Di Upload :</p>
+                        <ul style="text-decoration:none; list-style-position:outside">
+                            <li class="px-2">Surat Usul Pimpinan Unit Kerja </li>
+                            <li class="px-2">Surat Permohonan PNS ybs </li>
+                            <li class="px-2">DPCP (Dfatar Perorangan Calon Penerima Pensiun) </li>
+                            <li class="px-2">SK CPNS - SK Pangkat Terakhir (Legalisir) </li>
+                            <li class="px-2">Sk Jabatan (Fungsional/Struktural)(Legalisir) </li>
+                            <li class="px-2">Kartu Pegawai / KPE (Legalisir) </li>
+                            <li class="px-2">Akta/Surat Nikah/Cerai (Legalisir) </li>
+                            <li class="px-2">Akta/Surat Kenal Lahir anak < 25 Tahun (Legalisir) </li>
+                            <li class="px-2">Kartu Keluarga/Daftar Susunan Keluarga yang Disahkan</li>
+                            <li class="px-2">Pas Foto 3x4</li>
+                            <li class="px-2">Formulir Permintaan Pembayaran Pensiun (SP4)</li>
+                            <li class="px-2">Foto Kopi Buku Rekening</li>
+                            <li class="px-2">Penilaian Prestasi 1 Tahun Terakhir (Legalisir)</li>
+                            <li class="px-2">Surat Pernyataan Tidak Pernah Dijatuhi Hukuman Disiplin/ Tingkat sedang/ Berat 1 Tahun Terakhir</li>
+                            <li class="px-2">Surat Pernyataan Tidak Sedang Menjalani Proses Pidana Atau Pernah Dipidana Penjara Berdasarkan Putusan Pengadilan Yang Telah Berkekuatan Hukum</li>
+                            <hr>
+                            <li class="px-2">Surat Ahli Waris Yang Sah (Bagi Janda dan Duda)</li>
+                            <li class="px-2">Akta / Surat Kematian(Bagi Janda dan Duda)</li>
+                            <li class="px-2">Surat Keterangan Janda / Duda / Anak / Orang Tua(Bagi Janda dan Duda)</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <?= form_close()?>
+        </div>
+
+        <div class="card border mt-3">
+            <div class="card-body px-5">
+                <div class="row">
+                    <div class="col" style="font-weight:bold"><button type="submit" class="btn btn-success w-100">Ajukan</button></div>
+                    <div class="col pt-2">Dengan ini Saya setuju mengajukan pensiun</div>
+                </div>
+            </div>
+        </div>
+
+            <script>
+            $('#fileUpload').change(function(){
+                if(this.files.length>18)
+                    alert('File Terlalu Banyak')
+            });
+            // Prevent submission if limit is exceeded.
+            $('form').submit(function(){
+                if(this.files.length>18)
+                    return false;
+            });
+            </script>
+
+        <?= form_close()?>
+
         </div>
 
         

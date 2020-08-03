@@ -32,9 +32,10 @@
 
             <div class="card border mt-3">
                 <div class="card-body px-5">
+                    <h4 class="card-title">Data Pegawai</h4>
+                    <hr>
                     <div class="row">
-                        <div class="col-2 my-auto" style="font-weight:bold">Data Pegawai</div>
-                        <div class="col pl-5" style="border-left:1px solid gray">
+                        <div class="col">
                             <div class="row form-group">
                                 <div class="col">
                                     <div class="row">
@@ -90,9 +91,10 @@
 
             <div class="card border mt-3">
                 <div class="card-body px-5">
+                    <h4 class="card-title">Jenis Cuti</h4>
+                    <hr>
                     <div class="row">
-                        <div class="col-2 my-auto" style="font-weight:bold">Jenis Cuti</div>
-                        <div class="col-4 pl-5" style="border-left:1px solid gray">
+                        <div class="col-6 my-auto">
                             <?php echo form_dropdown('jeniscuti', array(1 => 'Cuti Besar', 2 => 'Cuti Tahunan', 3 => 'Cuti Sakit', 4 => 'Cuti Melahirkan', 5 => 'Cuti Karena Alasan Penting', 6 => 'Cuti Di luar Tanggungan Negara'), '', array('class' => 'form-control form-control-sm', 'id' => 'thnTrigger')); ?>
                         </div>
 
@@ -106,7 +108,7 @@
                             });
                         </script>
 
-                        <div class="col-2 my-auto" style="">Tahun :</div>
+                        <div class="col-2 my-auto" style="text-align:center">Tahun :</div>
                         <div class="col my-auto" style="">
                             <div class="form-check form-check-inline pr-3">
                                 <input class="form-check-input optThn" disabled type="radio" name="thncuti" id="exampleRadios1" value="1">
@@ -133,9 +135,10 @@
 
             <div class="card border mt-3">
                 <div class="card-body px-5">
+                    <h4 class="card-title">Alasan Cuti</h4>
+                    <hr>
                     <div class="row">
-                        <div class="col-2 my-auto" style="font-weight:bold">Alasan Cuti</div>
-                        <div class="col pl-5" style="border-left:1px solid gray">
+                        <div class="col">
                             <textarea name="alasancuti" id="" cols="30" rows="5" class="form-control form-control-sm"></textarea> 
                             <?php echo form_error('alasancuti') ?>
                         </div>
@@ -145,9 +148,10 @@
 
             <div class="card border mt-3">
                 <div class="card-body px-5">
+                    <h4 class="card-title">Lamanya Cuti</h4>
+                    <hr>
                     <div class="row">
-                        <div class="col-2 my-auto" style="font-weight:bold">Lamanya Cuti</div>
-                        <div class="col pl-5" style="border-left:1px solid gray">
+                        <div class="col">
                               <div class="row">
                                 <div class="col">
                                     <div class="row">
@@ -175,9 +179,10 @@
 
             <div class="card border mt-3">
                 <div class="card-body px-5">
+                    <h4 class="card-title">Alamat Cuti</h4>
+                    <hr>
                     <div class="row">
-                        <div class="col-2 my-auto" style="font-weight:bold">Alamat Cuti</div>
-                        <div class="col pl-5" style="border-left:1px solid gray">
+                        <div class="col">
                             <div class="row form-group">
                                 <div class="col-4 pt-1">Alamat Selama Menjalankan Cuti : </div>
                                 <div class="col">
@@ -284,7 +289,7 @@
                                     "data" : 'id_pengajuan_cuti',
                                     "render" : function(data, type, row){
                                         if(row.status_cuti == 1){
-                                            return '<a href="" style="font-size:12px" class="btn py-0 btn-sm btn-info">Download</a>';
+                                            return '<a href="<?= base_url()?>dashboard_p/print_pdf_cuti/'+data+'" style="font-size:12px" class="btn py-0 btn-sm btn-info">Download</a>';
                                         }else {
                                             return '';
                                         };

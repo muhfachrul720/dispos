@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 28, 2020 at 11:49 AM
+-- Generation Time: Aug 03, 2020 at 02:52 PM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.2.20
 
@@ -68,7 +68,31 @@ CREATE TABLE `tbl_anak` (
 --
 
 INSERT INTO `tbl_anak` (`id_anak`, `nama_anak`, `tgl_lahir_anak`, `thn_usia_anak`, `bln_usia_anak`, `jk_anak`, `ket_anak`, `id_kel`) VALUES
-(5, 'Kumon', '2020-07-14', '0', '0', 'Laki-Laki', 'Autis                                             ', 1);
+(6, 'Shirakami Fubuki', '2020-07-09', '0', '0', 'Perempuan', 'Manis                                             ', 1),
+(7, 'Natsuiro Matsuri', '2016-07-05', '4', '48', 'Perempuan', 'Aneh                                   ', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_berkas_pensiun`
+--
+
+CREATE TABLE `tbl_berkas_pensiun` (
+  `id_berkas` int(11) NOT NULL,
+  `nama_berkas` varchar(255) NOT NULL,
+  `id_pengajuan_pensiun` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_berkas_pensiun`
+--
+
+INSERT INTO `tbl_berkas_pensiun` (`id_berkas`, `nama_berkas`, `id_pengajuan_pensiun`) VALUES
+(6, 'pegawai_1berkas_0.jpg', 11),
+(7, 'pegawai_1berkas_01.jpg', 11),
+(8, 'pegawai_1berkas_02.jpg', 11),
+(9, 'pegawai_1berkas_03.jpg', 11),
+(10, 'pegawai_1berkas_04.jpg', 11);
 
 -- --------------------------------------------------------
 
@@ -97,7 +121,7 @@ CREATE TABLE `tbl_cpns` (
 --
 
 INSERT INTO `tbl_cpns` (`id_cpns`, `nomor_sk_cpns`, `tgl_sk_cpns`, `oleh_pejabat_cpns`, `tmt_cpns`, `thn_pmk_cpns`, `bln_pmk_cpns`, `pengurangan_thn_cpns`, `pangkat_cpns`, `tmt_real_cpns`, `mks_thn_cpns`, `mks_bln_cpns`, `id_pegawai`) VALUES
-(1, '08212144244', '2020-07-07', '-', '1987-03-01', '0', '0', 0, 'Penata Muda Tk. 1/3/b', '1987-03-01', '33', '396', 1),
+(1, '08212144244', '2020-07-07', '-', '1987-03-01', '0', '0', 0, 'Penata Muda Tk. 1/3/b', '1987-03-01', '33', '5', 1),
 (2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 3),
 (3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 4),
 (4, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 5),
@@ -488,7 +512,7 @@ CREATE TABLE `tbl_keluarga` (
 --
 
 INSERT INTO `tbl_keluarga` (`id_keluarga`, `nama_istri_suami_kel`, `tgl_nikah_kel`, `id_anak`, `id_pegawai`) VALUES
-(1, 'Mimin', '0000-00-00', 1, 1),
+(1, 'Mimin', '2020-07-21', 1, 1),
 (2, NULL, NULL, NULL, 5),
 (3, NULL, NULL, NULL, 6),
 (4, NULL, NULL, NULL, 7),
@@ -627,7 +651,7 @@ INSERT INTO `tbl_menu` (`id_menu`, `title`, `url`, `icon`, `is_main_menu`, `is_a
 (33, 'Ajuan Kenaikan Pangkat', 'Dashboard_p/ajukan_kenaikan_pangkat', 'fas fa-fw fa-users', 0, 'y'),
 (34, 'Ajukan Pensiun', 'Dashboard_p/ajukan_pensiun', 'fas fa-fw fa-users', 0, 'y'),
 (35, 'Pengisian DUK Pegawai', 'Dashboard_p', 'fas fa-fw fa-users', 0, 'y'),
-(36, 'Pengajuan Cuti', 'Pegawai/pengajuan_cuti', 'fas fa-fw fa-users', 0, 'y'),
+(36, 'Pengajuan Cuti', 'Dashboard_p/pengajuan_cuti', 'fas fa-fw fa-users', 0, 'y'),
 (37, 'Data Mahasiswa', 'Mahasiswa', 'fas fa-fw fa-users', 0, 'y'),
 (38, 'Pengajuan Aktif Kuliah', 'Mahasiswa/pengajuan_aktif_kuliah', 'fas fa-fw fa-users', 0, 'y'),
 (39, 'Pengajuan Penelitian', 'Mahasiswa/pengajuan_penelitian', 'fas fa-fw fa-users', 0, 'y'),
@@ -707,6 +731,7 @@ CREATE TABLE `tbl_pegawai` (
   `id_jab_fungsional` int(11) DEFAULT NULL,
   `id_tgs_tambahan_dosen` int(11) DEFAULT NULL,
   `id_user` int(11) DEFAULT NULL,
+  `id_uker` int(11) NOT NULL,
   `id_peter` int(11) DEFAULT NULL,
   `id_diklat` int(11) DEFAULT NULL,
   `id_keluarga` int(11) DEFAULT NULL,
@@ -727,10 +752,10 @@ CREATE TABLE `tbl_pegawai` (
 -- Dumping data for table `tbl_pegawai`
 --
 
-INSERT INTO `tbl_pegawai` (`id_pegawai`, `nip_peg`, `status_kepegawaian_peg`, `nip_full_peg`, `nama_tanpa_gelar_peg`, `nama_lengkap_peg`, `id_gelar`, `jk_peg`, `agama_peg`, `tempat_lahir_peg`, `kabupaten_lahir_peg`, `tgl_lahir_peg`, `usia_thn_lahir_peg`, `usia_bln_lahir_peg`, `kelompok_umur_peg`, `tmt_pensiun_peg`, `thn_masa_kerja_pensiun_peg`, `bln_masa_kerja_pensiun_peg`, `nip_lama_peg`, `karpeg_peg`, `sertifikat_dosen_peg`, `nidn_peg`, `id_cpns`, `id_pmk`, `id_kgb`, `id_impassing`, `id_pangkat_terakhir`, `gaji_pokok_peg`, `id_jab_fungsional`, `id_tgs_tambahan_dosen`, `id_user`, `id_peter`, `id_diklat`, `id_keluarga`, `alamat_rumah_peg`, `kode_pos_peg`, `tlp_kantor_peg`, `fax_kntr_peg`, `tlp_rumah_peg`, `hp_peg`, `email_peg`, `thn_selisih_pmk_peg`, `bln_selisih_pmk_peg`, `ket_peg`, `tgl_meninggal_dunia_peg`) VALUES
-(1, '196202041987031', 'Aktif', '196202041987031004', 'Muhammmad Andi', 'Prof.Dr.H.Muhammmad Andi.Ms.', 2, 'Laki Laki', 'Islam', 'Raha', 'Muna', '1962-02-04', 58, 696, '>41', '2032-03-04', '45', '0', '131683701', 'E 3455993', '081002902169', '0004026207', 1, 1, 1, 1, 1, 'IV/ e 320', 1, 1, 36, 1, 1, 1, 'Jln Bunga Toraja No 91', '93221', '0812332232', '', '0812332232', '0812332232', 'Andi92@gmail.com', '0', '0', 'tidak ada', NULL),
-(10, NULL, NULL, NULL, NULL, NULL, 10, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 9, 9, 9, 9, 9, NULL, 8, 7, 46, 7, 7, 7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(11, NULL, 'Aktif', NULL, 'Harmin', NULL, 11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2033-07-14', NULL, NULL, NULL, NULL, NULL, NULL, 10, 10, 10, 10, 10, NULL, 9, 8, 47, 8, 8, 8, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00');
+INSERT INTO `tbl_pegawai` (`id_pegawai`, `nip_peg`, `status_kepegawaian_peg`, `nip_full_peg`, `nama_tanpa_gelar_peg`, `nama_lengkap_peg`, `id_gelar`, `jk_peg`, `agama_peg`, `tempat_lahir_peg`, `kabupaten_lahir_peg`, `tgl_lahir_peg`, `usia_thn_lahir_peg`, `usia_bln_lahir_peg`, `kelompok_umur_peg`, `tmt_pensiun_peg`, `thn_masa_kerja_pensiun_peg`, `bln_masa_kerja_pensiun_peg`, `nip_lama_peg`, `karpeg_peg`, `sertifikat_dosen_peg`, `nidn_peg`, `id_cpns`, `id_pmk`, `id_kgb`, `id_impassing`, `id_pangkat_terakhir`, `gaji_pokok_peg`, `id_jab_fungsional`, `id_tgs_tambahan_dosen`, `id_user`, `id_uker`, `id_peter`, `id_diklat`, `id_keluarga`, `alamat_rumah_peg`, `kode_pos_peg`, `tlp_kantor_peg`, `fax_kntr_peg`, `tlp_rumah_peg`, `hp_peg`, `email_peg`, `thn_selisih_pmk_peg`, `bln_selisih_pmk_peg`, `ket_peg`, `tgl_meninggal_dunia_peg`) VALUES
+(1, '196202041987031', 'Aktif', '196202041987031004', 'Muhammmad Andi', 'Prof.Dr.H.Muhammmad Andi.Ms.', 2, 'Laki Laki', 'Islam', 'Raha', 'Muna', '1962-02-04', 58, 696, '>41', '2032-03-04', '45', '0', '131683701', 'E 3455993', '081002902169', '0004026207', 1, 1, 1, 1, 1, 'IV/ e 320', 1, 1, 36, 1, 1, 1, 1, 'Jln Bunga Toraja No 91', '93221', '0812332232', '', '0812332232', '0812332232', 'Andi92@gmail.com', '0', '0', 'tidak ada', NULL),
+(10, NULL, NULL, NULL, NULL, NULL, 10, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 9, 9, 9, 9, 9, NULL, 8, 7, 46, 0, 7, 7, 7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(11, NULL, 'Aktif', NULL, 'Harmin', NULL, 11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2033-07-14', NULL, NULL, NULL, NULL, NULL, NULL, 10, 10, 10, 10, 10, NULL, 9, 8, 47, 0, 8, 8, 8, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -797,11 +822,28 @@ CREATE TABLE `tbl_pengajuan_cuti` (
   `id_pengajuan_cuti` int(11) NOT NULL,
   `id_pegawai` int(11) NOT NULL DEFAULT 0,
   `id_users` int(11) NOT NULL DEFAULT 0,
+  `jenis_pengajuan_cuti` int(11) NOT NULL,
+  `tahun_pengajuan_cuti` varchar(5) DEFAULT NULL,
+  `alasan_pengajuan_cuti` tinytext DEFAULT NULL,
+  `alamat_pengajuan_cuti` tinytext NOT NULL,
+  `telepon_pengajuan_cuti` varchar(255) NOT NULL,
+  `jml_bln_cuti` int(11) NOT NULL,
+  `jml_thn_cuti` int(11) NOT NULL,
   `tgl_cuti` date DEFAULT NULL,
   `jml_hari_cuti` int(11) DEFAULT NULL,
   `status_cuti` int(11) DEFAULT NULL,
-  `kuota_cuti` int(11) DEFAULT NULL
+  `kuota_cuti` int(11) DEFAULT NULL,
+  `waktu_pengajuan_cuti` datetime NOT NULL,
+  `keterangan_pengajuan_cuti` tinytext DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_pengajuan_cuti`
+--
+
+INSERT INTO `tbl_pengajuan_cuti` (`id_pengajuan_cuti`, `id_pegawai`, `id_users`, `jenis_pengajuan_cuti`, `tahun_pengajuan_cuti`, `alasan_pengajuan_cuti`, `alamat_pengajuan_cuti`, `telepon_pengajuan_cuti`, `jml_bln_cuti`, `jml_thn_cuti`, `tgl_cuti`, `jml_hari_cuti`, `status_cuti`, `kuota_cuti`, `waktu_pengajuan_cuti`, `keterangan_pengajuan_cuti`) VALUES
+(2, 1, 29, 1, NULL, 'sdasdas', 'sdsad', 'sadasdsa', 0, 0, '2020-07-14', 8, 2, NULL, '2020-07-30 07:07:06', 'Ditolak'),
+(3, 1, 29, 1, '2019', 'sadasdsadsa', 'sadasdsa', 'asdasdas', 0, 0, '2020-07-16', 13, 1, 12, '2020-07-30 11:07:18', 'Telah diperiksa');
 
 -- --------------------------------------------------------
 
@@ -853,8 +895,17 @@ CREATE TABLE `tbl_pengajuan_pensiun` (
   `id_pengajuan_pensiun` int(11) NOT NULL,
   `id_pegawai` int(11) DEFAULT NULL,
   `id_users` int(11) DEFAULT NULL,
-  `status_pengajuan` int(11) DEFAULT NULL
+  `status_pengajuan` int(11) DEFAULT NULL,
+  `waktu_pengajuan_pensiun` datetime NOT NULL,
+  `keterangan_pengajuan_pensiun` tinytext DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_pengajuan_pensiun`
+--
+
+INSERT INTO `tbl_pengajuan_pensiun` (`id_pengajuan_pensiun`, `id_pegawai`, `id_users`, `status_pengajuan`, `waktu_pengajuan_pensiun`, `keterangan_pengajuan_pensiun`) VALUES
+(11, 1, NULL, NULL, '2020-08-03 01:08:07', NULL);
 
 -- --------------------------------------------------------
 
@@ -1009,8 +1060,16 @@ CREATE TABLE `tbl_unit_kerja` (
   `program_studi_uker` varchar(300) DEFAULT NULL,
   `homebase_uker` varchar(300) DEFAULT NULL,
   `full_fakultas_uker` varchar(300) DEFAULT NULL,
-  `singkat_fakultas_uker` varchar(100) DEFAULT NULL
+  `singkat_fakultas_uker` varchar(100) DEFAULT NULL,
+  `id_pegawai` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_unit_kerja`
+--
+
+INSERT INTO `tbl_unit_kerja` (`id_uker`, `program_studi_uker`, `homebase_uker`, `full_fakultas_uker`, `singkat_fakultas_uker`, `id_pegawai`) VALUES
+(1, 'Penyuluhan Pertanian S1', 'FP', 'Fakultas Pertanian', 'FP', 1);
 
 -- --------------------------------------------------------
 
@@ -1080,6 +1139,12 @@ ALTER TABLE `tbl_ajuan_pensiun`
 --
 ALTER TABLE `tbl_anak`
   ADD PRIMARY KEY (`id_anak`);
+
+--
+-- Indexes for table `tbl_berkas_pensiun`
+--
+ALTER TABLE `tbl_berkas_pensiun`
+  ADD PRIMARY KEY (`id_berkas`);
 
 --
 -- Indexes for table `tbl_cpns`
@@ -1335,7 +1400,13 @@ ALTER TABLE `tbl_ajuan_pensiun`
 -- AUTO_INCREMENT for table `tbl_anak`
 --
 ALTER TABLE `tbl_anak`
-  MODIFY `id_anak` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_anak` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `tbl_berkas_pensiun`
+--
+ALTER TABLE `tbl_berkas_pensiun`
+  MODIFY `id_berkas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `tbl_cpns`
@@ -1473,7 +1544,7 @@ ALTER TABLE `tbl_pengajuan_aktif_kuliah`
 -- AUTO_INCREMENT for table `tbl_pengajuan_cuti`
 --
 ALTER TABLE `tbl_pengajuan_cuti`
-  MODIFY `id_pengajuan_cuti` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_pengajuan_cuti` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tbl_pengajuan_cuti_kuliah`
@@ -1497,7 +1568,7 @@ ALTER TABLE `tbl_pengajuan_pangkat`
 -- AUTO_INCREMENT for table `tbl_pengajuan_pensiun`
 --
 ALTER TABLE `tbl_pengajuan_pensiun`
-  MODIFY `id_pengajuan_pensiun` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_pengajuan_pensiun` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `tbl_pengajuan_ujihasil`
@@ -1539,7 +1610,7 @@ ALTER TABLE `tbl_tgs_tambahan_dosen`
 -- AUTO_INCREMENT for table `tbl_unit_kerja`
 --
 ALTER TABLE `tbl_unit_kerja`
-  MODIFY `id_uker` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_uker` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tbl_user`

@@ -175,4 +175,14 @@ class M_pegawai extends CI_Model{
         $this->datatables->where('status_pengajuan', null);
         return $this->datatables->generate();
     }
+
+    public function get_berkas_pensi($id)
+    {   
+        $this->db->from('tbl_berkas_pensiun as bpensi');
+        $this->db->join('tbl_pengajuan_pensiun as pensi', 'pensi.id_pengajuan_pensiun = bpensi.id_pengajuan_pensiun');
+        $this->db->where('pensi.id_pengajuan_pensiun', $id);
+        
+        return $this->db->get();
+
+    }
 }

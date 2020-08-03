@@ -191,7 +191,6 @@ class User extends CI_Controller
         }
     }
     
-    
     function upload_foto(){
         $config['upload_path']          = './assets/foto_profil';
         $config['allowed_types']        = 'gif|jpg|png';

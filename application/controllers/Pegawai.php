@@ -106,6 +106,14 @@ class Pegawai extends CI_Controller {
 		$data = $this->m_pegawai->json_pensiun_verifikasi();
 		echo $data;
 	}
+
+	public function tinjau_pensiun($id)
+	{	
+		// $data = ;
+		$data = $this->m_pegawai->get_berkas_pensi($id)->result_array();
+		// $data = $this->m_pegawai->get_data_cuti_individual($id);
+		$this->template->load('template', 'pegawai/ajuan_pensiun/form_tinjau_pensiun', $data);
+	}
 	
 	// ===================================================================================================================
 	public function verifikasi_kenaikan_pangkat(){

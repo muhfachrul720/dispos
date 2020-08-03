@@ -7,25 +7,9 @@ class Dashboard_p extends CI_Controller {
     {
 		parent::__construct();
 		$this->load->library('form_validation');
+		$this->load->library('pdf');
         $this->load->model('m_pegawai');
 		$this->load->model('user_model');
-	}
-
-	function upload_foto($id){
-		$filename = 'profil'.$id;
-
-		$config['upload_path']          = './assets/foto_profil';
-		$config['allowed_types']        = 'gif|jpg|png';
-		$config['file_name']        	= $filename;
-		$config['overwrite']        	= TRUE;
-
-		$this->load->library('upload', $config);
-		if($this->upload->do_upload('images')){
-			return $this->upload->data();
-		}else {
-			return $this->upload->data();
-		}
-
 	}
 
 	// ================================ Duk Pegawai =====================================
@@ -580,6 +564,26 @@ class Dashboard_p extends CI_Controller {
 	}
 
 	// ======================================================== Ajuan Pensiun =====================================
+	function upload_file_multiple($id, $number, $date){
+		$config['upload_path']          = './upload/berkas_pensiun/pegawai_'.$id.'tgl_'.$date;
+		$config['allowed_types']        = 'gif|jpg|png';
+		$config['file_name']        	= 'pegawai_'.$id.'berkas_'.$number;
+
+		if(!is_dir('upload/berkas_pensiun/pegawai_'.$id.'tgl_'.$date)){
+			mkdir('./upload/berkas_pensiun/pegawai_'.$id.'tgl_'.$date, 077, TRUE);
+		}
+
+		$this->load->library('upload', $config);
+
+		if($this->upload->do_upload('img')){
+			return $this->upload->data();
+		}else {
+			redirect('dashboard_p/ajukan_pensiun');
+			die;
+		}
+
+	}
+	
 	public function ajukan_pensiun()
 	{
 		$this->template->load('template', 'pegawai/ajuan_pensiun/dashboard_ajuan_pensiun');	
@@ -597,21 +601,49 @@ class Dashboard_p extends CI_Controller {
 	public function create_ajuan_pensiun()
 	{	
 		$post = $this->input->post();
+		$id = $this->session->userdata('id_pegawai');
+		$date = str_replace(':','_',date('y-m-d h:m:s'));
 
-		$data_ajpen = array(
-			'id_pegawai' => $post['idpeg'],
-			'waktu_pengajuan_pensiun' => date('Y-m-d h:m:s'),
-		);
+		if($_FILES['images'] != null){
 
-		if($this->m_pegawai->insert($data_ajpen, 'tbl_pengajuan_pensiun')){
-			$this->session->set_flashdata('msg', 1);
-			redirect('dashboard_p/ajukan_pensiun');
-		} 
+			$data_ajpen = array(
+				'id_pegawai' => $id,
+				'waktu_pengajuan_pensiun' => date('Y-m-d h:m:s'),
+			);
+
+			if($idpensi = $this->m_pegawai->insert($data_ajpen, 'tbl_pengajuan_pensiun')){
+
+				for($i = 0; $i < count($_FILES['images']['name']); $i++){
+					$_FILES['img']['name']       = $_FILES['images']['name'][$i];
+					$_FILES['img']['type']       = $_FILES['images']['type'][$i];
+					$_FILES['img']['tmp_name']   = $_FILES['images']['tmp_name'][$i];
+					$_FILES['img']['error']      = $_FILES['images']['error'][$i];
+					$_FILES['img']['size']       = $_FILES['images']['size'][$i];
+					
+					$upload = $this->upload_file_multiple($id, $i, $date);
+
+					$data_berkas = array(
+						'nama_berkas' => $upload['file_name'],
+						'id_ajuan_pensiun' => $idpensi,
+					);
+
+					$this->m_pegawai->insert($data_berkas, 'tbl_berkas_pensiun');
+				}
+
+				$this->session->set_flashdata('msg', 1);
+				redirect('dashboard_p/ajukan_pensiun');
+
+			} 
+			else {
+				$this->session->set_flashdata('msg', 2);
+				redirect('dashboard_p/ajukan_pensiun');
+			}
+
+		}
 		else {
 			$this->session->set_flashdata('msg', 2);
 			redirect('dashboard_p/ajukan_pensiun');
 		}
-
 	}
 
 	// ======================================================= Ajuan Cuti ==============================================
@@ -689,6 +721,272 @@ class Dashboard_p extends CI_Controller {
 
 	}
 
+	public function print_pdf_cuti($id)
+	{
+		
+		$data = $this->m_pegawai->get_data_cuti_individual($id);
+		$data['lastday'] = date('Y-m-d', strtotime('+'.$data['jml_thn_cuti'].' years +'.$data['jml_bln_cuti'].' months +'.$data['jml_hari_cuti'].' days', strtotime($data['tgl_cuti'])));
+
+		$jenis = array();
+		$catatan = array();
+		
+		$year = array(date('Y'), date('Y', strtotime("-1 year")), date('Y', strtotime("-2 year")));
+		$kuota = array();
+
+		for($i = 0; $i <= 6; $i++){
+			if($i == $data['jenis_pengajuan_cuti'] - 1){
+				$jenis[$i] = 'Dipilih';
+				$catatan[$i] = $data['keterangan_pengajuan_cuti'];
+			}
+			else {
+				$jenis[$i] = ' ';
+				$catatan[$i] = ' ';
+			}
+		};
+
+		if($data['jenis_pengajuan_cuti'] == 2){
+			for($j=0; $j< count($year); $j++){
+				if($data['tahun_pengajuan_cuti'] == $year[$j]){
+					$kuota[$j] = $data['kuota_cuti'];
+				} 
+				else {
+					$kuota[$j] = '';
+				}
+			}
+		}
+		else {
+			$kuota = array(' ',' ',' ');
+		}
+
+
+		$lastday = date('Y-m-d', strtotime('+'.$data['jml_thn_cuti'].' years +'.$data['jml_bln_cuti'].' months +'.$data['jml_hari_cuti'].' days', strtotime($data['tgl_cuti'])));
+
+		$data['alamat_pengajuan_cuti'] = 'Jalana Belimbing No 41 Poasia Kendari Sulawesi Tenggara Indonesia RT 13/ RW 11';
+
+		// var_dump($data);
+		// die;
+
+		//===================== Cetak ===============================
+		$pdf = new FPDF('P', 'mm', array(210, 330));
+		$pdf-> SetMargins(14,3, 3, 3);
+		$pdf->AddPage();
+
+		$pdf->SetFont('Times','',11);
+
+		$pdf->Cell(181,12,'- 24 -',0,1,'C');
+
+		$pdf->Cell(70,4.6,'',0,0,'L');
+		$pdf->Cell(100,4.6,'ANAK LAMPIRAN 1.b',0,1,'L');
+
+		$pdf->Cell(70,4.6,'',0,0,'L');
+		$pdf->Cell(100,4.6,'PERATURAN BADAN KEPEGAWAIAN NEGARA',0,1,'L');
+
+		$pdf->Cell(70,4.6,'',0,0,'L');
+		$pdf->Cell(100,4.6,'REPUBLIK INDONESIA',0,1,'L');
+
+		$pdf->Cell(70,4.6,'',0,0,'L');
+		$pdf->Cell(100,4.6,'NOMOR 24 TAHUN 2017',0,1,'L');
+
+		$pdf->Cell(70,4.6,'',0,0,'L');
+		$pdf->Cell(100,4.6,'TENTANG',0,1,'L');
+
+		$pdf->Cell(70,4.6,'',0,0,'L');
+		$pdf->Cell(100,4.6,'TATA CARA PEMBERIAN CUTI PEGAWAI NEGERI SIPIL',0,1,'L');
+
+		$pdf->Cell(70,14,'',0,0,'L');
+		$pdf->Cell(100,14,'.............................., ...................................',0,1,'C');
+
+		$pdf->Cell(70,0,'',0,0,'L');
+		$pdf->Cell(100,0,'Kepada',0,1,'C');
+
+		$pdf->Cell(70,12,'',0,0,'L');
+		$pdf->Cell(100,12,'Yth, ...........................................',0,1,'C');
+
+		$pdf->Cell(70,-2,'',0,0,'L');
+		$pdf->Cell(100,-2,'di,                                      ',0,1,'C');
+
+		$pdf->Cell(70,10,'',0,0,'L');
+		$pdf->Cell(100,10,'.................................',0,1,'C');
+		
+		$pdf->Cell(181,10,'FORMULIR PERMINTAAN DAN PEMBERIAN CUTI',0,1,'C');
+		
+		// Data Pegawai
+		$pdf->Cell(181,5,'I.     DATA PEGAWAI',1,1,'L');
+
+		$pdf->Cell(25.5,5,'Nama',1,0,'L');
+		$pdf->Cell(62,5, $data['nama_tanpa_gelar_peg'],1,0,'L');
+
+		$pdf->Cell(27,5,'Nip',1,0,'L');
+		$pdf->Cell(66.5,5,$data['nip_peg'],1,1,'L');
+
+		$pdf->Cell(25.5,5,'Jabatan',1,0,'L');
+		$pdf->Cell(62,5,'-',1,0,'L');
+
+		$pdf->Cell(27,5,'Masa Kerja',1,0,'L');
+		$pdf->Cell(66.5,5,$data['thn_masa_kerja_pensiun_peg'].' Tahun',1,1,'L');
+
+		$pdf->Cell(25.5,5,'Unit Kerja',1,0,'L');
+		$pdf->Cell(155.5,5,$data['program_studi_uker'],1,1,'L');
+
+		$pdf->Cell(181,5,'',0,1,'L');
+
+		// Jenis Cuti Yang diambil
+		$pdf->Cell(181,5,'II.    JENIS CUTI YANG DIAMBIL **',1,1,'L');
+
+		$pdf->Cell(62,5,'1. Cuti Tahunan',1,0,'L');
+		$pdf->Cell(28.5,5,$jenis[1],1,0,'L');
+
+		$pdf->Cell(62,5,'2. Cuti Besar',1,0,'L');
+		$pdf->Cell(28.5,5,$jenis[0],1,1,'L');
+
+		$pdf->Cell(62,5,'3. Cuti Sakit',1,0,'L');
+		$pdf->Cell(28.5,5,$jenis[2],1,0,'L');
+
+		$pdf->Cell(62,5,'4. Cuti Melahirkan',1,0,'L');
+		$pdf->Cell(28.5,5,$jenis[3],1,1,'L');
+
+		$pdf->Cell(62,5,'5. Cuti Karena Alasan Penting',1,0,'L');
+		$pdf->Cell(28.5,5,$jenis[4],1,0,'L');
+
+		$pdf->Cell(62,5,'6. Cuti Diluar Tanggungan Negara',1,0,'L');
+		$pdf->Cell(28.5,5,$jenis[5],1,1,'L');
+
+		$pdf->Cell(181,5,'',0,1,'L');
+
+		// Alasan Cuti
+		$pdf->Cell(181,5,'III.   ALASAN CUTI',1,1,'L');
+		
+		$pdf->Cell(181,12,$data['alasan_pengajuan_cuti'],1,1,'L');
+		
+		$pdf->Cell(181,5,'',0,1,'L');
+		
+		// Lama nya Cuti
+		$pdf->Cell(181,5,'IV.    LAMANYA CUTI',1,1,'L');
+
+		$pdf->Cell(23,5,'Selama',1,0,'L');
+		$pdf->Cell(47,5,$data['jml_hari_cuti'].'hari/'.$data['jml_bln_cuti'].'bulan/'.$data['jml_thn_cuti'].'tahun',1,0,'L');
+		$pdf->Cell(31,5,'Mulai Tanggal',1,0,'L');
+		$pdf->Cell(32.5,5,$data['tgl_cuti'],1,0,'L');
+		$pdf->Cell(15,5,'S/d',1,0,'L');
+		$pdf->Cell(32.5,5,$lastday,1,1,'L');
+		
+		$pdf->Cell(181,5,'',0,1,'L');
+
+		// Catatan Cuti
+		$pdf->Cell(181,5,'V.     CATATAN CUTI',1,1,'L');
+		
+		$pdf->Cell(62,5,'1. CUTI TAHUNAN',1,0,'L');
+		$pdf->Cell(80,5,'2. CUTI BESAR',1,0,'L');
+		$pdf->Cell(39,5,$catatan[0],1,1,'L');
+		
+		$pdf->Cell(25.5,5,'Tahun',1,0,'L');
+		$pdf->Cell(12,5,'Sisa',1,0,'L');
+		$pdf->Cell(24.5,5,'Keterangan',1,0,'L');
+		$pdf->Cell(80,5,'3. CUTI SAKIT',1,0,'L');
+		$pdf->Cell(39,5,$catatan[2],1,1,'L');
+		
+		$pdf->Cell(25.5,5,$year[2],1,0,'L');
+		$pdf->Cell(12,5,$kuota[2],1,0,'L');
+		$pdf->Cell(24.5,5,'Hari',1,0,'L');
+		$pdf->Cell(80,5,'4. CUTI MELAHIRKAN',1,0,'L');
+		$pdf->Cell(39,5,$catatan[3],1,1,'L');
+		
+		$pdf->Cell(25.5,5,$year[1],1,0,'L');
+		$pdf->Cell(12,5,$kuota[1],1,0,'L');
+		$pdf->Cell(24.5,5,'Hari',1,0,'L');
+		$pdf->Cell(80,5,'5. CUTI KARENA ALASAN PENTING',1,0,'L');
+		$pdf->Cell(39,5,$catatan[4],1,1,'L');
+		
+		$pdf->Cell(25.5,5,$year[0],1,0,'L');
+		$pdf->Cell(12,5,$kuota[0],1,0,'L');
+		$pdf->Cell(24.5,5,'Hari',1,0,'L');
+		$pdf->Cell(80,5,'6. CUTI DI LUAR TANGGUNGAN NEGARA',1,0,'L');
+		$pdf->Cell(39,5,$catatan[5],1,1,'L');
+
+		$pdf->Cell(181,5,'',0,1,'L');
+		
+		// Alamat dan telepon cuti
+		$pdf->Cell(181,5,'VI.    ALAMAT SELAMA MENJALANKAN CUTI',1,1,'L');
+		$pdf->Cell(45,5,'TELP',1,0,'L');
+		$pdf->Cell(55,5,$data['telepon_pengajuan_cuti'],1,0,'L');
+		$pdf->Cell(81,5,'Hormat Saya',1,1,'C');
+		
+		$cellWidth = 100;
+		$cellHeight = 8;
+
+		if($pdf->GetStringWidth($data['alamat_pengajuan_cuti']) < $cellWidth){
+			$line = 1;
+		}
+		else {
+			$textLength = strlen($data['alamat_pengajuan_cuti']);
+			$errmargin = 10;
+			$startchar = 0;
+			$maxchar = 0;
+			$textArray = array();
+			$tmpstring = '';
+
+			while($startchar < $textLength){
+				while($pdf->GetStringWidth($tmpstring) < ($cellWidth - $errmargin) && ($startchar + $maxchar) < $textLength){
+					$maxchar++;
+					$tmpstring = substr($data['alamat_pengajuan_cuti'], $startchar, $maxchar);
+				}
+				$startchar = $startchar + $maxchar;
+				array_push($textArray, $tmpstring);
+				$maxchar = 0;
+				$tmpstring = '';
+			}
+
+			$line = count($textArray);
+		}
+
+		$xpos = $pdf->getX();
+		$ypos = $pdf->getY();
+		$pdf->MultiCell($cellWidth, $cellHeight, $data['alamat_pengajuan_cuti'], 1);
+		$pdf->SetXY($xpos + $cellWidth, $ypos);
+
+		$pdf->Cell(81, ($line * $cellHeight), '', 1,1, 'C');
+		
+		$pdf->Cell(181,5,'',0,1,'L');
+		
+		// Pertimbangan Atasa
+		$pdf->Cell(181,5,'VII.   PERTIMBANGAN ATASAN LANGSUNG',1,1,'L');
+		$pdf->Cell(45.25,5,'DISETUJUI',1,0,'L');
+		$pdf->Cell(45.25,5,'PERUBAHAN',1,0,'L');
+		$pdf->Cell(45.25,5,'DITANGGUHKAN',1,0,'L');
+		$pdf->Cell(45.25,5,'TIDAK DISETUJUI',1,1,'L');
+
+		$pdf->Cell(45.25,5,'',1,0,'L');
+		$pdf->Cell(45.25,5,'',1,0,'L');
+		$pdf->Cell(45.25,5,'',1,0,'L');
+		$pdf->Cell(45.25,5,'',1,1,'L');
+
+		$pdf->Cell(135.75,10,'',0,0,'L');
+		$pdf->Cell(45.25,10,'',1,1,'L');
+
+		$pdf->Cell(181,5,'',0,1,'L');
+
+		// kEPUTUSAN PEJABAT
+		$pdf->Cell(181,5,'VIII.  KEPUTUSAN PEJABAT YANG BERWENANG MEMBERIKAN CUTI',1,1,'L');
+		$pdf->Cell(45.25,5,'DISETUJUI',1,0,'L');
+		$pdf->Cell(45.25,5,'PERUBAHAN',1,0,'L');
+		$pdf->Cell(45.25,5,'DITANGGUHKAN',1,0,'L');
+		$pdf->Cell(45.25,5,'TIDAK DISETUJUI',1,1,'L');
+
+		$pdf->Cell(45.25,5,'',1,0,'L');
+		$pdf->Cell(45.25,5,'',1,0,'L');
+		$pdf->Cell(45.25,5,'',1,0,'L');
+		$pdf->Cell(45.25,5,'',1,1,'L');
+
+		$pdf->Cell(135.75,10,'',0,0,'L');
+		$pdf->Cell(45.25,10,'',1,1,'L');
+
+		
+		
+		
+		$pdf->Output();
+
+	}
+	
 }
 
 // 
