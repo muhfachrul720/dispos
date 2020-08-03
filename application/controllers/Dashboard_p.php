@@ -18,6 +18,11 @@ class Dashboard_p extends CI_Controller {
 		$data = $this->m_pegawai->getinfo_pegawai_individual($this->session->userdata('id_users'));
 		$data['jumlah_anak'] = $this->m_pegawai->count_child($data['id_keluarga'])->num_rows();
 
+		// echo "<pre>";
+		// print_r($data);
+		// die;
+		// echo "</pre>";
+
 		$this->template->load('template_admin', 'pegawai/duk/detail_duk_pegawai', $data);	
 	}
 
@@ -306,8 +311,8 @@ class Dashboard_p extends CI_Controller {
 	}
 
 	public function update_dataimpassing()
-	{
-		$post = $this->input->post();
+	
+{		$post = $this->input->post();
 		
 		$dataimp = array(
 			'no_sk_impassing' 				=> $post['nosk'],
@@ -412,7 +417,7 @@ class Dashboard_p extends CI_Controller {
 		$data = $this->m_pegawai->get_dataother('tbl_unit_kerja',$this->session->userdata('id_pegawai'));
 		$data['action'] = base_url('dashboard_p/update_datauker');
 		
-		$this->template->load('template', 'pegawai/duk/form_data_unit_kerja', $data);
+		$this->template->load('template_admin', 'pegawai/duk/form_data_unit_kerja', $data);
 	}
 
 	public function update_datauker()
@@ -586,7 +591,7 @@ class Dashboard_p extends CI_Controller {
 	
 	public function ajukan_pensiun()
 	{
-		$this->template->load('template', 'pegawai/ajuan_pensiun/dashboard_ajuan_pensiun');	
+		$this->template->load('template_admin', 'pegawai/ajuan_pensiun/dashboard_ajuan_pensiun');
 	}
 
 	public function json_pensiun_individual()
@@ -647,14 +652,14 @@ class Dashboard_p extends CI_Controller {
 	}
 
 
-		$this->template->load('template_admin', 'pegawai/ajuan_pensiun/dashboard_ajuan_pensiun', $data);	
+			
 
 	// ======================================================= Ajuan Cuti ==============================================
 	public function pengajuan_cuti()
 	{
 		$data = $this->m_pegawai->get_datapeg_cuti($this->session->userdata('id_pegawai'));
 
-		$this->template->load('template', 'pegawai/ajuan_cuti/dashboard_ajuan_cuti', $data);	
+		$this->template->load('template_admin', 'pegawai/ajuan_cuti/dashboard_ajuan_cuti', $data);	
 	}
 
 	public function json_cuti_individual()

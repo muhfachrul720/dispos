@@ -35,15 +35,12 @@ class Pegawai extends CI_Controller {
 		$data['title'] = 'Dashboard Admin';
 
 		$this->template->load('template_admin', 'dashboard_adminpegawai', $data);
-	public function index()
-	{
-		$this->template->load('template', 'dashboard_adminpegawai');
 	}
 
-	// ================================= Verifikasi Cuti =======================================
+
 	public function verifikasi_cuti()
 	{
-		$this->template->load('template', 'pegawai/ajuan_cuti/list_ajuan_cuti');
+		$this->template->load('template_admin', 'pegawai/ajuan_cuti/list_ajuan_cuti');
 	}
 
 	public function json_verifcuti()
