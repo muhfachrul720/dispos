@@ -3,20 +3,21 @@
         <h2 style="text-align:center; margin-top:25vh">Anda Belum <br> Berstatus Aktif Sebagai Pegawai <br> Silahkan Menghubungi Admin Untuk Mengaktifkan Akun Anda</h2>
     </div>
 <?php }else {?>
+    
     <div class="container-fluid" style="overflow-y:scroll; height:780px">
 
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h4 class="h3 mb-0 text-gray-800">Detail DUK Pegawai</h4>
-            <div class="dropdown">
-                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Update Data Induk
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <div>
+            <div class="dropdown mx-2" style="float:left">
+                <button class="btn btn-sm btn-danger dropdown-toggle" type="button" id="dropdownMenuOutlineButton3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> Dropdown </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuOutlineButton3">
                     <a class="dropdown-item" href="<?=base_url()?>dashboard_p/form_data_pegawai">Update Data Pegawai</a>
                     <a class="dropdown-item" href="<?=base_url()?>dashboard_p/form_data_cpns">Update Data CPNS</a>
                     <a class="dropdown-item" href="<?=base_url()?>dashboard_p/form_data_pmk">Update Data PMK</a>
                     <a class="dropdown-item" href="<?=base_url()?>dashboard_p/form_data_kgb">Update Data KGB</a>
+                    <a class="dropdown-item" href="<?=base_url()?>dashboard_p/form_data_uker">Update Data Unit Kerja</a>
                     <a class="dropdown-item" href="<?=base_url()?>dashboard_p/form_data_impassing">Update Data Impassing</a>
                     <a class="dropdown-item" href="<?=base_url()?>dashboard_p/form_data_panghir">Update Data Pangkat Terakhir</a>
                     <a class="dropdown-item" href="<?=base_url()?>dashboard_p/form_d">Update Data Jabatan Fungsional</a>
@@ -25,6 +26,8 @@
                     <a class="dropdown-item" href="<?=base_url()?>dashboard_p/form_data_diklat">Update Data Diklat Pelatihan</a>
                     <a class="dropdown-item" href="<?=base_url()?>dashboard_p/form_data_keluarga">Update Data Keluarga</a>
                 </div>
+            </div>
+            <button style="float:left" class="btn btn-success btn-sm">Export Excel</button>
             </div>
         </div>
 
@@ -35,13 +38,6 @@
         <?php
             };
         ?>
-
-        <!-- Data Pegawai -->
-        <div class="card mb-4">
-            <div class="card-body p-2">
-                <button class="btn btn-success btn-sm">Export Excel</button>
-            </div>
-        </div>
 
         <!-- Data Pegawai -->
         <div class="card mb-4">
@@ -157,6 +153,35 @@
                     <div class="col-5 p-0 border-bottom">
                         <label for=""><small style="font-weight:bold">Diberikan Oleh :</small></label>
                         <p style="margin-bottom:10px;"><?= $oleh_pejabat_pmk?></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Unit Kerja -->
+        <div class="card mb-4">
+            <div class="card-header" style="background-color:#4e73df; color:white;font-weight:bold">
+                Data Unit Kerja
+            </div>
+            <div class="card-body">
+                <div class="row mb-3 px-3 justify-content-between">
+                    <div class="col-3 p-0 border-bottom"> 
+                        <label for=""><small style="font-weight:bold">Program Studi :</small></label>
+                        <p style="margin-bottom:10px;"><?= $program_studi_uker?></p>
+                    </div>
+                    <div class="col-3 p-0 border-bottom">
+                        <label for=""><small style="font-weight:bold">Home Base :</small></label>
+                        <p style="margin-bottom:10px;"><?= $homebase_uker?></p>
+                    </div>
+                    <div class="col-3 p-0 border-bottom">
+                        <label for=""><small style="font-weight:bold">Full Fakultas :</small></label>
+                        <p style="margin-bottom:10px;"><?= $full_fakultas_uker?></p>
+                    </div>
+                </div>
+                <div class="row mb-3 px-3 justify-content-between">
+                    <div class="col-5 p-0 border-bottom">
+                        <label for=""><small style="font-weight:bold">Singkat Fakultas :</small></label>
+                        <p style="margin-bottom:10px;"><?= $singkat_fakultas_uker?></p>
                     </div>
                 </div>
             </div>

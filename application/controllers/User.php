@@ -113,6 +113,7 @@ class User extends CI_Controller
                     'id_user' => $last_id,
                     'id_diklat' => $this->m_pegawai->insert($idpeg, 'tbl_diklat_pelatihan'),
                     'id_keluarga' => $this->m_pegawai->insert($idpeg, 'tbl_keluarga'),
+                    'id_uker' => $this->m_pegawai->insert($idpeg, 'tbl_unit_kerja'),
                 );
                 
                 $this->m_pegawai->update('tbl_pegawai', array('id_pegawai' => $pegid), $dataid);
@@ -191,7 +192,6 @@ class User extends CI_Controller
             redirect(site_url('user'));
         }
     }
-    
     
     function upload_foto(){
         $config['upload_path']          = './assets/foto_profil';

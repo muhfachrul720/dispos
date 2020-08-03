@@ -4,10 +4,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class M_pegawai extends CI_Model{
 
     protected $table_name = 'tbl_pegawai as pgw';
-    protected $table_pensiun = 'tbl_ajuan_pensiun';
+    protected $table_pensiun = 'tbl_pengajuan_pensiun';
     protected $table_jfungsi = 'tbl_jab_fungsional';
 
-    // DUK
+    // ================================================ Basic CRUD ======================================= 
+    public function delete($table, $where)
+    {
+        $this->db->where($where);
+        return $this->db->delete($table);
+    }
+
+    public function update($table, $where, $data)
+    {
+        $this->db->where($where);
+        return $this->db->update($table, $data);
+    }
+
+    public function insert($data, $table = null)
+    {
+        if($table == null){
+            return $this->db->insert($this->table_name, $data);
+        }
+        else {
+            $this->db->insert($table, $data);
+            return $this->db->insert_id();
+        }
+    }
+
+    // ========================================== DUK Pegawai ========================================================
     public function json_duk(){
         $this->datatables->select('id_users, pgw.id_pegawai as id_peg, nama_tanpa_gelar_peg, status_kepegawaian_peg, tmt_pensiun_peg, gaji_pokok_peg, tgl_meninggal_dunia_peg');
         $this->datatables->from($this->table_name);
@@ -25,6 +49,7 @@ class M_pegawai extends CI_Model{
         $this->db->join('tbl_pmk as pmk', 'pgw.id_pmk = pmk.id_pmk');
         $this->db->join('tbl_kgb as kgb', 'pgw.id_kgb = kgb.id_kgb');
         $this->db->join('tbl_impassing as imp', 'pgw.id_impassing = imp.id_impassing');
+        $this->db->join('tbl_unit_kerja as uker', 'pgw.id_uker = uker.id_uker');
         
         $this->db->join('tbl_pangkat_terakhir as pgkt', 'pgw.id_pangkat_terakhir = pgkt.id_pangkat_terakhir');
         $this->db->join('tbl_tgs_tambahan_dosen as tgstbh', 'pgw.id_tgs_tambahan_dosen = tgstbh.id_tgs_tambahan_dosen');
@@ -85,70 +110,79 @@ class M_pegawai extends CI_Model{
         return $this->db->get('tbl_anak');
     }
 
-    public function delete($table, $where)
+    public function get_tmtpeg($id)
     {
-        $this->db->where($id);
-        return $this->db->delete($table);
+        $this->db->select('tmt_pensiun_peg');
+        $this->db->where('id_pegawai', $id);
+        return $this->db->get($this->table_name)->row_array();
     }
 
-    public function update($table, $where, $data)
+    // =================================================== Cuti ==================================================
+    public function get_datapeg_cuti($id)
     {
-        $this->db->where($where);
-        return $this->db->update($table, $data);
+        $this->db->select('nama_tanpa_gelar_peg, nip_peg, thn_masa_kerja_pensiun_peg, program_studi_uker');
+        $this->db->from($this->table_name);
+        $this->db->join('tbl_unit_kerja as uker', 'pgw.id_uker = uker.id_uker');
+        $this->db->where('pgw.id_pegawai', $id);
+        return $this->db->get()->row_array();
     }
 
-    public function insert($data, $table = null)
+    public function json_cuti_individual($where)
     {
-        if($table == null){
-            return $this->db->insert($this->table_name, $data);
-        }
-        else {
-            $this->db->insert($table, $data);
-            return $this->db->insert_id();
-        }
+        $this->datatables->select('id_pengajuan_cuti, status_cuti, waktu_pengajuan_cuti, keterangan_pengajuan_cuti, full_name');
+        $this->datatables->from('tbl_pengajuan_cuti as cuti');
+        $this->datatables->join('tbl_user as us', 'us.id_users = cuti.id_users');
+        $this->datatables->where('cuti.id_pegawai', $where);
+        return $this->datatables->generate();   
     }
 
-    // ===============================================================================================================
-    // Ajuan pensiun
-    public function get_pensiun_status($where)
+    public function json_cuti_verifikasi()
     {
-        $this->db->select('ajuan_pensiun_status as status, ajuan_pensiun_keterangan as ket');
-        $this->db->where('ajuan_pensiun_iduser', $where);
-        $this->db->order_by('ajuan_pensiun_time', 'DESC');
-        return $this->db->get($this->table_pensiun)->row();
+        $this->datatables->select('id_pengajuan_cuti, nama_tanpa_gelar_peg, status_cuti, waktu_pengajuan_cuti, jenis_pengajuan_cuti');
+        $this->datatables->from('tbl_pengajuan_cuti as cuti');
+        $this->datatables->join($this->table_name, 'pgw.id_pegawai = cuti.id_pegawai');
+        $this->datatables->where('status_cuti', null);
+        return $this->datatables->generate();
     }
+
+    public function get_data_cuti_individual($id)
+    {
+        $this->db->select('cuti.*, nama_tanpa_gelar_peg, nip_peg, thn_masa_kerja_pensiun_peg, program_studi_uker');
+        $this->db->from('tbl_pengajuan_cuti as cuti');
+        $this->db->join($this->table_name, 'pgw.id_pegawai = cuti.id_pegawai');
+        $this->db->join('tbl_unit_kerja as uker', 'pgw.id_uker = uker.id_uker');
+        $this->db->where('id_pengajuan_cuti', $id);
+        return $this->db->get()->row_array();
+    }
+
+
+    // =================================================== Pensiun ================================================
 
     public function json_pensiun_individual($where)
     {
-        $this->datatables->select('ajuan_pensiun_iduser, ajuan_pensiun_status, ajuan_pensiun_keterangan, ajuan_pensiun_time');
-        $this->datatables->from($this->table_pensiun);
-        $this->datatables->where('ajuan_pensiun_iduser', $where);
-        $this->datatables->add_column('action',anchor(site_url('user/update/$1'),'<i class="far fa-edit" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm'))." 
-        ".anchor(site_url('user/delete/$1'),'<i class="far fa-trash-alt" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'id_users');
-        return $this->datatables->generate();
-    }
-
-    public function json_verifpensi_netral()
-    {
-        $this->datatables->select('*');
-        $this->datatables->where('ajuan_pensiun_status', '3');
-        $this->datatables->from($this->table_pensiun);
-        return $this->datatables->generate();
-    }
-
-    public function json_verifpensi_terima()
-    {
-        $this->datatables->select('*');
-        $this->datatables->where('ajuan_pensiun_status', '1');
-        $this->datatables->from($this->table_pensiun);
-        return $this->datatables->generate();
+        $this->datatables->select('id_pengajuan_pensiun, status_pengajuan, waktu_pengajuan_pensiun, keterangan_pengajuan_pensiun, full_name');
+        $this->datatables->from($this->table_pensiun.' as psn');
+        $this->datatables->join('tbl_user as us', 'us.id_users = psn.id_users');
+        $this->datatables->where('psn.id_pegawai', $where);
+        return $this->datatables->generate();   
     }
     
-    public function json_verifpensi_tolak()
+    public function json_pensiun_verifikasi()
     {
-        $this->datatables->select('*');
-        $this->datatables->where('ajuan_pensiun_status', '2');
-        $this->datatables->from($this->table_pensiun);
+        $this->datatables->select('id_pengajuan_pensiun, nama_tanpa_gelar_peg, status_pengajuan, waktu_pengajuan_pensiun');
+        $this->datatables->from($this->table_pensiun.' as psn');
+        $this->datatables->join($this->table_name, 'pgw.id_pegawai = psn.id_pegawai');
+        $this->datatables->where('status_pengajuan', null);
         return $this->datatables->generate();
+    }
+
+    public function get_berkas_pensi($id)
+    {   
+        $this->db->from('tbl_berkas_pensiun as bpensi');
+        $this->db->join('tbl_pengajuan_pensiun as pensi', 'pensi.id_pengajuan_pensiun = bpensi.id_pengajuan_pensiun');
+        $this->db->where('pensi.id_pengajuan_pensiun', $id);
+        
+        return $this->db->get();
+
     }
 }
