@@ -30,7 +30,10 @@ class Pegawai extends CI_Controller {
 	}
 
 	public function index(){
-		$this->template->load('template', 'dashboard_adminpegawai');
+
+		$data['title'] = 'Dashboard Admin';
+
+		$this->template->load('template_admin', 'dashboard_adminpegawai', $data);
 	}
 
 	public function verifikasi_cuti(){
@@ -43,7 +46,7 @@ class Pegawai extends CI_Controller {
 
 	// Verifikasi Pensiun
 	public function verifikasi_pensiun(){
-		$this->template->load('template', 'pegawai/ajuan_pensiun/list_ajuan_pensiun');
+		$this->template->load('template_admin', 'pegawai/ajuan_pensiun/list_ajuan_pensiun');
 	}
 
 	public function json_verifpensi_netral(){
@@ -83,12 +86,14 @@ class Pegawai extends CI_Controller {
 	// ================================================================================================================================
 	// Data Duk
 	public function data_duk(){
-		
-		$this->template->load('template', 'pegawai/duk/list_duk_pegawai');
+
+		$data['title'] = 'Dashboard Admin';
+
+		$this->template->load('template_admin', 'pegawai/duk/list_duk_pegawai', $data);
 	}
 
 	public function json_duk(){
-		// header('Content-Type: application/json');
+		header('Content-Type: application/json');
 
 		$data = $this->m_pegawai->json_duk();
 		echo $data;
@@ -101,7 +106,7 @@ class Pegawai extends CI_Controller {
 		$data['button'] = 'Save';
 		$data['back'] = 'pegawai';
 
-		$this->template->load('template', 'pegawai/duk/form_data_pegawai', $data);	
+		$this->template->load('template_admin', 'pegawai/duk/form_data_pegawai', $data);	
 	}
 
 	public function update_datapeg(){

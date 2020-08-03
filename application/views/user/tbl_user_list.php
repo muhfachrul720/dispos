@@ -1,38 +1,38 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
-<!-- DataTales Example -->
-          <div class="card shadow mb-4">
-            <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Manajamen Data Pengguna</h6>
-            </div>
-            <div class="card-body">
+<div class="col-xl-12 stretch-card grid-margin">
+        <div class="card shadow mb-4">
+          <div class="card-header ">
+            <h6 class="m-0 font-weight-bold text-primary">Manajamen Data Pengguna</h6>
+          </div>
+          <div class="card-body">
+            <div class="card-header">
               <div class="card-header">
-                <div class="card-header">
-                  <?php echo anchor(site_url('user/create'), '<i class="fa fa-wpforms" aria-hidden="true"></i> Tambah Data', 'class="btn btn-danger btn-sm"'); ?>
-                  <?php echo anchor(site_url('user/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export Ms Excel', 'class="btn btn-success btn-sm"'); ?>
-                </div>
+                <?php echo anchor(site_url('user/create'), '<i class="fa fa-wpforms" aria-hidden="true"></i> Tambah Data', 'class="btn btn-danger btn-sm"'); ?>
+                <?php echo anchor(site_url('user/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export Ms Excel', 'class="btn btn-success btn-sm"'); ?>
               </div>
-              <hr>
-              <div class="table-responsive">
-             
-                <table id="example" class="table table-striped table-bordered table-sm text-center" style="width:100%">
-                  <thead>
-                    <tr>
-                      <th width="30px">No</th>
-                      <th>Nama Lengkap</th>
-                      <th>Email</th>
-                      <th>Nama Level</th>
-                      <th>Status</th>
-                      <th width="100px">Aksi</th>
-                    </tr>
-                  </thead>
-                </table>
-           
             </div>
-        </div>
-    </div>
-        
-      <!-- Bootstrap core JavaScript-->
+            <hr>
+          
+           
+              <table id="example" class="table table-striped table-bordered table-sm text-center" style="width:100%">
+                <thead>
+                  <tr>
+                    <th width="30px">No</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Nama Level</th>
+                    <th>Status</th>
+                    <th width="100px">Aksi</th>
+                  </tr>
+                </thead>
+              </table>
+         
+          </div>
+      </div>
+  </div>
+</div>
+
+
+             <!-- Bootstrap core JavaScript-->
   
   <script src="<?php echo base_url(); ?>assets/assets-sbadmin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -49,8 +49,7 @@
   <!-- Page level custom scripts -->
   <script src="<?php echo base_url(); ?>assets/assets-sbadmin/js/demo/datatables-demo.js"></script>
 
-
-
+        
         <script type="text/javascript">
             $(document).ready(function() {
                 $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
@@ -87,7 +86,7 @@
                         {
                             "data": "id_users",
                             "orderable": false
-                        },{"data": "full_name"},
+                        },{"data": "username"},
                           {"data": "email"},
                           {"data": "nama_level"},
                           {"data": "is_aktif"},

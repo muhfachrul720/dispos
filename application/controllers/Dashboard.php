@@ -5,8 +5,9 @@ class Dashboard extends CI_Controller {
 
 	public function index()
 	{
-	
-		$this->template->load('template', 'dashboard');	
+		$data['title'] = 'Dashboard Admin';
+
+		$this->template->load('template_admin', 'dashboard', $data);	
 	}
 
 }

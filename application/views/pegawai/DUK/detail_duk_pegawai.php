@@ -3,7 +3,7 @@
         <h2 style="text-align:center; margin-top:25vh">Anda Belum <br> Berstatus Aktif Sebagai Pegawai <br> Silahkan Menghubungi Admin Untuk Mengaktifkan Akun Anda</h2>
     </div>
 <?php }else {?>
-    <div class="container-fluid" style="overflow-y:scroll; height:480px">
+    <div class="container-fluid" style="overflow-y:scroll; height:780px">
 
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">

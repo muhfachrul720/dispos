@@ -17,13 +17,13 @@ class User_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('id_users,full_name,email,nama_level,is_aktif');
+        $this->datatables->select('id_users,username,email,nama_level,is_aktif');
         $this->datatables->from('tbl_user');
         $this->datatables->add_column('is_aktif', '$1', 'rename_string_is_aktif(is_aktif)');
         //add this line for join
         $this->datatables->join('tbl_user_level', 'tbl_user.id_user_level = tbl_user_level.id_user_level');
-        $this->datatables->add_column('action',anchor(site_url('user/update/$1'),'<i class="far fa-edit" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm'))." 
-                ".anchor(site_url('user/delete/$1'),'<i class="far fa-trash-alt" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'id_users');
+        $this->datatables->add_column('action',anchor(site_url('user/update/$1'),'<i class="mdi mdi-tooltip-edit" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm'))." 
+                ".anchor(site_url('user/delete/$1'),'<i class="mdi mdi-delete-sweep" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'id_users');
         return $this->datatables->generate();
     }
 
@@ -44,14 +44,14 @@ class User_model extends CI_Model
     // get total rows
     function total_rows($q = NULL) {
         $this->db->like('id_users', $q);
-	$this->db->or_like('full_name', $q);
-	$this->db->or_like('email', $q);
-	$this->db->or_like('password', $q);
+    $this->db->or_like('username', $q);
+    $this->db->or_like('email', $q);
+    $this->db->or_like('password', $q);
     $this->db->or_like('nama_lembaga', $q);
-	$this->db->or_like('images', $q);
-	$this->db->or_like('id_user_level', $q);
-	$this->db->or_like('is_aktif', $q);
-	$this->db->from($this->table);
+    $this->db->or_like('images', $q);
+    $this->db->or_like('id_user_level', $q);
+    $this->db->or_like('is_aktif', $q);
+    $this->db->from($this->table);
         return $this->db->count_all_results();
     }
 
@@ -59,14 +59,14 @@ class User_model extends CI_Model
     function get_limit_data($limit, $start = 0, $q = NULL) {
         $this->db->order_by($this->id, $this->order);
         $this->db->like('id_users', $q);
-        $this->db->or_like('full_name', $q);
-        $this->db->or_like('email', $q);
-        $this->db->or_like('password', $q);
-        $this->db->or_like('nama_lembaga', $q);
-        $this->db->or_like('images', $q);
-        $this->db->or_like('id_user_level', $q);
-        $this->db->or_like('is_aktif', $q);
-        $this->db->limit($limit, $start);
+    $this->db->or_like('username', $q);
+    $this->db->or_like('email', $q);
+    $this->db->or_like('password', $q);
+    $this->db->or_like('nama_lembaga', $q);
+    $this->db->or_like('images', $q);
+    $this->db->or_like('id_user_level', $q);
+    $this->db->or_like('is_aktif', $q);
+    $this->db->limit($limit, $start);
         return $this->db->get($this->table)->result();
     }
 
@@ -74,7 +74,6 @@ class User_model extends CI_Model
     function insert($data)
     {
         $this->db->insert($this->table, $data);
-        return $this->db->insert_id();
     }
 
     // update data

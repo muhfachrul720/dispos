@@ -16,8 +16,9 @@ class Kelolamenu extends CI_Controller
 
     public function index()
     {
+        $data['title'] = 'Dashboard Admin';
         $data['setting'] = $this->db->get_where('tbl_setting',array('id_setting'=>1))->row_array();
-        $this->template->load('template','kelolamenu/tbl_menu_list',$data);
+        $this->template->load('template_admin','kelolamenu/tbl_menu_list',$data);
     }
     
     function simpan_setting(){

@@ -16,7 +16,9 @@ class Userlevel extends CI_Controller
 
     public function index()
     {
-        $this->template->load('template','userlevel/tbl_user_level_list');
+        $data['title'] = 'Dashboard Admin';
+
+        $this->template->load('template_admin','userlevel/tbl_user_level_list',$data);
     } 
     
     public function json() {
@@ -32,7 +34,7 @@ class Userlevel extends CI_Controller
 		'id_user_level' => $row->id_user_level,
 		'nama_level' => $row->nama_level,
 	    );
-            $this->template->load('template','userlevel/tbl_user_level_read', $data);
+            $this->template->load('template_admin','userlevel/tbl_user_level_read', $data);
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
             redirect(site_url('userlevel'));
@@ -40,9 +42,11 @@ class Userlevel extends CI_Controller
     }
     
     function akses(){
+
+        $data['title'] = "Kelola Hak Akses";
         $data['level'] = $this->db->get_where('tbl_user_level',array('id_user_level'=>  $this->uri->segment(3)))->row_array();
         $data['menu'] = $this->db->get('tbl_menu')->result();
-        $this->template->load('template','userlevel/akses',$data);
+        $this->template->load('template_admin','userlevel/akses',$data);
     }
     
     function kasi_akses_ajax(){
@@ -69,7 +73,7 @@ class Userlevel extends CI_Controller
 	    'id_user_level' => set_value('id_user_level'),
 	    'nama_level' => set_value('nama_level'),
 	);
-        $this->template->load('template','userlevel/tbl_user_level_form', $data);
+        $this->template->load('template_admin','userlevel/tbl_user_level_form', $data);
     }
     
     public function create_action() 
@@ -100,7 +104,7 @@ class Userlevel extends CI_Controller
 		'id_user_level' => set_value('id_user_level', $row->id_user_level),
 		'nama_level' => set_value('nama_level', $row->nama_level),
 	    );
-            $this->template->load('template','userlevel/tbl_user_level_form', $data);
+            $this->template->load('template_admin','userlevel/tbl_user_level_form', $data);
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
             redirect(site_url('userlevel'));

@@ -22,8 +22,8 @@ class Menu_model extends CI_Model
         $this->datatables->add_column('is_aktif', '$1', 'rename_string_is_aktif(is_aktif)');
         //add this line for join
         //$this->datatables->join('table2', 'tbl_menu.field = table2.field');
-        $this->datatables->add_column('action',anchor(site_url('kelolamenu/update/$1'),'<i class="fas fa-exclamation-triangle" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-circle btn-sm'))." 
-                ".anchor(site_url('kelolamenu/delete/$1'),'<i class="fas fa-trash" aria-hidden="true"></i>','class="btn btn-danger btn-circle btn-sm" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'id_menu');
+        $this->datatables->add_column('action',anchor(site_url('kelolamenu/update/$1'),'<i class="mdi mdi-tooltip-edit" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-circle btn-sm'))." 
+                ".anchor(site_url('kelolamenu/delete/$1'),'<i class="mdi mdi-delete-sweep" aria-hidden="true"></i>','class="btn btn-danger btn-circle btn-sm" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'id_menu');
         return $this->datatables->generate();
     }
     

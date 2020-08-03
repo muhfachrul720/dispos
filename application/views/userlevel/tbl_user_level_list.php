@@ -1,6 +1,4 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
-
+<div class="col-12">
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Kelola Data Level User</h6>
@@ -12,7 +10,6 @@
             </div>
 
             <hr>
-            <div class="table-responsive">
 
                 <table id="example" class="table table-striped table-bordered table-sm text-center" style="width:100%">
                     <thead>
@@ -24,8 +21,9 @@
                     </thead>
 
                 </table>
-            </div>
         </div>
+    </div>
+
     </div>
                     
              <!-- Bootstrap core JavaScript-->

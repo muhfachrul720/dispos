@@ -34,7 +34,7 @@ class Dashboard_p extends CI_Controller {
 		$data = $this->m_pegawai->getinfo_pegawai_individual($this->session->userdata('id_users'));
 		$data['jumlah_anak'] = $this->m_pegawai->count_child($data['id_keluarga'])->num_rows();
 
-		$this->template->load('template', 'pegawai/duk/detail_duk_pegawai', $data);	
+		$this->template->load('template_admin', 'pegawai/duk/detail_duk_pegawai', $data);	
 	}
 
 	public function json_jab_fungsi()
@@ -55,7 +55,7 @@ class Dashboard_p extends CI_Controller {
 		$data['jumlah_anak'] = $this->m_pegawai->count_child($data['id_keluarga'])->num_rows();
 		$data['action'] = base_url('dashboard_p/update_keluarga');
 
-		$this->template->load('template', 'pegawai/duk/form_data_keluarga', $data);
+		$this->template->load('template_admin', 'pegawai/duk/form_data_keluarga', $data);
 	}
 
 	public function update_keluarga(Type $var = null)
@@ -115,7 +115,7 @@ class Dashboard_p extends CI_Controller {
 			);
 		}
 
-		$this->template->load('template', 'pegawai/duk/form_data_anak', $data);
+		$this->template->load('template_admin', 'pegawai/duk/form_data_anak', $data);
 	}
 
 	public function insert_anak()
@@ -186,7 +186,7 @@ class Dashboard_p extends CI_Controller {
 		$data = $this->m_pegawai->get_dataother('tbl_tgs_tambahan_dosen', $this->session->userdata('id_pegawai'));
 		$data['action'] = base_url('dashboard_p/update_tgs_tambahan');
 
-		$this->template->load('template', 'pegawai/duk/form_data_tgstambahan', $data);
+		$this->template->load('template_admin', 'pegawai/duk/form_data_tgstambahan', $data);
 	}
 
 	public function update_tgs_tambahan()
@@ -218,7 +218,7 @@ class Dashboard_p extends CI_Controller {
 		$data['date'] = explode(" ",$data['time_diklat'])[0];
 		$data['time'] = explode(" ",$data['time_diklat'])[1];
 
-		$this->template->load('template', 'pegawai/duk/form_data_diklatpelatihan', $data);
+		$this->template->load('template_admin', 'pegawai/duk/form_data_diklatpelatihan', $data);
 	}
 
 	public function update_diklat()
@@ -246,7 +246,7 @@ class Dashboard_p extends CI_Controller {
 		$data = $this->m_pegawai->get_dataother('tbl_pendidikan_terakhir',$this->session->userdata('id_pegawai'));
 		$data['action'] = base_url('dashboard_p/update_peter');
 
-		$this->template->load('template', 'pegawai/duk/form_data_pendidikanakhir', $data);
+		$this->template->load('template_admin', 'pegawai/duk/form_data_pendidikanakhir', $data);
 	}
 
 	public function update_peter()
@@ -280,7 +280,7 @@ class Dashboard_p extends CI_Controller {
 		$data['golongan'] = explode('/', $data['pangkat_terakhir'])[1];
 		$data['ruang'] = explode('/', $data['pangkat_terakhir'])[2];
 
-		$this->template->load('template', 'pegawai/duk/form_data_pangkatakhir', $data);
+		$this->template->load('template_admin', 'pegawai/duk/form_data_pangkatakhir', $data);
 	}
 
 	public function update_datapanghir()
@@ -318,7 +318,7 @@ class Dashboard_p extends CI_Controller {
 		$data = $this->m_pegawai->get_dataother('tbl_impassing',$this->session->userdata('id_pegawai'));
 		$data['action'] = base_url('dashboard_p/update_dataimpassing');
 
-		$this->template->load('template', 'pegawai/duk/form_data_impassing', $data);
+		$this->template->load('template_admin', 'pegawai/duk/form_data_impassing', $data);
 	}
 
 	public function update_dataimpassing()
@@ -353,7 +353,7 @@ class Dashboard_p extends CI_Controller {
 		$data = $this->m_pegawai->get_dataother('tbl_kgb',$this->session->userdata('id_pegawai'));
 		$data['action'] = base_url('dashboard_p/update_datakgb');
 
-		$this->template->load('template', 'pegawai/duk/form_data_kgb', $data);
+		$this->template->load('template_admin', 'pegawai/duk/form_data_kgb', $data);
 	}
 
 	public function update_datakgb()
@@ -390,7 +390,7 @@ class Dashboard_p extends CI_Controller {
 		$data = $this->m_pegawai->get_dataother('tbl_pmk',$this->session->userdata('id_pegawai'));
 		$data['action'] = base_url('dashboard_p/update_datapmk');
 		
-		$this->template->load('template', 'pegawai/duk/form_data_pmk', $data);
+		$this->template->load('template_admin', 'pegawai/duk/form_data_pmk', $data);
 	}
 
 	public function update_datapmk()
@@ -434,7 +434,7 @@ class Dashboard_p extends CI_Controller {
 		$data['button'] = 'Save';
 		$data['back'] = 'dashboard_p';
 
-		$this->template->load('template', 'pegawai/duk/form_data_cpns', $data);
+		$this->template->load('template_admin', 'pegawai/duk/form_data_cpns', $data);
 	}
 	
 	public function update_datacpns()
@@ -474,7 +474,7 @@ class Dashboard_p extends CI_Controller {
 		$data['button'] = 'Save';
 		$data['back'] = 'dashboard_p';
 
-		$this->template->load('template', 'pegawai/duk/form_data_pegawai', $data);	
+		$this->template->load('template_admin', 'pegawai/duk/form_data_pegawai', $data);	
 	}
 
 	public function update_datapeg()
@@ -567,7 +567,7 @@ class Dashboard_p extends CI_Controller {
 			);
 		}
 
-		$this->template->load('template', 'pegawai/ajuan_pensiun/dashboard_ajuan_pensiun', $data);	
+		$this->template->load('template_admin', 'pegawai/ajuan_pensiun/dashboard_ajuan_pensiun', $data);	
 	}
 
 	public function form_ajuan_pensiun()
@@ -579,7 +579,7 @@ class Dashboard_p extends CI_Controller {
 			'id' 	 	=> set_value('id')
 		);
 
-		$this->template->load('template', 'pegawai/ajuan_pensiun/form_ajuan_pensiun', $data);	
+		$this->template->load('template_admin', 'pegawai/ajuan_pensiun/form_ajuan_pensiun', $data);	
 	}
 
 	public function create_ajuan_pensiun()

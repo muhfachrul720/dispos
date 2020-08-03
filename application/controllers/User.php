@@ -12,12 +12,14 @@ class User extends CI_Controller
         $this->load->model('User_model');
         $this->load->model('m_pegawai');
         $this->load->library('form_validation');        
-	$this->load->library('datatables');
+	    $this->load->library('datatables');
     }
 
     public function index()
     {
-        $this->template->load('template','user/tbl_user_list');
+        $data['title'] = 'Dashboard Admin';
+
+        $this->template->load('template_admin','user/tbl_user_list', $data);
     } 
     
     public function json() {
@@ -34,14 +36,14 @@ class User extends CI_Controller
         if ($row) {
             $data = array(
 		'id_users'      => $row->id_users,
-		'full_name'     => $row->full_name,
+		'username'     => $row->username,
 		'email'         => $row->email,
 		'password'      => $row->password,
 		'images'        => $row->images,
 		'id_user_level' => $row->id_user_level,
 		'is_aktif'      => $row->is_aktif,
 	    );
-            $this->template->load('template','user/tbl_user_read', $data);
+            $this->template->load('template_admin','user/tbl_user_read', $data);
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
             redirect(site_url('user'));
@@ -54,14 +56,14 @@ class User extends CI_Controller
             'button'        => 'Create',
             'action'        => site_url ('user/create_action'),
 	    'id_users'      => set_value('id_users'),
-	    'full_name'     => set_value('full_name'),
+	    'username'     => set_value('username'),
 	    'email'         => set_value('email'),
 	    'password'      => set_value('password'),
 	    'images'        => set_value('images'),
 	    'id_user_level' => set_value('id_user_level'),
 	    'is_aktif'      => set_value('is_aktif'),
 	);
-        $this->template->load('template','user/tbl_user_form', $data);
+        $this->template->load('template_admin','user/tbl_user_form', $data);
     }
     
     
@@ -78,7 +80,7 @@ class User extends CI_Controller
             $hashPassword   = password_hash($password,PASSWORD_BCRYPT,$options);
             
             $data = array(
-		'full_name'     => $this->input->post('full_name',TRUE),
+		'username'     => $this->input->post('username',TRUE),
 		'email'         => $this->input->post('email',TRUE),
 		'password'      => $hashPassword,
 		'images'        => $foto['file_name'],
@@ -90,7 +92,7 @@ class User extends CI_Controller
             
             $datainfo = array(
                 'id_user' => $last_id,
-                'nama_tanpa_gelar_peg' => $this->input->post('full_name',TRUE),
+                'nama_tanpa_gelar_peg' => $this->input->post('username',TRUE),
             );
             
             if($pegid= $this->m_pegawai->insert($datainfo, 'tbl_pegawai')){
@@ -133,14 +135,14 @@ class User extends CI_Controller
                 'button'        => 'Update',
                 'action'        => site_url('user/update_action'),
 		'id_users'      => set_value('id_users', $row->id_users),
-		'full_name'     => set_value('full_name', $row->full_name),
+		'username'     => set_value('username', $row->username),
 		'email'         => set_value('email', $row->email),
 		'password'      => set_value('password', $row->password),
 		'images'        => set_value('images', $row->images),
 		'id_user_level' => set_value('id_user_level', $row->id_user_level),
 		'is_aktif'      => set_value('is_aktif', $row->is_aktif),
 	    );
-            $this->template->load('template','user/tbl_user_form', $data);
+            $this->template->load('template_admin','user/tbl_user_form', $data);
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
             redirect(site_url('user'));
@@ -161,7 +163,7 @@ class User extends CI_Controller
             $hashPassword   = password_hash($password,PASSWORD_BCRYPT,$options);
 
                 $data = array(
-		'full_name'     => $this->input->post('full_name',TRUE),
+		'username'     => $this->input->post('username',TRUE),
 		'email'         => $this->input->post('email',TRUE),
         'password'      => $hashPassword,
 		'id_user_level' => $this->input->post('id_user_level',TRUE),
@@ -173,7 +175,7 @@ class User extends CI_Controller
             $hashPassword   = password_hash($password,PASSWORD_BCRYPT,$options);
 
                 $data = array(
-		'full_name'     => $this->input->post('full_name',TRUE),
+		'username'     => $this->input->post('username',TRUE),
 		'email'         => $this->input->post('email',TRUE),
         'password'      => $hashPassword,
         'images'        =>$foto['file_name'],
@@ -218,7 +220,7 @@ class User extends CI_Controller
 
     public function _rules() 
     {
-	$this->form_validation->set_rules('full_name', 'full name', 'trim|required');
+	$this->form_validation->set_rules('username', 'full name', 'trim|required');
 	$this->form_validation->set_rules('email', 'email', 'trim|required');
 	//$this->form_validation->set_rules('password', 'password', 'trim|required');
 	//$this->form_validation->set_rules('images', 'images', 'trim|required');
@@ -264,7 +266,7 @@ class User extends CI_Controller
 
             //ubah xlsWriteLabel menjadi xlsWriteNumber untuk kolom numeric
             xlsWriteNumber($tablebody, $kolombody++, $nourut);
-	    xlsWriteLabel($tablebody, $kolombody++, $data->full_name);
+	    xlsWriteLabel($tablebody, $kolombody++, $data->username);
 	    xlsWriteLabel($tablebody, $kolombody++, $data->email);
 	    xlsWriteLabel($tablebody, $kolombody++, $data->password);
         xlsWriteLabel($tablebody, $kolombody++, $data->id_lembaga);
@@ -280,18 +282,7 @@ class User extends CI_Controller
         exit();
     }
 
-    public function word()
-    {
-        header("Content-type: application/vnd.ms-word");
-        header("Content-Disposition: attachment;Filename=tbl_user.doc");
-
-        $data = array(
-            'tbl_user_data' => $this->User_model->get_all(),
-            'start' => 0
-        );
-        
-        $this->load->view('user/tbl_user_doc',$data);
-    }
+   
     
     function profile(){
         
@@ -299,8 +290,3 @@ class User extends CI_Controller
 
 }
 
-/* End of file User.php */
-/* Location: ./application/controllers/User.php */
-/* Please DO NOT modify this information : */
-/* Generated by Harviacode Codeigniter CRUD Generator 2017-10-04 06:32:22 */
-/* http://harviacode.com */

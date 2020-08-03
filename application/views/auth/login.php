@@ -1,50 +1,53 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Aplikasi APA-UHO</title>
-        <!-- Tell the browser to be responsive to screen width -->
-        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-        <!-- Bootstrap 3.3.7 -->
-        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/adminlte/bower_components/bootstrap/dist/css/bootstrap.min.css">
-        <!-- Font Awesome -->
-        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/adminlte/bower_components/font-awesome/css/font-awesome.min.css">
-        <!-- Ionicons -->
-        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/adminlte/bower_components/Ionicons/css/ionicons.min.css">
-        <!-- Theme style -->
-        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/adminlte/dist/css/AdminLTE.min.css">
-        <!-- iCheck -->
-        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/adminlte/plugins/iCheck/square/blue.css">
+<html lang="en">
+<head>
+    <title>SIDASIP - SISTEM INFORMASI DATA FISIP</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->  
+    <link rel="icon" type="image/png" href="<?php echo base_url();?>assets/template_login/images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/template_login/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/template_login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/template_login/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/template_login/vendor/animate/animate.css">
+<!--===============================================================================================-->  
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/template_login/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/template_login/vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/template_login/css/util.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/template_login/css/main.css">
+<!--===============================================================================================-->
+</head>
+<body>
+    
+    <div class="limiter">
+        <div class="container-login100" style="background-image: url('assets/template_login/images/dron_uho.jpg');">
+            <div class="wrap-login100 p-t-10 p-b-30">
 
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
+                
 
-        <!-- Google Font -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-    </head>
-    <body class="hold-transition image-login" style="overflow:hidden">
-        <div class="overlay-container">
-        <!-- Modificate -->
-            <div class="login-box" style="margin-top:24vh">
-                <div class="img-fluid text-center">
-                    <h1 style="font-size:50px; font-weight:bold; color:white; margin:0; padding:0;">SIDASIP</h1>
-                    <!-- <img src="<?php echo base_url(); ?>assets/alarm/logo-login.png" width="90%" style="margin: center;" alt=""> -->
-                </div>
-                <br>
-                <!-- <div class="login-logo">
-                    <div class="font-weight-bold">
-                    <b>APA-UHO</b>
-                    <h3 class="text-white font-weight-bold">Alarm Penyerapan Anggaran</h3>
+                <!-- form open -->
+                <?php 
+                    $attributes = array('class' => 'login100-form validate-form');
+                    echo form_open('Auth/cheklogin', $attributes); 
+                ?>
+                <!-- end form open -->
+
+                    <div class="login100-form-avatar">
+                        <img src="<?php echo base_url(); ?>assets/template_login/images/logo.png" alt="FISIP UHO">
                     </div>
-                </div> -->
-                <!-- /.login-logo -->
-                <div class="login-bc mt-1">
-                    <?php
+
+                    <span class="login100-form-title p-t-20 p-b-45">
+                        SIDASIP<br><small style="color: black;">SISTEM INFORMASI DATA FISIP</small> 
+                    </span>
+
+                    <!-- Notif jika login gagal atau berhasil -->
+                 <?php
                     $status_login = $this->session->userdata('status_login');
                     if (empty($status_login)) {
                         $message = "Silahkan login untuk masuk ke aplikasi";
@@ -52,71 +55,62 @@
                         $message = $status_login;
                     }
                     ?>
-                    <p class="login-box-msg"><?php echo $message; ?></p>
+                    <p class="text-center w-full txt1 p-b-18"><?php echo $message; ?></p>
+                <!-- end notif -->
 
-                    <!--<form action="<?php echo base_url(); ?>/adminlte/index2.html" method="post">-->
-                    <?php echo form_open('Auth/cheklogin'); ?>
-                    <div class="form-group has-feedback">
-                        <input type="email" class="form-control" style="border-radius:6px" name="email" placeholder="Email">
-                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    <div class="wrap-input100 validate-input m-b-10" data-validate = "Username harus di isi">
+                        <input class="input100" type="text" name="username" placeholder="Username">
+                        <span class="focus-input100"></span>
+                        <span class="symbol-input100">
+                            <i class="fa fa-user"></i>
+                        </span>
                     </div>
-                    <div class="form-group has-feedback">
-                        <input type="password" class="form-control" style="border-radius:6px" name="password" placeholder="Password">
-                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+
+                    <div class="wrap-input100 validate-input m-b-10" data-validate = "Password harus di isi">
+                        <input class="input100" type="password" name="password" placeholder="Password">
+                        <span class="focus-input100"></span>
+                        <span class="symbol-input100">
+                            <i class="fa fa-lock"></i>
+                        </span>
                     </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <button type="submit" class="btn btn-danger btn-block btn-flat"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</button>
-                        </div>
-                        <!-- <div class="col-xs-6">
-                            <?php echo anchor('#', '<i class="fa fa-eye-slash" aria-hidden="true"></i> Lupa Password', array('class' => 'btn btn-primary btn-block btn-flat')); ?>
-                        </div> -->
+
+                    <div class="container-login100-form-btn p-t-10">
+                        <button type="submit" class="login100-form-btn">
+                            Login
+                        </button>
                     </div>
-                    <!-- /.col -->
 
+                    <div class="text-center w-full p-t-25 p-b-10">
+                        <a href="#" class="txt1">
+                            Forgot Username / Password?
+                        </a>
+                    </div>
 
-                    <!-- /.col -->
-                    <!-- <div class="row" style="margin-top: 20px;">
-                        <div class="col-xs-12">
-                            <div class="callout callout-info">
-                                <h4>Level Super Admin</h4>
-
-                                <p><b>Email</b> : admin_keu@uho.ac.id</p>
-                                <p><b>Password</b> : password</p>
-                                <hr>
-                                <h4>Level Admin</h4>
-
-                                <p><b>Email</b> : bendahara_keu@uho.ac.id</p>
-                                <p><b>Password</b> : password</p>
-                            </div>
-                        </div>
-
-                    </div> -->
-                    </form>
-
-
-
-
-                </div>
-                <!-- /.login-box-body -->
+                    <div class="text-center w-full">
+                        <a class="txt1" href="#">
+                            Create new account
+                            <i class="fa fa-long-arrow-right"></i>                      
+                        </a>
+                    </div>
+                <?php 
+                    echo form_close();
+                 ?>
             </div>
         </div>
-        <!-- /.login-box -->
-    </body>
+    </div>
+    
+    
 
-        <!-- jQuery 3 -->
-        <script src="<?php echo base_url(); ?>assets/adminlte/bower_components/jquery/dist/jquery.min.js"></script>
-        <!-- Bootstrap 3.3.7 -->
-        <script src="<?php echo base_url(); ?>/assets/adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-        <!-- iCheck -->
-        <script src="<?php echo base_url(); ?>/assets/adminlte/plugins/iCheck/icheck.min.js"></script>
-        <script>
-            $(function () {
-                $('input').iCheck({
-                    checkboxClass: 'icheckbox_square-blue',
-                    radioClass: 'iradio_square-blue',
-                    increaseArea: '20%' // optional
-                });
-            });
-        </script>
+    
+<!--===============================================================================================-->  
+    <script src="<?php echo base_url(); ?>assets/template_login/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+    <script src="<?php echo base_url(); ?>assets/template_login/vendor/bootstrap/js/popper.js"></script>
+    <script src="<?php echo base_url(); ?>assets/template_login/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+    <script src="<?php echo base_url(); ?>assets/template_login/vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+    <script src="<?php echo base_url(); ?>assets/template_login/js/main.js"></script>
+
+</body>
 </html>

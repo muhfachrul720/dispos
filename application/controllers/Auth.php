@@ -8,13 +8,13 @@ Class Auth extends CI_Controller{
     }
     
     public function cheklogin(){
-        $email      = $this->input->post('email');
+        $username      = $this->input->post('username');
         //$password   = $this->input->post('password');
         $password = $this->input->post('password',TRUE);
         $hashPass = password_hash($password,PASSWORD_DEFAULT);
         $test     = password_verify($password, $hashPass);
         // query chek users
-        $this->db->where('email',$email);
+        $this->db->where('username',$username);
         //$this->db->where('password',  $test);
         $users       = $this->db->get('tbl_user');
         
@@ -28,17 +28,24 @@ Class Auth extends CI_Controller{
                     redirect('Dashboard');
                 } else if ($user['id_user_level'] == 5){
                     # code...
-                    redirect('Pegawai');
+                    redirect('Pegawai'); 
+                } else if ($user['id_user_level'] == 9){
+                    # code...
+                    redirect('Mahasiswa');
                 } else if ($user['id_user_level'] == 10){
                     # code...
                     redirect('Dashboard_p');
+                }
+                  else if ($user['id_user_level'] == 4){
+                    # code...
+                    redirect('Akademik');
                 }
                 
             }else{
                 redirect('Auth');
             }
         }else{
-            $this->session->set_flashdata('status_login','email atau password yang anda input salah');
+            $this->session->set_flashdata('status_login','username atau password yang anda input salah');
             redirect('Auth');
         }
     }

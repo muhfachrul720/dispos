@@ -5,7 +5,9 @@ class Akademik extends CI_Controller {
 
 	public function index()
 	{
-		
+		$data['title'] = 'Dashboard Admin';
+
+		$this->template->load('template_admin', 'dashboard', $data);	
 	}
 
 	public function verifikasi_skripsi(){
