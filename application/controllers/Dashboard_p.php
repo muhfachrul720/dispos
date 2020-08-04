@@ -15,13 +15,8 @@ class Dashboard_p extends CI_Controller {
 	// ================================ Duk Pegawai =====================================
 	public function index()
 	{
-		$data = $this->m_pegawai->getinfo_pegawai_individual($this->session->userdata('id_users'));
+		$data = $this->m_pegawai->get_pegawai_individual($this->session->userdata('id_users'));
 		$data['jumlah_anak'] = $this->m_pegawai->count_child($data['id_keluarga'])->num_rows();
-
-		// echo "<pre>";
-		// print_r($data);
-		// die;
-		// echo "</pre>";
 
 		$this->template->load('template_admin', 'pegawai/duk/detail_duk_pegawai', $data);	
 	}
@@ -47,7 +42,7 @@ class Dashboard_p extends CI_Controller {
 		$this->template->load('template_admin', 'pegawai/duk/form_data_keluarga', $data);
 	}
 
-	public function update_keluarga(Type $var = null)
+	public function update_keluarga()
 	{
 		$post = $this->input->post();
 		
@@ -204,8 +199,9 @@ class Dashboard_p extends CI_Controller {
 	{
 		$data = $this->m_pegawai->get_dataother('tbl_diklat_pelatihan', $this->session->userdata('id_pegawai'));
 		$data['action'] = base_url('dashboard_p/update_diklat');
-		$data['date'] = explode(" ",$data['time_diklat'])[0];
-		$data['time'] = explode(" ",$data['time_diklat'])[1];
+
+		$data['date'] = $data['time_diklat'][0] != null ? explode(" ",$data['time_diklat'])[0] : '';
+		$data['time'] = $data['time_diklat'][0] != null ? explode(" ",$data['time_diklat'])[1] : '';
 
 		$this->template->load('template_admin', 'pegawai/duk/form_data_diklatpelatihan', $data);
 	}
@@ -311,8 +307,8 @@ class Dashboard_p extends CI_Controller {
 	}
 
 	public function update_dataimpassing()
-	
-{		$post = $this->input->post();
+	{		
+		$post = $this->input->post();
 		
 		$dataimp = array(
 			'no_sk_impassing' 				=> $post['nosk'],
@@ -446,8 +442,8 @@ class Dashboard_p extends CI_Controller {
 	{
 		$data = $this->m_pegawai->get_dataother('tbl_cpns',$this->session->userdata('id_pegawai'));
 
-		$data['golongan_cpns'] = explode('/', $data['pangkat_cpns'])[1];
-		$data['ruang_cpns'] = explode('/', $data['pangkat_cpns'])[2];
+		$data['golongan_cpns'] = $data['pangkat_cpns'] != null ? explode('/', $data['pangkat_cpns'])[1] : '';
+		$data['ruang_cpns'] = $data['pangkat_cpns'] != null ? explode('/', $data['pangkat_cpns'])[2] : '';
 
 		$data['action'] = base_url('dashboard_p/update_datacpns');
 		$data['button'] = 'Save';
@@ -499,6 +495,7 @@ class Dashboard_p extends CI_Controller {
 	public function form_data_pegawai()
 	{
 		$data = $this->m_pegawai->get_datapegandgelar($this->session->userdata('id_users'));
+
 		$data['action'] = base_url('dashboard_p/update_datapeg');
 		$data['button'] = 'Save';
 		$data['back'] = 'dashboard_p';
@@ -547,7 +544,7 @@ class Dashboard_p extends CI_Controller {
 			);
 
 			$check1 = $this->m_pegawai->update('tbl_pegawai', array('id_pegawai' => $post['id']), $data_peg);
-			
+
 			// Gelar
 			$data_gel = array(
 				'prof_gelar' 			=> $post['profgelar'],
@@ -571,7 +568,7 @@ class Dashboard_p extends CI_Controller {
 	// ======================================================== Ajuan Pensiun =====================================
 	function upload_file_multiple($id, $number, $date){
 		$config['upload_path']          = './upload/berkas_pensiun/pegawai_'.$id.'tgl_'.$date;
-		$config['allowed_types']        = 'gif|jpg|png';
+		$config['allowed_types']        = 'gif|jpg|png|pdf';
 		$config['file_name']        	= 'pegawai_'.$id.'berkas_'.$number;
 
 		if(!is_dir('upload/berkas_pensiun/pegawai_'.$id.'tgl_'.$date)){
@@ -596,7 +593,7 @@ class Dashboard_p extends CI_Controller {
 
 	public function json_pensiun_individual()
 	{
-		header('Content-Type: application/json');
+		// header('Content-Type: application/json');
 		$id = $this->input->post('id');
 
         $data = $this->m_pegawai->json_pensiun_individual($id);
@@ -629,7 +626,7 @@ class Dashboard_p extends CI_Controller {
 
 					$data_berkas = array(
 						'nama_berkas' => $upload['file_name'],
-						'id_ajuan_pensiun' => $idpensi,
+						'id_pengajuan_pensiun' => $idpensi,
 					);
 
 					$this->m_pegawai->insert($data_berkas, 'tbl_berkas_pensiun');
@@ -652,8 +649,6 @@ class Dashboard_p extends CI_Controller {
 	}
 
 
-			
-
 	// ======================================================= Ajuan Cuti ==============================================
 	public function pengajuan_cuti()
 	{
@@ -664,12 +659,10 @@ class Dashboard_p extends CI_Controller {
 
 	public function json_cuti_individual()
 	{
-		header('Content-Type: application/json');
+		// header('Content-Type: application/json');
 		$id = $this->input->post('id');
-
-
-		$this->template->load('template_admin', 'pegawai/ajuan_pensiun/form_ajuan_pensiun', $data);	
 		$data = $this->m_pegawai->json_cuti_individual($id);
+
 		echo $data;
 	}
 
@@ -684,6 +677,8 @@ class Dashboard_p extends CI_Controller {
 	public function create_ajuan_cuti()
 	{
 		$post = $this->input->post();
+
+
 
 		$this->cuti_rules($post);
 		$this->form_validation->set_error_delimiters('<small class="text-danger">', '</small>');
@@ -773,8 +768,6 @@ class Dashboard_p extends CI_Controller {
 
 		$data['alamat_pengajuan_cuti'] = 'Jalana Belimbing No 41 Poasia Kendari Sulawesi Tenggara Indonesia RT 13/ RW 11';
 
-		// var_dump($data);
-		// die;
 
 		//===================== Cetak ===============================
 		$pdf = new FPDF('P', 'mm', array(210, 330));

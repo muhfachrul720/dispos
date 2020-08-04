@@ -60,7 +60,7 @@
         }else{
                 // display main menu
           echo "<li class='nav-item'>";
-          echo "<a class='nav-link' href='$menu->url'> <i class='".$menu->icon."'></i><span class='menu-title'>".ucwords($menu->title)."</span></a>";
+          echo "<a class='nav-link' href='".base_url($menu->url)."'> <i class='".$menu->icon."'></i><span class='menu-title'>".ucwords($menu->title)."</span></a>";
 
               // $atts = array(
               //   'class'         => 'nav-link',

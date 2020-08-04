@@ -39,7 +39,7 @@ class M_pegawai extends CI_Model{
         return $this->datatables->generate();
     }
     
-    public function getinfo_pegawai_individual($where)
+    public function get_pegawai_individual($where)
     {
         $this->db->where('id_user', $where);
         
@@ -69,6 +69,7 @@ class M_pegawai extends CI_Model{
     
     public function get_datapegandgelar($where)
     {
+        $this->db->select('pgw.*, prof_gelar, depan_gelar, belakang_gelar, h_hj_gelar, gelar.id_gelar');
         $this->db->where('id_user', $where);
         $this->db->join('tbl_gelar as gelar', 'pgw.id_gelar = gelar.id_gelar');
         return $this->db->get($this->table_name)->row_array();
@@ -129,7 +130,7 @@ class M_pegawai extends CI_Model{
 
     public function json_cuti_individual($where)
     {
-        $this->datatables->select('id_pengajuan_cuti, status_cuti, waktu_pengajuan_cuti, keterangan_pengajuan_cuti, full_name');
+        $this->datatables->select('id_pengajuan_cuti, status_cuti, waktu_pengajuan_cuti, keterangan_pengajuan_cuti, username');
         $this->datatables->from('tbl_pengajuan_cuti as cuti');
         $this->datatables->join('tbl_user as us', 'us.id_users = cuti.id_users');
         $this->datatables->where('cuti.id_pegawai', $where);
@@ -160,7 +161,7 @@ class M_pegawai extends CI_Model{
 
     public function json_pensiun_individual($where)
     {
-        $this->datatables->select('id_pengajuan_pensiun, status_pengajuan, waktu_pengajuan_pensiun, keterangan_pengajuan_pensiun, full_name');
+        $this->datatables->select('id_pengajuan_pensiun, status_pengajuan, waktu_pengajuan_pensiun, keterangan_pengajuan_pensiun, username');
         $this->datatables->from($this->table_pensiun.' as psn');
         $this->datatables->join('tbl_user as us', 'us.id_users = psn.id_users');
         $this->datatables->where('psn.id_pegawai', $where);
@@ -173,7 +174,17 @@ class M_pegawai extends CI_Model{
         $this->datatables->from($this->table_pensiun.' as psn');
         $this->datatables->join($this->table_name, 'pgw.id_pegawai = psn.id_pegawai');
         $this->datatables->where('status_pengajuan', null);
+        $this->datatables->or_where('status_pengajuan', 3);
         return $this->datatables->generate();
+    }
+
+    public function get_ajuan_pensiun($where)
+    {
+        $this->db->select('psn.*, nama_tanpa_gelar_peg, nip_peg');
+        $this->db->where('id_pengajuan_pensiun', $where);
+        $this->db->from('tbl_pengajuan_pensiun as psn');
+        $this->db->join($this->table_name, 'pgw.id_pegawai = psn.id_pegawai');
+        return $this->db->get();
     }
 
     public function get_berkas_pensi($id)

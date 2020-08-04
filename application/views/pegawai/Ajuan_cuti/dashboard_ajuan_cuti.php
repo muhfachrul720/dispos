@@ -28,7 +28,7 @@
                 </div>
             </div>
 
-            <?= form_open('dashboard_p/create_ajuan_cuti')?>
+            <?= form_open('dashboard_p/create_ajuan_pensiun')?>
 
             <div class="card border mt-3">
                 <div class="card-body px-5">
@@ -109,20 +109,20 @@
                         </script>
 
                         <div class="col-2 my-auto" style="text-align:center">Tahun :</div>
-                        <div class="col my-auto" style="">
-                            <div class="form-check form-check-inline pr-3">
+                        <div class="col my-auto">
+                            <div class="pr-5" style="display:inline">
                                 <input class="form-check-input optThn" disabled type="radio" name="thncuti" id="exampleRadios1" value="1">
                                 <label class="form-check-label" for="exampleRadios1">
                                     N 
                                 </label>
                             </div>
-                            <div class="form-check form-check-inline pr-3">
+                            <div class="pr-5" style="display:inline">
                                 <input class="form-check-input optThn" disabled type="radio" name="thncuti" id="exampleRadios1" value="2">
                                 <label class="form-check-label" for="exampleRadios1">
                                     N-1 
                                 </label>
                             </div>
-                            <div class="form-check form-check-inline pr-3">
+                            <div class="pr-5" style="display:inline">
                                 <input class="form-check-input optThn" disabled type="radio" name="thncuti" id="exampleRadios1" value="3">
                                 <label class="form-check-label" for="exampleRadios1">
                                     N-2 
@@ -186,7 +186,7 @@
                             <div class="row form-group">
                                 <div class="col-4 pt-1">Alamat Selama Menjalankan Cuti : </div>
                                 <div class="col">
-                                    <textarea class="form-control form-control-sm" name="adresscuti" id="" cols="30" rows="3"></textarea>
+                                    <textarea class="form-control form-control-sm" name="addresscuti" id="" cols="30" rows="3"></textarea>
                                     <?php echo form_error('addresscuti') ?>
                                 </div>
                             </div>
@@ -274,7 +274,7 @@
                                 {"data" : 'waktu_pengajuan_cuti', orderable:false},
                                 {"data" : 'waktu_pengajuan_cuti'},
                                 {"data" : 'keterangan_pengajuan_cuti'},
-                                {"data" : 'full_name'},
+                                {"data" : 'username'},
                                 {
                                     "data" : 'status_cuti',
                                     "render" : function(data, type, row){

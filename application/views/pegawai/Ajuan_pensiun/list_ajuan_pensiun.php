@@ -59,7 +59,17 @@
                         {"data" : 'waktu_pengajuan_pensiun', orderable:false},
                         {"data" : 'nama_tanpa_gelar_peg'},
                         {"data" : 'waktu_pengajuan_pensiun'},
-                        {"data" : 'status_pengajuan'},
+                        {
+                            "data" : 'status_pengajuan',
+                            "render" : function(data, type, row){
+                                if(data == null){
+                                    return '<label class="badge badge-danger">Belum Diperiksa</label>' ;
+                                }
+                                else {
+                                    return '<label class="badge badge-warning">Ditangguhkan</label>' ;
+                                }
+                            }
+                        },
                         {
                             "data" : 'id_pengajuan_pensiun',
                             "render" : function(data, type, row){

@@ -24,10 +24,18 @@
     <!-- Jquery -->
     <script src="<?php echo base_url(); ?>assets/assets-sbadmin/vendor/jquery/jquery.min.js"></script>
 
+    <!-- JS BS -->
+    <script src="<?php echo base_url();?>assets/template/template/assets/vendors/js/vendor.bundle.base.js"></script>
+
      <!-- Datatables -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
   
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+
+    <!-- Yearpicker script -->
+    <script src="<?= base_url(); ?>assets/plugin-yearpicker/yearpicker.js" async></script>
+
+    <link rel="stylesheet" href="<?= base_url(); ?>assets/plugin-yearpicker/yearpicker.css">
 
   </head>
   <body>
@@ -110,7 +118,6 @@
     </div>
     <!-- container-scroller -->
     <!-- plugins:js -->
-    <!-- <script src="<?php echo base_url();?>assets/template/template/assets/vendors/js/vendor.bundle.base.js"></script> -->
     <!-- endinject -->
     <!-- Plugin js for this page -->
     <script src="<?php echo base_url();?>assets/template/template/assets/vendors/jquery-bar-rating/jquery.barrating.min.js"></script>
@@ -131,5 +138,10 @@
     <!-- Custom js for this page -->
     <script src="<?php echo base_url();?>assets/template/template/assets/js/dashboard.js"></script>
     <!-- End custom js for this page -->
+
+    <!-- Page level custom scripts -->
+    <script src="<?php echo base_url(); ?>assets/assets-sbadmin/js/demo/datatables-demo.js"></script>
+    <!-- <script>s -->
+
   </body>
 </html>

@@ -7,11 +7,16 @@
 
                 <table class='table table-bordered'>        
 
-                    <tr>
+                    <!-- <tr>
                         <td width='200'>Nama Lengkap <?php echo form_error('full_name') ?></td><td><input type="text" class="form-control" name="full_name" id="full_name" placeholder="Masukkan Nama Lengkap" value="<?php echo $full_name; ?>" />
                         </td>
-                    </tr>
+                    </tr> -->
                     
+                    <tr>
+                        <td width='200'>Nama Lengkap <?php echo form_error('username') ?></td><td><input type="text" class="form-control" name="username" id="username" placeholder="Masukkan Nama Lengkap" value="<?php echo $username; ?>" />
+                        </td>
+                    </tr>
+
                     <tr>
                         <td width='200'>Email <?php echo form_error('email') ?></td>
                         <td>

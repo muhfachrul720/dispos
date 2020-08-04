@@ -56,7 +56,7 @@ class Pegawai extends CI_Controller {
 		$data = $this->m_pegawai->get_data_cuti_individual($id);
 		$data['lastday'] = date('Y-m-d', strtotime('+'.$data['jml_thn_cuti'].' years +'.$data['jml_bln_cuti'].' months +'.$data['jml_hari_cuti'].' days', strtotime($data['tgl_cuti'])));
 
-		$this->template->load('template', 'pegawai/ajuan_cuti/form_tinjau_cuti', $data);
+		$this->template->load('template_admin', 'pegawai/ajuan_cuti/form_tinjau_cuti', $data);
 	}
 
 	public function action_tinjau_cuti()
@@ -98,12 +98,12 @@ class Pegawai extends CI_Controller {
 	// ============================ Verifikasi Pensiun ========================================
 	public function verifikasi_pensiun()
 	{
-		$this->template->load('template', 'pegawai/ajuan_pensiun/list_ajuan_pensiun');
+		$this->template->load('template_admin', 'pegawai/ajuan_pensiun/list_ajuan_pensiun');
 	}
 	
 	public function json_verifpensi()
 	{
-		// header('Content-Type: application/json');
+		header('Content-Type: application/json');
 		
 		$data = $this->m_pegawai->json_pensiun_verifikasi();
 		echo $data;
@@ -111,10 +111,40 @@ class Pegawai extends CI_Controller {
 
 	public function tinjau_pensiun($id)
 	{	
-		// $data = ;
-		$data = $this->m_pegawai->get_berkas_pensi($id)->result_array();
+		$data = $this->m_pegawai->get_ajuan_pensiun($id)->row_array();
+		$data['berkas'] = $this->m_pegawai->get_berkas_pensi($id)->result_array();
+
 		// $data = $this->m_pegawai->get_data_cuti_individual($id);
-		$this->template->load('template', 'pegawai/ajuan_pensiun/form_tinjau_pensiun', $data);
+		$this->template->load('template_admin', 'pegawai/ajuan_pensiun/form_tinjau_pensiun', $data);
+	}
+
+	public function action_tinjau_pensiun()
+	{
+		$post = $this->input->post();
+
+		$this->form_validation->set_rules('ket', 'Keterangan', 'trim|required');
+
+		if($this->form_validation->run() != FALSE){
+
+			$dataaju = array(
+				'id_users' => $this->session->userdata('id_users'),
+				'status_pengajuan' => $post['status'],
+				'keterangan_pengajuan_pensiun' => $post['ket']
+			);
+
+			if($this->m_pegawai->update('tbl_pengajuan_pensiun', array('id_pengajuan_pensiun' => $post['id']), $dataaju)){
+				$this->session->set_flashdata('msg', 'Berhasil Mengupdate Data');
+				redirect('pegawai/verifikasi_pensiun');
+			}
+			else {
+				$this->session->set_flashdata('msg', 'Gagal Mengupdate Data');
+				$this->tinjau_pensiun($post['id']);
+			}
+		}
+		else {
+			
+		}
+
 	}
 	
 	// ===================================================================================================================

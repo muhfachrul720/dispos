@@ -20,84 +20,83 @@
     </li>
     </ul>
     <div class="tab-content" id="myTabContent">
-    <div class="tab-pane fade show active mb-4" style="font-size:14px" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <div class="tab-pane show active fade mb-4" style="font-size:14px" id="home" role="tabpanel" aria-labelledby="home-tab">
 
-        <div class="card border border-top-0">
-            <div class="card-body px-5 pt-5 pb-4">
-                <h2>Form Ajukan Pensiun</h2>
-                <p>Silahkan Mengupload Berkas Berkas Persyaratan Untuk Pensiun Secara Lengkap dan benar</p>
+            <div class="card border border-top-0">
+                <div class="card-body px-5 pt-5 pb-4">
+                    <h2>Form Ajukan Pensiun</h2>
+                    <p>Silahkan Mengupload Berkas Berkas Persyaratan Untuk Pensiun Secara Lengkap dan benar</p>
+                </div>
             </div>
-        </div>
 
-        <?= form_open_multipart('dashboard_p/create_ajuan_pensiun')?>
+            <?= form_open_multipart('dashboard_p/create_ajuan_pensiun')?>
 
-        <div class="row">
-            <div class="col-7">
-                <div class="card border mt-3">
-                    <div class="card-body px-5">
-                        <div style="text-align:center; border:4px dashed rgba(0,0,0,0.3); padding:283px 40px">
-                            <p>Tekan Dibawah Untuk Mengupload Berkas</p>
-                            <label for="fileUpload" class="btn btn-primary btn-sm m-0" style="font-size:12px">Upload File</label>
-                            <input id="fileUpload" type="file" multiple="" name="images[]" style="display:none">
+            <div class="row">
+                <div class="col-7">
+                    <div class="card border mt-3">
+                        <div class="card-body px-5">
+                            <div style="text-align:center; border:4px dashed rgba(0,0,0,0.3); padding:283px 40px">
+                                <p>Tekan Dibawah Untuk Mengupload Berkas</p>
+                                <label for="fileUpload" class="btn btn-primary btn-sm m-0" style="font-size:12px">Upload File</label>
+                                <input id="fileUpload" type="file" multiple="" name="images[]" style="display:none" accept="image/jpeg,image/gif,image/png,application/pdf">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card border mt-3">
+                        <div class="card-body">
+                            <p>Berkas Yang Di Upload :</p>
+                            <ul style="text-decoration:none; list-style-position:outside">
+                                <li class="px-2">Surat Usul Pimpinan Unit Kerja </li>
+                                <li class="px-2">Surat Permohonan PNS ybs </li>
+                                <li class="px-2">DPCP (Dfatar Perorangan Calon Penerima Pensiun) </li>
+                                <li class="px-2">SK CPNS - SK Pangkat Terakhir (Legalisir) </li>
+                                <li class="px-2">Sk Jabatan (Fungsional/Struktural)(Legalisir) </li>
+                                <li class="px-2">Kartu Pegawai / KPE (Legalisir) </li>
+                                <li class="px-2">Akta/Surat Nikah/Cerai (Legalisir) </li>
+                                <li class="px-2">Akta/Surat Kenal Lahir anak < 25 Tahun (Legalisir) </li>
+                                <li class="px-2">Kartu Keluarga/Daftar Susunan Keluarga yang Disahkan</li>
+                                <li class="px-2">Pas Foto 3x4</li>
+                                <li class="px-2">Formulir Permintaan Pembayaran Pensiun (SP4)</li>
+                                <li class="px-2">Foto Kopi Buku Rekening</li>
+                                <li class="px-2">Penilaian Prestasi 1 Tahun Terakhir (Legalisir)</li>
+                                <li class="px-2">Surat Pernyataan Tidak Pernah Dijatuhi Hukuman Disiplin/ Tingkat sedang/ Berat 1 Tahun Terakhir</li>
+                                <li class="px-2">Surat Pernyataan Tidak Sedang Menjalani Proses Pidana Atau Pernah Dipidana Penjara Berdasarkan Putusan Pengadilan Yang Telah Berkekuatan Hukum</li>
+                                <hr>
+                                <li class="px-2">Surat Ahli Waris Yang Sah (Bagi Janda dan Duda)</li>
+                                <li class="px-2">Akta / Surat Kematian(Bagi Janda dan Duda)</li>
+                                <li class="px-2">Surat Keterangan Janda / Duda / Anak / Orang Tua(Bagi Janda dan Duda)</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="card border mt-3">
-                    <div class="card-body">
-                        <p>Berkas Yang Di Upload :</p>
-                        <ul style="text-decoration:none; list-style-position:outside">
-                            <li class="px-2">Surat Usul Pimpinan Unit Kerja </li>
-                            <li class="px-2">Surat Permohonan PNS ybs </li>
-                            <li class="px-2">DPCP (Dfatar Perorangan Calon Penerima Pensiun) </li>
-                            <li class="px-2">SK CPNS - SK Pangkat Terakhir (Legalisir) </li>
-                            <li class="px-2">Sk Jabatan (Fungsional/Struktural)(Legalisir) </li>
-                            <li class="px-2">Kartu Pegawai / KPE (Legalisir) </li>
-                            <li class="px-2">Akta/Surat Nikah/Cerai (Legalisir) </li>
-                            <li class="px-2">Akta/Surat Kenal Lahir anak < 25 Tahun (Legalisir) </li>
-                            <li class="px-2">Kartu Keluarga/Daftar Susunan Keluarga yang Disahkan</li>
-                            <li class="px-2">Pas Foto 3x4</li>
-                            <li class="px-2">Formulir Permintaan Pembayaran Pensiun (SP4)</li>
-                            <li class="px-2">Foto Kopi Buku Rekening</li>
-                            <li class="px-2">Penilaian Prestasi 1 Tahun Terakhir (Legalisir)</li>
-                            <li class="px-2">Surat Pernyataan Tidak Pernah Dijatuhi Hukuman Disiplin/ Tingkat sedang/ Berat 1 Tahun Terakhir</li>
-                            <li class="px-2">Surat Pernyataan Tidak Sedang Menjalani Proses Pidana Atau Pernah Dipidana Penjara Berdasarkan Putusan Pengadilan Yang Telah Berkekuatan Hukum</li>
-                            <hr>
-                            <li class="px-2">Surat Ahli Waris Yang Sah (Bagi Janda dan Duda)</li>
-                            <li class="px-2">Akta / Surat Kematian(Bagi Janda dan Duda)</li>
-                            <li class="px-2">Surat Keterangan Janda / Duda / Anak / Orang Tua(Bagi Janda dan Duda)</li>
-                        </ul>
+
+            <div class="card border mt-3">
+                <div class="card-body px-5">
+                    <div class="row">
+                        <div class="col" style="font-weight:bold"><button type="submit" class="btn btn-success w-100">Ajukan</button></div>
+                        <div class="col pt-2">Dengan ini Saya setuju mengajukan pensiun</div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="card border mt-3">
-            <div class="card-body px-5">
-                <div class="row">
-                    <div class="col" style="font-weight:bold"><button type="submit" class="btn btn-success w-100">Ajukan</button></div>
-                    <div class="col pt-2">Dengan ini Saya setuju mengajukan pensiun</div>
-                </div>
-            </div>
-        </div>
+                <script>
+                $('#fileUpload').change(function(){
+                    if(this.files.length>18)
+                        alert('File Terlalu Banyak')
+                });
+                // Prevent submission if limit is exceeded.
+                $('form').submit(function(){
+                    if(this.files.length>18)
+                        return false;
+                });
+                </script>
 
-            <script>
-            $('#fileUpload').change(function(){
-                if(this.files.length>18)
-                    alert('File Terlalu Banyak')
-            });
-            // Prevent submission if limit is exceeded.
-            $('form').submit(function(){
-                if(this.files.length>18)
-                    return false;
-            });
-            </script>
-
-        <?= form_close()?>
+            <?= form_close()?>
 
         </div>
-
         
         <div class="tab-pane fade border border-top-0 p-5" style="background-color:white; font-size:14px" id="contact" role="tabpanel" aria-labelledby="contact-tab">
             <div class="header mb-3">
@@ -156,9 +155,20 @@
                             columns: [
                                 {"data" : 'waktu_pengajuan_pensiun', orderable:false},
                                 {"data" : 'waktu_pengajuan_pensiun'},
-                                {"data" : 'status_pengajuan'},
+                                {
+                                    "data" : 'status_pengajuan',
+                                    "render" : function(data, type, row){
+                                        if(data == 1){
+                                            return "<label class='badge badge-success'>Disetujui</label>";
+                                        }else if(data == 3){
+                                            return "<label class='badge badge-warning'>Ditangguhkan</label>";
+                                        }else {
+                                            return "<label class='badge badge-danger'>Ditolak</label>";
+                                        }
+                                    }
+                                },
                                 {"data" : 'keterangan_pengajuan_pensiun'},
-                                {"data" : 'full_name'},
+                                {"data" : 'username'},
                                 // {
                                 //     "data" : 'id_pengajuan_pensiun',
                                 //     "render" : function(data, type, row){
