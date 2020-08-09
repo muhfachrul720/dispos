@@ -11,21 +11,17 @@ class Pegawai extends CI_Controller {
 	}
 	
 	// ==========================================
-	function upload_foto($id){
-		$filename = 'profil'.$id;
-
-		$config['upload_path']          = './assets/foto_profil';
-		$config['allowed_types']        = 'gif|jpg|png';
-		$config['file_name']        	= $filename;
-		$config['overwrite']        	= TRUE;
+	function upload_file($id){
+		
+		$config['upload_path']          = './upload/report_pensiun';
+		$config['allowed_types']        = 'jpg|png|pdf';
+		$config['file_name']        	= 'laporan_pensiun_pegawai_'.$id;
 
 		$this->load->library('upload', $config);
-		if($this->upload->do_upload('images')){
+		if($this->upload->do_upload('report')){
 			return $this->upload->data();
-			die;
 		}else {
 			return $this->upload->data();
-			die;
 		}
 
 	}
@@ -112,9 +108,8 @@ class Pegawai extends CI_Controller {
 	public function tinjau_pensiun($id)
 	{	
 		$data = $this->m_pegawai->get_ajuan_pensiun($id)->row_array();
-		$data['berkas'] = $this->m_pegawai->get_berkas_pensi($id)->result_array();
+		$data['berkas'] = $this->m_pegawai->get_berkas_pensi($id)->row_array();
 
-		// $data = $this->m_pegawai->get_data_cuti_individual($id);
 		$this->template->load('template_admin', 'pegawai/ajuan_pensiun/form_tinjau_pensiun', $data);
 	}
 
@@ -126,10 +121,13 @@ class Pegawai extends CI_Controller {
 
 		if($this->form_validation->run() != FALSE){
 
+			$filename = $this->upload_file($post['idpeg']);
+			
 			$dataaju = array(
 				'id_users' => $this->session->userdata('id_users'),
 				'status_pengajuan' => $post['status'],
-				'keterangan_pengajuan_pensiun' => $post['ket']
+				'keterangan_pengajuan_pensiun' => $post['ket'],
+				'laporan_pengajuan_pensiun' => $filename['file_name'],
 			);
 
 			if($this->m_pegawai->update('tbl_pengajuan_pensiun', array('id_pengajuan_pensiun' => $post['id']), $dataaju)){
@@ -142,7 +140,7 @@ class Pegawai extends CI_Controller {
 			}
 		}
 		else {
-			
+			$this->tinjau_pensiun($post['id']);
 		}
 
 	}

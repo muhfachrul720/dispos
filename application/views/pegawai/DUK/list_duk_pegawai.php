@@ -14,9 +14,9 @@
         <table id="example" style="font-size:12px; width:100%" class="table table-striped table-bordered table-sm text-center" style="width:100%">
             <thead>
             <tr>
-                <th width="5px">No</th>
+                <th width="">No</th>
                 <th>Nama Pegawai</th>
-                <th width="5">Status Pegawai</th>
+                <th>Status Pegawai</th>
                 <th>TMT Pensiun Pegawai</th>
                 <th>Gaji Pokok Pegawai</th>
                 <th>Tanggal Meninggal Dunia</th>

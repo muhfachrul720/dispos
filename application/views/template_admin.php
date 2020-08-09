@@ -38,6 +38,15 @@
     <link rel="stylesheet" href="<?= base_url(); ?>assets/plugin-yearpicker/yearpicker.css">
 
   </head>
+  <style>
+
+    table {width:100% !important; table-layout: fixed !important;}
+    table td, table th {
+    word-wrap:break-word !important;
+    white-space: normal !important;
+    }
+
+  </style>
   <body>
     <div class="container-scroller">
       <!-- partial:partials/_horizontal-navbar.html -->
@@ -49,10 +58,10 @@
                 <img src="<?php echo base_url(); ?>assets/template/template/assets/images/logo-sidasip.png" alt="Sistem Informasi Data Fisip" />
                 <span class="font-12 d-block font-weight-light">Sistem Informasi Data Fisip </span>
               </a>
-              <a class="navbar-brand brand-logo-mini" href="index.html"><img src="<?php echo base_url(); ?>assets/template/template/assets/images/logo-mini.svg" alt="logo" /></a>
+              <a class="navbar-brand brand-logo-mini" href="index.html"><img src="<?php echo base_url(); ?>assets/template/template/assets/images/logo-mini.svg" alt="logo"/></a>
             </div>
             <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
-              <ul class="navbar-nav mr-lg-2">
+              <ul class="navbar-nav">
                 <li class="nav-item nav-search d-none d-lg-block">
                   <div class="input-group">
                     <div class="input-group-prepend hover-cursor" id="navbar-search-icon">

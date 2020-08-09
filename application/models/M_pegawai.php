@@ -62,7 +62,7 @@ class M_pegawai extends CI_Model{
 
     public function get_infopegawai_adminonly($where)
     {
-        $this->db->select('id_user, nama_tanpa_gelar_peg, status_kepegawaian_peg, tmt_pensiun_peg, gaji_pokok_peg, tgl_meninggal_dunia_peg, id_pegawai');
+        $this->db->select('id_user, nip_peg, nama_tanpa_gelar_peg, status_kepegawaian_peg, tmt_pensiun_peg, gaji_pokok_peg, tgl_meninggal_dunia_peg, id_pegawai');
         $this->db->where('id_pegawai', $where);
         return $this->db->get($this->table_name);
     }
@@ -161,7 +161,7 @@ class M_pegawai extends CI_Model{
 
     public function json_pensiun_individual($where)
     {
-        $this->datatables->select('id_pengajuan_pensiun, status_pengajuan, waktu_pengajuan_pensiun, keterangan_pengajuan_pensiun, username');
+        $this->datatables->select('id_pengajuan_pensiun, status_pengajuan, waktu_pengajuan_pensiun, keterangan_pengajuan_pensiun, username, id_berkas_pengajuan_pensiun, laporan_pengajuan_pensiun');
         $this->datatables->from($this->table_pensiun.' as psn');
         $this->datatables->join('tbl_user as us', 'us.id_users = psn.id_users');
         $this->datatables->where('psn.id_pegawai', $where);
@@ -187,13 +187,23 @@ class M_pegawai extends CI_Model{
         return $this->db->get();
     }
 
-    public function get_berkas_pensi($id)
-    {   
-        $this->db->from('tbl_berkas_pensiun as bpensi');
-        $this->db->join('tbl_pengajuan_pensiun as pensi', 'pensi.id_pengajuan_pensiun = bpensi.id_pengajuan_pensiun');
-        $this->db->where('pensi.id_pengajuan_pensiun', $id);
+    public function get_berkas_pensi($where)
+    { 
+        $this->db->select('brk.*');
+        $this->db->from('tbl_pengajuan_pensiun as pns'); 
+        $this->db->where('id_pengajuan_pensiun', $where); 
+        $this->db->join('tbl_berkas_pengajuan_pensiun as brk', 'pns.id_berkas_pengajuan_pensiun = brk.id_berkas_pengajuan_pensiun');
         
         return $this->db->get();
 
+    }
+
+    // ====================================== Tambahan ==================================
+    public function check_dosen($id)
+    {
+        $this->db->select('id_jab_struktural as dosen');
+        $this->db->from($this->table_name);
+        $this->db->where('id_pegawai', $id);
+        return $this->db->get();
     }
 }

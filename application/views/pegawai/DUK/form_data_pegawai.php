@@ -8,25 +8,40 @@
             <?php if($this->session->userdata('id_user_level') == 5){ ?> 
             <input type="hidden" name="idpeg" value="<?= $id_pegawai?>">
             <div class="row mb-3 px-3">
-                <div class="col-12">
+                <div class="col-6">
                     <label for=""><small style="font-weight:bold">Nama Pegawai :</small></label>
                     <p style="margin:0"><?= $nama_tanpa_gelar_peg?></p>
                 </div>
+                  <div class="col-6">
+                    <label for=""><small style="font-weight:bold">Nip :</small></label>
+                    <p style="margin:0"><?= $nip_peg?></p>
+                </div>
             </div>
             <div class="row mb-3 px-3">
-                <div class="col-4">
+                <div class="col-5">
                     <label for=""><small style="font-weight:bold">Terhitung Pensiun (TMT) :</small></label>
                     <input name="tmtpensi" type="date" class="form-control form-control-sm" value="<?= $tmt_pensiun_peg?>">
                 </div>
-                <div class="col-4">
+                <div class="col-5">
                     <label for=""><small style="font-weight:bold">Status Kepegawaian :</small></label>
                     <?php echo form_dropdown('statuspeg', array('Aktif' => 'Aktif', 'Tidak Aktif' => 'Tidak Aktif'), $status_kepegawaian_peg, array('class' => 'form-control form-control-sm')); ?>
                     <!-- <input name="statuspeg" type="text" class="form-control form-control-sm" value="<?= $status_kepegawaian_peg?>"> -->
                 </div>
-                <div class="col-4">
+                <div class="col-2">
+                    <label for="" style="color:white"> asdas </label>
+                    <input type="button" id="detailBtn" class="btn btn-info w-100" value="Selengkapnya" style="height:60%">
+                </div>
+            </div>
+            <div class="row mb-3 px-3" style="height:0; overflow:hidden;" id="detailInfo">
+                <div class="col-12">
                     <label for=""><small style="font-weight:bold">Tanggal Meninggal Dunia :</small></label>
                     <input name="deaddate" type="date" class="form-control form-control-sm" value="<?= $tgl_meninggal_dunia_peg?>">
                 </div>
+                <script>
+                    $('#detailBtn').on('click', function(){
+                        $('#detailInfo').css('height', 'auto');
+                    });
+                </script>
             </div>
             <hr>
             <?php } else {?>

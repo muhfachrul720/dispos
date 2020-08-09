@@ -9,6 +9,7 @@ class Dashboard_p extends CI_Controller {
 		$this->load->library('form_validation');
 		$this->load->library('pdf');
         $this->load->model('m_pegawai');
+        $this->load->model('m_akademik');
 		$this->load->model('user_model');
 	}
 
@@ -566,10 +567,11 @@ class Dashboard_p extends CI_Controller {
 	}
 
 	// ======================================================== Ajuan Pensiun =====================================
-	function upload_file_multiple($id, $number, $date){
+	function upload_file_multiple($id, $date, $name, $number = 0){
+
 		$config['upload_path']          = './upload/berkas_pensiun/pegawai_'.$id.'tgl_'.$date;
 		$config['allowed_types']        = 'gif|jpg|png|pdf';
-		$config['file_name']        	= 'pegawai_'.$id.'berkas_'.$number;
+		$config['overwrite']			= true;
 
 		if(!is_dir('upload/berkas_pensiun/pegawai_'.$id.'tgl_'.$date)){
 			mkdir('./upload/berkas_pensiun/pegawai_'.$id.'tgl_'.$date, 077, TRUE);
@@ -577,23 +579,37 @@ class Dashboard_p extends CI_Controller {
 
 		$this->load->library('upload', $config);
 
-		if($this->upload->do_upload('img')){
+		if($bool = $this->upload->do_upload($name)){
 			return $this->upload->data();
+			// echo $bool;
 		}else {
-			redirect('dashboard_p/ajukan_pensiun');
-			die;
+			// redirect('dashboard_p/ajukan_pensiun');
+			return $this->upload->data();
+			// echo $bool;
 		}
 
 	}
 	
-	public function ajukan_pensiun()
+	public function ajukan_pensiun($id = null)
 	{
-		$this->template->load('template_admin', 'pegawai/ajuan_pensiun/dashboard_ajuan_pensiun');
+		if($id != null){
+			$data['ajuan'] = $this->m_pegawai->get_ajuan_pensiun($id)->row_array();
+			$data['result'] = $this->m_pegawai->get_berkas_pensi($id)->row_array();
+			$data['action'] = 'dashboard_p/update_ajuan_pensiun';
+
+			$this->template->load('template_admin', 'pegawai/ajuan_pensiun/dashboard_ajuan_pensiun', $data);
+			
+		}
+		else {
+			
+			$data['action'] = 'dashboard_p/create_ajuan_pensiun';
+			$this->template->load('template_admin', 'pegawai/ajuan_pensiun/dashboard_ajuan_pensiun', $data);
+		}
 	}
 
 	public function json_pensiun_individual()
 	{
-		// header('Content-Type: application/json');
+		header('Content-Type: application/json');
 		$id = $this->input->post('id');
 
         $data = $this->m_pegawai->json_pensiun_individual($id);
@@ -601,53 +617,145 @@ class Dashboard_p extends CI_Controller {
 	}
 
 	public function create_ajuan_pensiun()
-	{	
-		$post = $this->input->post();
+	{
 		$id = $this->session->userdata('id_pegawai');
 		$date = str_replace(':','_',date('y-m-d h:m:s'));
 
-		if($_FILES['images'] != null){
+		if($_FILES != null){
 
-			$data_ajpen = array(
-				'id_pegawai' => $id,
-				'waktu_pengajuan_pensiun' => date('Y-m-d h:m:s'),
+			foreach($_FILES as $key => $val){
+
+				if($_FILES[$key]['name'] != ''){
+
+					$_FILES[$key]['name'] = $key.'.'.pathinfo($_FILES[$key]['name'], PATHINFO_EXTENSION);
+
+					$upload = $this->upload_file_multiple($id, $date, $key);
+
+					if($key == 'skjbt'){
+						$upload = $this->upload_file_multiple($id, $date, $key);
+					}
+
+					$array[$key] = $upload['file_name'];
+					
+				}
+				else {
+					$array[$key] = '';
+				}
+				
+			}
+
+			$data_berkas = array(
+				'surat_pimpinan_uker' 						=> $array['supuk'],
+				'surat_permohonan_pns' 						=> $array['sppyb'],
+				'dpcp' 										=> $array['dpcpp'],
+				'skcpns_skpangkat_akhir' 					=> $array['skcpskpt'],
+				'sk_jabatan' 								=> $array['skjbt'],
+				'karpeg' 									=> $array['kpe'],
+				'surat_nikah_cerai' 						=> $array['askc'],
+				'surat_kenal_anak' 							=> $array['askla25'],
+				'kartu_keluarga' 							=> $array['kkdskys'],
+				'pas_foto' 									=> $array['pfb3x4'],
+				'formulir_permintaan_pembayaran_pensiun' 	=> $array['fppp'],
+				'foto_kopi_buku_rekening' 					=> $array['fkbr'],
+				'penilaian_prestasi' 						=> $array['pp1tr'],
+				'surat_pernyataan_tidak_dijatuhi_hukum' 	=> $array['sptpdhdts'],
+				'surat_pernyataan_tidak_berproses_pidana' 	=> $array['sptsmppapdpbpp'],
+				'surat_kematian' 							=> $array['awys'],
+				'surat_keterangan_janda_duda_anak_orangtua' => $array['ask'],
+				'surat_ahli_waris' 							=> $array['skjdaot']
 			);
 
-			if($idpensi = $this->m_pegawai->insert($data_ajpen, 'tbl_pengajuan_pensiun')){
+			if($id_berkas = $this->m_pegawai->insert($data_berkas, 'tbl_berkas_pengajuan_pensiun')){
 
-				for($i = 0; $i < count($_FILES['images']['name']); $i++){
-					$_FILES['img']['name']       = $_FILES['images']['name'][$i];
-					$_FILES['img']['type']       = $_FILES['images']['type'][$i];
-					$_FILES['img']['tmp_name']   = $_FILES['images']['tmp_name'][$i];
-					$_FILES['img']['error']      = $_FILES['images']['error'][$i];
-					$_FILES['img']['size']       = $_FILES['images']['size'][$i];
-					
-					$upload = $this->upload_file_multiple($id, $i, $date);
+				$data_ajpen = array(
+					'id_pegawai' => $id,
+					'id_berkas_pengajuan_pensiun' => $id_berkas,
+					'waktu_pengajuan_pensiun' => date('Y-m-d h:m:s'),
+				);
 
-					$data_berkas = array(
-						'nama_berkas' => $upload['file_name'],
-						'id_pengajuan_pensiun' => $idpensi,
-					);
-
-					$this->m_pegawai->insert($data_berkas, 'tbl_berkas_pensiun');
-				}
+				$this->m_pegawai->insert($data_ajpen, 'tbl_pengajuan_pensiun');
 
 				$this->session->set_flashdata('msg', 1);
 				redirect('dashboard_p/ajukan_pensiun');
-
 			} 
 			else {
 				$this->session->set_flashdata('msg', 2);
 				redirect('dashboard_p/ajukan_pensiun');
 			}
-
+			
 		}
 		else {
 			$this->session->set_flashdata('msg', 2);
 			redirect('dashboard_p/ajukan_pensiun');
 		}
+
 	}
 
+	public function update_ajuan_pensiun()
+	{
+		$id = $this->session->userdata('id_pegawai');
+		$date = substr(str_replace(':','_', $this->input->post('time')), 2);
+
+		$column = array(
+			'supuk' => 'surat_pimpinan_uker',
+			'sppyb' => 'surat_permohonan_pns',
+			'dpcpp' => 'dpcp',
+			'skcpskpt' => 'skcpns_skpangkat_akhir',
+			'skjbt' => 'sk_jabatan',
+			'kpe' => 'karpeg',
+			'askc' => 'surat_nikah_cerai',
+			'askla25' => 'surat_kenal_anak',
+			'kkdskys' => 'kartu_keluarga',
+			'pfb3x4' => 'pas_foto',
+			'fppp' => 'formulir_permintaan_pembayaran_pensiun',
+			'fkbr' => 'foto_kopi_buku_rekening',
+			'pp1tr' => 'penilaian_prestasi', 
+			'sptpdhdts' => 'surat_pernyataan_tidak_dijatuhi_hukum',
+			'sptsmppapdpbpp' => 'surat_pernyataan_tidak_diproses_pidana',
+			'ask' => 'surat_kematian',
+			'skjdaot' => 'surat_keterangan_janda_duda_anak_orangtua',
+			'awys' => 'surat_ahli_waris',
+		);
+
+		if($_FILES != null){
+
+			foreach($_FILES as $key => $val){
+
+				if($_FILES[$key]['name'] != ''){
+
+					$_FILES[$key]['name'] = $key.'.'.pathinfo($_FILES[$key]['name'], PATHINFO_EXTENSION);
+
+					$upload = $this->upload_file_multiple($id, $date, $key);
+
+					if($key == 'skjbt'){
+						$upload = $this->upload_file_multiple($id, $date, $key);
+					}
+
+					$array[$key] = $upload['file_name'];
+				}
+				else {
+					$array[$key] = '';
+				}
+
+				if($array[$key] != ''){
+					$data_berkas[$column[$key]] = $array[$key];
+				}
+			}
+
+			if($this->m_pegawai->update('tbl_berkas_pengajuan_pensiun', array('id_berkas_pengajuan_pensiun' => $this->input->post('id')), $data_berkas)){
+				$this->session->set_flashdata('msg', 1);
+				$this->ajukan_pensiun($this->input->post('id_aju'));
+			} 
+			else {
+				$this->session->set_flashdata('msg', 2);
+				$this->ajukan_pensiun($this->input->post('id_aju'));
+			}
+		}
+		else {
+			$this->session->set_flashdata('msg', 2);
+			$this->ajukan_pensiun($this->input->post('id_aju'));
+		}
+	}
 
 	// ======================================================= Ajuan Cuti ==============================================
 	public function pengajuan_cuti()
@@ -677,9 +785,6 @@ class Dashboard_p extends CI_Controller {
 	public function create_ajuan_cuti()
 	{
 		$post = $this->input->post();
-
-
-
 		$this->cuti_rules($post);
 		$this->form_validation->set_error_delimiters('<small class="text-danger">', '</small>');
 
@@ -989,7 +1094,22 @@ class Dashboard_p extends CI_Controller {
 		$pdf->Output();
 
 	}
-	
+
+	// ================================================== Jadwal Mengajar ============================================
+	public function jadwal_mengajar()
+	{
+		$data = $this->m_pegawai->check_dosen($this->session->userdata('id_pegawai'))->row_array();
+
+		$this->template->load('template_admin', 'pegawai/jadwal_mengajar/dashboard_jadwal_mengajar', $data);
+	}
+
+	public function json_jadwal_mengajar()
+	{
+		// header('Content-Type: application/json');
+		$data = $this->m_akademik->json_jadwal_mengajar_individual($this->session->userdata('id_pegawai'));
+
+		echo $data;
+	}
 }
 
 // 
