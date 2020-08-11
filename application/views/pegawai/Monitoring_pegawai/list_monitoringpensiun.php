@@ -2,8 +2,8 @@
     <div class="card shadow mb-4 p-5" style="font-size:14px">
 
         <div class="header">
-            <h3 class="mb-3">List Ajuan Pensiun</h3>
-            <p class="mb-0">List List Ajuan Pensiun Pegawai yang perlu ditinjau</p>
+            <h3 class="mb-3">Monitoring Ajuan Pensiun</h3>
+            <p class="mb-0">List Ajuan Pensiun Pegawai yang telah ditinjau</p>
         </div>
         <hr>
         <div class="body">
@@ -13,9 +13,9 @@
                     <tr>
                         <th width="40px">No</th>
                         <th>Nama Pegawai</th>
+                        <th>Nip</th>
                         <th>Waktu</th>
                         <th>Status</th>
-                        <th width="200px">Aksi</th>
                     </tr>
                     </thead>
                 </table>
@@ -54,26 +54,24 @@
                     },
                     processing: true,
                     serverSide: true,
-                    ajax: {"url": '<?= base_url()?>pegawai/json_verifpensi', "type": "POST", data : {'id' : <?= $this->session->userdata('id_pegawai')?>}},
+                    ajax: {"url": '<?= base_url()?>pegawai/json_mon_pensiun', "type": "POST", data : {'id' : <?= $this->session->userdata('id_pegawai')?>}},
                     columns: [
                         {"data" : 'waktu_pengajuan_pensiun', orderable:false},
                         {"data" : 'nama_tanpa_gelar_peg'},
+                        {"data" : 'nip_full_peg'},
                         {"data" : 'waktu_pengajuan_pensiun'},
                         {
                             "data" : 'status_pengajuan',
                             "render" : function(data, type, row){
-                                if(data == null){
-                                    return '<label class="badge badge-danger">Belum Diperiksa</label>' ;
+                                if(data == 1){
+                                    return '<label class="badge badge-success">Telah Diperiksa</label>' ;
+                                }
+                                else if(data == 2){
+                                    return '<label class="badge badge-danger">Ditolak</label>' ;
                                 }
                                 else {
-                                    return '<label class="badge badge-warning">Telah Dikoreksi</label>' ;
+                                    return '<label class="badge badge-warning">Akan Dikoreksi</label>' ;
                                 }
-                            }
-                        },
-                        {
-                            "data" : 'id_pengajuan_pensiun',
-                            "render" : function(data, type, row){
-                                return '<a href="<?=base_url()?>pegawai/tinjau_pensiun/'+data+'" class="btn btn-sm btn-primary">Tinjau</a>' ;
                             }
                         },
                     ],

@@ -193,7 +193,10 @@
                                             return "<label class='badge badge-success'>Disetujui</label>";
                                         }else if(data == 3){
                                             return "<label class='badge badge-warning'>Dikoreksi</label>";
-                                        }else {
+                                        }else if(data == 4){
+                                            return "<label class='badge badge-info'>Telah Dikoreksi</label>";
+                                        }
+                                        else {
                                             return "<label class='badge badge-danger'>Ditolak</label>";
                                         }
                                     }
@@ -208,6 +211,9 @@
                                         }
                                         else if(row.status_pengajuan == 1) {
                                             return "<a href='<?= base_url()?>upload/report_pensiun/"+row.laporan_pengajuan_pensiun+"' class='btn btn-success btn-sm' download>Download Laporan</a>";
+                                        }
+                                        else {
+                                            return '';
                                         };
                                     }
                                 },

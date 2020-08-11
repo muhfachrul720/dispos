@@ -31,6 +31,59 @@ class M_pegawai extends CI_Model{
         }
     }
 
+    // ========================================= Dashboard =========================================================
+    public function count_cuti()
+    {
+        $this->db->select('id_pengajuan_cuti');
+        $this->db->where('status_cuti', null);
+        return $this->db->get('tbl_pengajuan_cuti');
+    }
+
+    public function count_pensi()
+    {
+        $this->db->select('id_pengajuan_pensiun');
+        $this->db->where('status_pengajuan', null);
+        $this->db->or_where('status_pengajuan', 4);
+        return $this->db->get('tbl_pengajuan_pensiun');
+    }
+
+    public function count_naikpangkat()
+    {
+        
+    }
+
+    public function count_pegawai()
+    {
+        $this->db->select('id_pegawai');
+        $this->db->where('status_kepegawaian_peg', null);
+        $this->db->or_where('status_kepegawaian_peg', 'Tidak Aktif');
+        return $this->db->get('tbl_pegawai');
+    }
+
+    // ========================================== Monitoring Pegawai ================================================
+    public function json_mon_pensiun()
+    {
+        $this->datatables->select('id_pengajuan_pensiun, nip_full_peg, nama_tanpa_gelar_peg, status_pengajuan, waktu_pengajuan_pensiun');
+        $this->datatables->from($this->table_pensiun.' as psn');
+        $this->datatables->join($this->table_name, 'pgw.id_pegawai = psn.id_pegawai');
+        $this->datatables->where('status_pengajuan', 1);
+        $this->datatables->or_where('status_pengajuan', 2);
+        $this->datatables->or_where('status_pengajuan', 3);
+        return $this->datatables->generate();
+        // $this->datatables->where('', $where);
+        return $this->datatables->generate();   
+    }
+
+    public function json_mon_cuti()
+    {
+        $this->datatables->select('id_pengajuan_cuti, nama_tanpa_gelar_peg, status_cuti, waktu_pengajuan_cuti, jenis_pengajuan_cuti');
+        $this->datatables->from('tbl_pengajuan_cuti as cuti');
+        $this->datatables->join($this->table_name, 'pgw.id_pegawai = cuti.id_pegawai');
+        $this->datatables->where('status_cuti', 1);
+        $this->datatables->or_where('status_cuti', 2);
+        return $this->datatables->generate();
+    }
+
     // ========================================== DUK Pegawai ========================================================
     public function json_duk(){
         $this->datatables->select('id_users, pgw.id_pegawai as id_peg, nama_tanpa_gelar_peg, status_kepegawaian_peg, tmt_pensiun_peg, gaji_pokok_peg, tgl_meninggal_dunia_peg');
@@ -174,7 +227,7 @@ class M_pegawai extends CI_Model{
         $this->datatables->from($this->table_pensiun.' as psn');
         $this->datatables->join($this->table_name, 'pgw.id_pegawai = psn.id_pegawai');
         $this->datatables->where('status_pengajuan', null);
-        $this->datatables->or_where('status_pengajuan', 3);
+        $this->datatables->or_where('status_pengajuan', 4);
         return $this->datatables->generate();
     }
 

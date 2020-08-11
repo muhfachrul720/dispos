@@ -2,8 +2,8 @@
     <div class="card shadow mb-4 p-5" style="font-size:14px">
 
         <div class="header">
-            <h3 class="mb-3">List Ajuan Pensiun</h3>
-            <p class="mb-0">List List Ajuan Pensiun Pegawai yang perlu ditinjau</p>
+            <h3 class="mb-3">List Ajuan Cuti</h3>
+            <p class="mb-0">List List Ajuan Cuti</p>
         </div>
         <hr>
         <div class="body">
@@ -14,8 +14,8 @@
                         <th width="40px">No</th>
                         <th>Nama Pegawai</th>
                         <th>Waktu</th>
+                        <th>Jenis</th>
                         <th>Status</th>
-                        <th width="200px">Aksi</th>
                     </tr>
                     </thead>
                 </table>
@@ -54,26 +54,33 @@
                     },
                     processing: true,
                     serverSide: true,
-                    ajax: {"url": '<?= base_url()?>pegawai/json_verifpensi', "type": "POST", data : {'id' : <?= $this->session->userdata('id_pegawai')?>}},
+                    ajax: {"url": '<?= base_url()?>pegawai/json_mon_cuti', "type": "POST", data : {'id' : <?= $this->session->userdata('id_pegawai')?>}},
                     columns: [
-                        {"data" : 'waktu_pengajuan_pensiun', orderable:false},
+                        {"data" : 'waktu_pengajuan_cuti', orderable:false},
                         {"data" : 'nama_tanpa_gelar_peg'},
-                        {"data" : 'waktu_pengajuan_pensiun'},
+                        {"data" : 'waktu_pengajuan_cuti'},
                         {
-                            "data" : 'status_pengajuan',
+                            "data" : 'jenis_pengajuan_cuti',
                             "render" : function(data, type, row){
-                                if(data == null){
-                                    return '<label class="badge badge-danger">Belum Diperiksa</label>' ;
-                                }
-                                else {
-                                    return '<label class="badge badge-warning">Telah Dikoreksi</label>' ;
-                                }
+                                if(data == 1) return 'Cuti Besar';
+                                else if(data == 2) return 'Cuti Tahunan';
+                                else if(data == 3) return 'Cuti Sakit';
+                                else if(data == 4) return 'Cuti Melahirkan';
+                                else if(data == 5) return 'Cuti Karena Alasan Penting';
+                                else if(data == 6) return 'Cuti Di Luar Tanggungan Negara';
+
+                                return  ;
                             }
                         },
                         {
-                            "data" : 'id_pengajuan_pensiun',
+                            "data" : 'status_cuti',
                             "render" : function(data, type, row){
-                                return '<a href="<?=base_url()?>pegawai/tinjau_pensiun/'+data+'" class="btn btn-sm btn-primary">Tinjau</a>' ;
+                                if(data == 1){
+                                    return '<label class="badge badge-success">Telah Diperiksa</label>';
+                                }
+                                else {
+                                    return '<label class="badge badge-danger">Ditolak</label>';
+                                }
                             }
                         },
                     ],

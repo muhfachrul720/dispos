@@ -28,7 +28,7 @@
                 </div>
             </div>
 
-            <?= form_open('dashboard_p/create_ajuan_pensiun')?>
+            <?= form_open('dashboard_p/create_ajuan_cuti')?>
 
             <div class="card border mt-3">
                 <div class="card-body px-5">

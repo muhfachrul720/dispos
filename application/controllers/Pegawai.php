@@ -10,7 +10,7 @@ class Pegawai extends CI_Controller {
 		$this->load->library('form_validation');
 	}
 	
-	// ==========================================
+	// ========================================== General ====================================
 	function upload_file($id){
 		
 		$config['upload_path']          = './upload/report_pensiun';
@@ -28,12 +28,48 @@ class Pegawai extends CI_Controller {
 
 	public function index(){
 
-		$data['title'] = 'Dashboard Admin';
+		$data['title'] = 'Dashboard Admin Pegawai';
+
+		$data['countcuti'] = $this->m_pegawai->count_cuti()->num_rows();
+		$data['countpensi'] = $this->m_pegawai->count_pensi()->num_rows();
+		// $data['countnaikpangkat'] = $this->m_pegawai->count_naikpangkat()->num_rows();
+		$data['countnaikpangkat'] = 0;
+		$data['countpegawai'] = $this->m_pegawai->count_pegawai()->num_rows();
+
+		// var_dump($data['countpensi']);
+		// die;
 
 		$this->template->load('template_admin', 'dashboard_adminpegawai', $data);
 	}
 
+	// =================================== Monitoring Pegawai ===============================
+	public function monitoring_pensiun()
+	{
+		$this->template->load('template_admin', 'pegawai/monitoring_pegawai/list_monitoringpensiun');	
+	}
+	
+	public function json_mon_pensiun()
+	{
+		header('Content-Type: application/json');
+		
+		$data = $this->m_pegawai->json_mon_pensiun();
+		echo $data;
+	}
+	
+	public function monitoring_cuti()
+	{
+		$this->template->load('template_admin', 'pegawai/monitoring_pegawai/list_monitoringcuti');	
+	}
 
+	public function json_mon_cuti()
+	{
+		// header('Content-Type: application/json');
+		
+		$data = $this->m_pegawai->json_mon_cuti();
+		echo $data;
+	}
+
+	// ======================================= Verifikasi Cuti =================================
 	public function verifikasi_cuti()
 	{
 		$this->template->load('template_admin', 'pegawai/ajuan_cuti/list_ajuan_cuti');
@@ -86,12 +122,7 @@ class Pegawai extends CI_Controller {
 		}
 	}
 
-	// ========================================================================================
-	public function mon_pegawai(){
-
-	}
-
-	// ============================ Verifikasi Pensiun ========================================
+	// =================================== Verifikasi Pensiun ========================================
 	public function verifikasi_pensiun()
 	{
 		$this->template->load('template_admin', 'pegawai/ajuan_pensiun/list_ajuan_pensiun');
@@ -149,17 +180,12 @@ class Pegawai extends CI_Controller {
 	public function verifikasi_kenaikan_pangkat(){
 		
 	}
-	
-	// ============================ Data Pensiun ================================================
-	public function data_pensiun(){
-	}
 
 	public function data_pangkat_golongan(){
 
 	}
 
-	// ================================================================================================================================
-	// Data Duk
+	// ========================================================== Data Duk =====================================================
 	public function data_duk(){
 
 		$data['title'] = 'Dashboard Admin';

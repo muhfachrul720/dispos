@@ -641,7 +641,6 @@ class Dashboard_p extends CI_Controller {
 				else {
 					$array[$key] = '';
 				}
-				
 			}
 
 			$data_berkas = array(
@@ -743,8 +742,20 @@ class Dashboard_p extends CI_Controller {
 			}
 
 			if($this->m_pegawai->update('tbl_berkas_pengajuan_pensiun', array('id_berkas_pengajuan_pensiun' => $this->input->post('id')), $data_berkas)){
-				$this->session->set_flashdata('msg', 1);
-				$this->ajukan_pensiun($this->input->post('id_aju'));
+
+				$data_ajpen = array(
+					'status_pengajuan' => 4,
+				);
+
+				if($this->m_pegawai->update('tbl_pengajuan_pensiun', array('id_pengajuan_pensiun' => $this->input->post('id_aju')), $data_ajpen)){
+					$this->session->set_flashdata('msg', 1);
+					$this->ajukan_pensiun($this->input->post('id_aju'));
+				}
+				else {
+					$this->session->set_flashdata('msg', 2);
+					$this->ajukan_pensiun($this->input->post('id_aju'));	
+				}
+
 			} 
 			else {
 				$this->session->set_flashdata('msg', 2);
