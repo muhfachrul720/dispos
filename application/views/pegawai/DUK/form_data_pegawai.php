@@ -8,24 +8,45 @@
             <?php if($this->session->userdata('id_user_level') == 5){ ?> 
             <input type="hidden" name="idpeg" value="<?= $id_pegawai?>">
             <div class="row mb-3 px-3">
-                <div class="col-6">
+                <div class="col-5">
                     <label for=""><small style="font-weight:bold">Nama Pegawai :</small></label>
                     <p style="margin:0"><?= $nama_tanpa_gelar_peg?></p>
                 </div>
-                  <div class="col-6">
-                    <label for=""><small style="font-weight:bold">Nip :</small></label>
-                    <p style="margin:0"><?= $nip_peg?></p>
-                </div>
             </div>
             <div class="row mb-3 px-3">
-                <div class="col-5">
-                    <label for=""><small style="font-weight:bold">Terhitung Pensiun (TMT) :</small></label>
-                    <input name="tmtpensi" type="date" class="form-control form-control-sm" value="<?= $tmt_pensiun_peg?>">
-                </div>
-                <div class="col-5">
+                <div class="col-4">
                     <label for=""><small style="font-weight:bold">Status Kepegawaian :</small></label>
                     <?php echo form_dropdown('statuspeg', array('Aktif' => 'Aktif', 'Tidak Aktif' => 'Tidak Aktif'), $status_kepegawaian_peg, array('class' => 'form-control form-control-sm')); ?>
                     <!-- <input name="statuspeg" type="text" class="form-control form-control-sm" value="<?= $status_kepegawaian_peg?>"> -->
+                </div>
+                <div class="col-3">
+                    <label for=""><small style="font-weight:bold">Terhitung Masuk (TMT) :</small></label>
+                    <input id="tmtIn" name="tmtmasuk" type="date" class="form-control form-control-sm" value="<?= $tmt_masuk_peg?>">
+                </div>
+                <script>
+                    
+                    <?php if($dosen == 12) {?>
+                        var limit = 20;
+                    <?php }else {?>
+                        var limit = 10;
+                    <?php }?>
+
+                    $('#tmtIn').on('change', function(){
+                        var tmtIn = new Date($(this).val());
+
+                        var year = tmtIn.getFullYear();
+                        var month = tmtIn.getMonth();
+                        var day = tmtIn.getDate();
+
+                        var tmtOut = new Date((year + limit), month, day + 1);
+                        document.getElementById('tmtOut').valueAsDate = tmtOut;
+                    });
+
+                </script>
+                <div class="col-3">
+                    <label for=""><small style="font-weight:bold">Terhitung Pensiun (TMT) :</small></label>
+                    <input id="tmtOut" name="tmtpensi" type="date" class="form-control form-control-sm" value="<?= $tmt_pensiun_peg?>">
+                    <!-- <input id="tmtOut" name="tmtpensi" type="text" class="form-control form-control-sm" value="<?= $tmt_pensiun_peg?>"> -->
                 </div>
                 <div class="col-2">
                     <label for="" style="color:white"> asdas </label>
@@ -48,19 +69,13 @@
             
             <input type="hidden" name="id" value="<?= $id_pegawai?>">
             <div class="row mb-3 px-3">
-                <div class="col-12">
+                <div class="col-6">
                     <label for=""><small style="font-weight:bold">Nama Lengkap :</small></label>
                     <input name="name" type="text" class="form-control form-control-sm" value="<?= $nama_tanpa_gelar_peg?>">
                 </div>
-            </div>
-            <div class="row mb-3 px-3">
-                <div class="col-6">
+                   <div class="col-6">
                     <label for=""><small style="font-weight:bold">Nip (Nomor Induk Pegawai) :</small></label>
                     <input name="nip" type="text" class="form-control form-control-sm" value="<?= $nip_peg?>">
-                </div>
-                <div class="col-6">
-                    <label for=""><small style="font-weight:bold">Nip Full :</small></label>
-                    <input name="nipfull" type="text" class="form-control form-control-sm" value="<?= $nip_full_peg?>">
                 </div>
             </div>
             <div class="row mb-3 px-3">
@@ -89,15 +104,11 @@
             </div>
             <hr style="mx-2">
             <div class="row mb-3 px-3">
-                <div class="col-4">
-                    <label for=""><small style="font-weight:bold">Nip Lama Pegawai :</small></label>
-                    <input name="oldnip" type="text" class="form-control form-control-sm" value="<?= $nip_lama_peg?>">
-                </div>
-                <div class="col-4">
+                <div class="col-6">
                     <label for=""><small style="font-weight:bold">Karpeg pegawai :</small></label>
                     <input name="karpeg" type="text" class="form-control form-control-sm" value="<?= $karpeg_peg?>">
                 </div>
-                <div class="col-4">
+                <div class="col-6">
                     <label for=""><small style="font-weight:bold">Nidn Pegawai :</small></label>
                     <input name="nidn" type="text" class="form-control form-control-sm" value="<?= $nidn_peg?>">
                 </div>

@@ -1,9 +1,6 @@
 <div class="container-fluid">
-    <?php if($dosen != 12){?>
 
-        <h2 class="" style="margin-top:25vh; margin-bottom:30vh; text-align:center;">Hanya Karyawan Berstatus Dosen Yang Dapat Mengakses Jadwal Mengajar</h2>
-
-    <?php } else { ?>
+    <a href="<?= base_url()?>jurusan/form_jadkul" class="btn btn-success mb-3" style=""> Tambah Jadwal Kuliah</a>
 
     <div class="card shadow mb-4 p-5" style="font-size:14px">
 
@@ -24,6 +21,7 @@
                         <th>Jadwal (Hari)</th>
                         <th>Jadwal (Jam)</th>
                         <th>Dosen</th>
+                        <th>Aksi</th>
                     </tr>
                     </thead>
                 </table>
@@ -62,7 +60,7 @@
                     },
                     processing: true,
                     serverSide: true,
-                    ajax: {"url": '<?= base_url()?>dashboard_p/json_jadwal_mengajar', "type": "POST"},
+                    ajax: {"url": '<?= base_url()?>jurusan/json_jadwal_mengajar', "type": "POST"},
                     columns: [
                         {"data" : 'id_jadwal_kuliah', orderable:false},
                         {"data" : 'nama_mata_kuliah'},
@@ -71,6 +69,12 @@
                         {"data" : 'hari_jadwal_kuliah'},
                         {"data" : 'waktu_jadwal_kuliah'},
                         {"data" : 'nama_lengkap_peg'},
+                        {
+                            "data" : 'id_jadwal_kuliah',
+                            "render" : function(data, type, row){
+                                return '<a href="<?= base_url()?>jurusan/form_jadkul/'+data+'" class="btn btn-sm btn-warning mx-2"><i class="mdi mdi-pencil"></i></a><a href="<?= base_url()?>akademik/hapus_jadkul/'+data+'" class="btn btn-sm btn-danger"><i class="mdi mdi-delete"></i></a>' ;
+                            }
+                        },
                     ],
                     order: [[0, 'asc']],
                     rowCallback: function(row, data, iDisplayIndex) {
@@ -91,5 +95,3 @@
 
     </div>
 </div>
-
-<?php }; ?>

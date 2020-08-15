@@ -289,7 +289,7 @@
                                     "data" : 'id_pengajuan_cuti',
                                     "render" : function(data, type, row){
                                         if(row.status_cuti == 1){
-                                            return '<a href="<?= base_url()?>dashboard_p/print_pdf_cuti/'+data+'" style="font-size:12px" class="btn py-0 btn-sm btn-info">Download</a>';
+                                            return '<a href="<?= base_url()?>dashboard_p/print_pdf_cuti/'+data+'" style="font-size:12px" class="btn btn-sm btn-info">Download</a>';
                                         }else {
                                             return '';
                                         };

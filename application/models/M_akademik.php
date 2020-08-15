@@ -6,6 +6,7 @@ class M_akademik extends CI_Model{
     protected $table_jadwal = 'tbl_info_jadwal_kuliah as jadkul';
     protected $table_matkul = 'tbl_mata_kuliah as matkul';
     protected $table_pegawai = 'tbl_pegawai as pgw';
+    protected $table_jurusan = 'tbl_jurusan as jrs';
 
     public function __construct()
     {
@@ -61,10 +62,11 @@ class M_akademik extends CI_Model{
     
     public function get_jadkul_byid($id)
     {
-        $this->db->select('id_jadwal_kuliah, nama_lengkap_peg, pgw.id_pegawai, matkul.id_mata_kuliah, hari_jadwal_kuliah, waktu_jadwal_kuliah');
+        $this->db->select('id_jadwal_kuliah, jrs.id_jurusan, nama_lengkap_peg, pgw.id_pegawai, matkul.id_mata_kuliah, hari_jadwal_kuliah, waktu_jadwal_kuliah');
         $this->db->from($this->table_jadwal);
         $this->db->join($this->table_pegawai, 'pgw.id_pegawai = jadkul.id_pegawai');
         $this->db->join($this->table_matkul, 'matkul.id_mata_kuliah = jadkul.id_mata_kuliah');
+        $this->db->join($this->table_jurusan, 'jrs.id_jurusan = jadkul.jurusan_jadwal_kuliah');
         $this->db->where('id_jadwal_kuliah', $id);
 
         return $this->db->get();

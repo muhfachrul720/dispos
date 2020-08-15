@@ -17,6 +17,12 @@ class Dashboard_p extends CI_Controller {
 	public function index()
 	{
 		$data = $this->m_pegawai->get_pegawai_individual($this->session->userdata('id_users'));
+
+		if(isset($data['pangkat_cpns'])){
+			$gol = explode('/',$data['pangkat_cpns'])[1];
+			$data['pangkat_cpns'] = explode('/', $data['pangkat_cpns'])[0].'/ '.convert_gol_to_roman($gol).'/ '.explode('/', $data['pangkat_cpns'])[2];			
+		}
+
 		$data['jumlah_anak'] = $this->m_pegawai->count_child($data['id_keluarga'])->num_rows();
 
 		$this->template->load('template_admin', 'pegawai/duk/detail_duk_pegawai', $data);	
@@ -263,8 +269,14 @@ class Dashboard_p extends CI_Controller {
 		$data = $this->m_pegawai->get_dataother('tbl_pangkat_terakhir',$this->session->userdata('id_pegawai'));
 		$data['action'] = base_url('dashboard_p/update_datapanghir');
 
-		$data['golongan'] = explode('/', $data['pangkat_terakhir'])[1];
-		$data['ruang'] = explode('/', $data['pangkat_terakhir'])[2];
+		if(isset($data['pangkat_terakhir'])){
+			$data['golongan'] = explode('/', $data['pangkat_terakhir'])[1];
+			$data['ruang'] = explode('/', $data['pangkat_terakhir'])[2];
+		}
+		else {
+			$data['golongan'] = '';
+			$data['ruang'] = '';
+		}
 
 		$this->template->load('template_admin', 'pegawai/duk/form_data_pangkatakhir', $data);
 	}
@@ -519,18 +531,17 @@ class Dashboard_p extends CI_Controller {
 			// Pegawai
 			$data_peg = array(
 				'nip_peg' 				=> $post['nip'],
-				'nip_full_peg' 			=> $post['nipfull'],
 				'nama_tanpa_gelar_peg' 	=> $post['name'],
-				'nama_lengkap_peg'		=> $post['profgelar'].$post['frontgelar'].$post['hajigelar'].$post['name'].'.'.$post['backgelar'],
+				'nama_lengkap_peg'		=> $post['profgelar'].$post['frontgelar'].$post['hajigelar'].' '.$post['name'].'.'.$post['backgelar'],
 				'jk_peg' 				=> $post['gender'],
 				'agama_peg' 			=> $post['religion'],
 				'tempat_lahir_peg' 		=> $post['birthplace'],
 				'kabupaten_lahir_peg' 	=> $post['birthkab'],
+				'nidn_peg' 	=> $post['nidn'],
 				'tgl_lahir_peg' 		=> $post['birthdate'],
 				'usia_thn_lahir_peg' 	=> $age,
 				'usia_bln_lahir_peg'	=> ($age * 12),
 				'kelompok_umur_peg' 	=> $age_group,
-				'nip_lama_peg' 			=> $post['oldnip'],
 				'karpeg_peg' 			=> $post['karpeg'],
 				'sertifikat_dosen_peg' 	=> $post['sertif'],
 				'alamat_rumah_peg' 		=> $post['address'],
@@ -597,13 +608,13 @@ class Dashboard_p extends CI_Controller {
 			$data['result'] = $this->m_pegawai->get_berkas_pensi($id)->row_array();
 			$data['action'] = 'dashboard_p/update_ajuan_pensiun';
 
-			$this->template->load('template_admin', 'pegawai/ajuan_pensiun/dashboard_ajuan_pensiun', $data);
+			$this->template->load('template_admin', 'pegawai/pensiun/ajuan_pensiun/dashboard_ajuan_pensiun', $data);
 			
 		}
 		else {
 			
 			$data['action'] = 'dashboard_p/create_ajuan_pensiun';
-			$this->template->load('template_admin', 'pegawai/ajuan_pensiun/dashboard_ajuan_pensiun', $data);
+			$this->template->load('template_admin', 'pegawai/pensiun/ajuan_pensiun/dashboard_ajuan_pensiun', $data);
 		}
 	}
 
@@ -710,7 +721,7 @@ class Dashboard_p extends CI_Controller {
 			'fkbr' => 'foto_kopi_buku_rekening',
 			'pp1tr' => 'penilaian_prestasi', 
 			'sptpdhdts' => 'surat_pernyataan_tidak_dijatuhi_hukum',
-			'sptsmppapdpbpp' => 'surat_pernyataan_tidak_diproses_pidana',
+			'sptsmppapdpbpp' => 'surat_pernyataan_tidak_berproses_pidana',
 			'ask' => 'surat_kematian',
 			'skjdaot' => 'surat_keterangan_janda_duda_anak_orangtua',
 			'awys' => 'surat_ahli_waris',

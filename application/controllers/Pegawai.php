@@ -18,7 +18,7 @@ class Pegawai extends CI_Controller {
 		$config['file_name']        	= 'laporan_pensiun_pegawai_'.$id;
 
 		$this->load->library('upload', $config);
-		if($this->upload->do_upload('report')){
+		if($this->upload->do_upload('sk')){
 			return $this->upload->data();
 		}else {
 			return $this->upload->data();
@@ -42,23 +42,50 @@ class Pegawai extends CI_Controller {
 		$this->template->load('template_admin', 'dashboard_adminpegawai', $data);
 	}
 
-	// =================================== Monitoring Pegawai ===============================
+	// =================================== Monitoring Pegawai =====================================
+	// Pensiun
 	public function monitoring_pensiun()
 	{
-		$this->template->load('template_admin', 'pegawai/monitoring_pegawai/list_monitoringpensiun');	
+		$this->template->load('template_admin', 'pegawai/pensiun/monitoring_pensiun/list_monitoringpensiun');	
 	}
-	
+
 	public function json_mon_pensiun()
 	{
-		header('Content-Type: application/json');
+		// header('Content-Type: application/json');	
+		$data = $this->m_pegawai->json_peg_pensiun(strtotime(date('Y-m-d')));
+
+		echo $data;
+	}
+
+	public function reporting_pensiun()
+	{
+		$this->template->load('template_admin', 'pegawai/pensiun/monitoring_pensiun/list_reportingpensiun');
+	}
+
+	public function json_reporting_pensiun()
+	{
+		// header('Content-Type: application/json');	
+		$data = $this->m_pegawai->json_report_pensiun();
+		echo $data;
+	}
+
+	// =================================== Monitoring Ajuan Pegawai ===============================
+	public function monitoring_ajuan_pensiun()
+	{
+		$this->template->load('template_admin', 'pegawai/pensiun/ajuan_pensiun/list_monitoring_ajuanpensiun');	
+	}
+	
+	public function json_ajuan_mon_pensiun()
+	{
+		// header('Content-Type: application/json');
 		
-		$data = $this->m_pegawai->json_mon_pensiun();
+		$data = $this->m_pegawai->json_ajuan_mon_pensiun();
 		echo $data;
 	}
 	
 	public function monitoring_cuti()
 	{
-		$this->template->load('template_admin', 'pegawai/monitoring_pegawai/list_monitoringcuti');	
+		$this->template->load('template_admin', 'pegawai/monitoring_ajuan_pegawai/list_monitoringcuti');	
 	}
 
 	public function json_mon_cuti()
@@ -125,7 +152,7 @@ class Pegawai extends CI_Controller {
 	// =================================== Verifikasi Pensiun ========================================
 	public function verifikasi_pensiun()
 	{
-		$this->template->load('template_admin', 'pegawai/ajuan_pensiun/list_ajuan_pensiun');
+		$this->template->load('template_admin', 'pegawai/pensiun/ajuan_pensiun/list_ajuan_pensiun');
 	}
 	
 	public function json_verifpensi()
@@ -141,7 +168,7 @@ class Pegawai extends CI_Controller {
 		$data = $this->m_pegawai->get_ajuan_pensiun($id)->row_array();
 		$data['berkas'] = $this->m_pegawai->get_berkas_pensi($id)->row_array();
 
-		$this->template->load('template_admin', 'pegawai/ajuan_pensiun/form_tinjau_pensiun', $data);
+		$this->template->load('template_admin', 'pegawai/pensiun/ajuan_pensiun/form_tinjau_pensiun', $data);
 	}
 
 	public function action_tinjau_pensiun()
@@ -152,16 +179,18 @@ class Pegawai extends CI_Controller {
 
 		if($this->form_validation->run() != FALSE){
 
-			$filename = $this->upload_file($post['idpeg']);
-			
 			$dataaju = array(
 				'id_users' => $this->session->userdata('id_users'),
 				'status_pengajuan' => $post['status'],
 				'keterangan_pengajuan_pensiun' => $post['ket'],
-				'laporan_pengajuan_pensiun' => $filename['file_name'],
 			);
 
 			if($this->m_pegawai->update('tbl_pengajuan_pensiun', array('id_pengajuan_pensiun' => $post['id']), $dataaju)){
+
+				if($post['status'] == 1){
+					$this->m_pegawai->update('tbl_pegawai', array('id_pegawai' => $post['idpeg']), array('status_kepegawaian_peg' => 'Pensiun'));
+				};
+
 				$this->session->set_flashdata('msg', 'Berhasil Mengupdate Data');
 				redirect('pegawai/verifikasi_pensiun');
 			}
@@ -174,6 +203,28 @@ class Pegawai extends CI_Controller {
 			$this->tinjau_pensiun($post['id']);
 		}
 
+	}
+
+	public function upload_sk()
+	{
+		// var_dump($_FILES);
+		$post = $this->input->post();
+		
+		if($_FILES['sk']['name'] != ""){
+			$filename = $this->upload_file($post['ajupen']);
+
+			$datask = array(
+				'laporan_pengajuan_pensiun' => $filename['file_name'],
+			);
+
+			$this->m_pegawai->update('tbl_pengajuan_pensiun', array('id_pengajuan_pensiun' => $post['ajupen']), $datask);
+
+			redirect('pegawai/reporting_pensiun');
+		}	
+		else {
+			$this->session->set_flashdata('msg', 'Berhasil Mengupdate Data');
+			redirect('pegawai/reporting_pensiun');
+		};
 	}
 	
 	// ===================================================================================================================
@@ -217,6 +268,7 @@ class Pegawai extends CI_Controller {
 			'status_kepegawaian_peg' => $post['statuspeg'],
 			'tgl_meninggal_dunia_peg' => $post['deaddate'],
 			'tmt_pensiun_peg' => $post['tmtpensi'],
+			'notif_pensiun_peg' => strtotime('-1 years', strtotime(date('Y-m-d', strtotime($post['tmtpensi'])))),
 		);
 
 		if($this->m_pegawai->update('tbl_pegawai', array('id_pegawai' => $post['idpeg']),$datapeg)){

@@ -61,9 +61,9 @@ class M_pegawai extends CI_Model{
     }
 
     // ========================================== Monitoring Pegawai ================================================
-    public function json_mon_pensiun()
+    public function json_ajuan_mon_pensiun()
     {
-        $this->datatables->select('id_pengajuan_pensiun, nip_full_peg, nama_tanpa_gelar_peg, status_pengajuan, waktu_pengajuan_pensiun');
+        $this->datatables->select('id_pengajuan_pensiun, nip_peg, nama_tanpa_gelar_peg, status_pengajuan, waktu_pengajuan_pensiun');
         $this->datatables->from($this->table_pensiun.' as psn');
         $this->datatables->join($this->table_name, 'pgw.id_pegawai = psn.id_pegawai');
         $this->datatables->where('status_pengajuan', 1);
@@ -72,6 +72,23 @@ class M_pegawai extends CI_Model{
         return $this->datatables->generate();
         // $this->datatables->where('', $where);
         return $this->datatables->generate();   
+    }
+
+    public function json_peg_pensiun($where)
+    {
+        // $this->datatables->select('id_pengajuan_cuti, nama_tanpa_gelar_peg, status_cuti, waktu_pengajuan_cuti, jenis_pengajuan_cuti');
+        $this->datatables->from('tbl_pegawai as pgw');
+        $this->datatables->where('notif_pensiun_peg <=', $where);
+        return $this->datatables->generate();
+    }
+
+    public function json_report_pensiun()
+    {
+        $this->datatables->select('*, pgw.id_pegawai as idpgw');
+        $this->datatables->from('tbl_pegawai as pgw');
+        $this->datatables->join('tbl_pengajuan_pensiun as ajupns', 'pgw.id_pegawai = ajupns.id_pegawai');
+        $this->datatables->where('ajupns.status_pengajuan', 1);
+        return $this->datatables->generate();
     }
 
     public function json_mon_cuti()
@@ -115,7 +132,7 @@ class M_pegawai extends CI_Model{
 
     public function get_infopegawai_adminonly($where)
     {
-        $this->db->select('id_user, nip_peg, nama_tanpa_gelar_peg, status_kepegawaian_peg, tmt_pensiun_peg, gaji_pokok_peg, tgl_meninggal_dunia_peg, id_pegawai');
+        $this->db->select('id_user, tmt_masuk_peg, id_jab_struktural as dosen, nama_tanpa_gelar_peg, status_kepegawaian_peg, tmt_pensiun_peg, gaji_pokok_peg, tgl_meninggal_dunia_peg, id_pegawai');
         $this->db->where('id_pegawai', $where);
         return $this->db->get($this->table_name);
     }
@@ -214,9 +231,9 @@ class M_pegawai extends CI_Model{
 
     public function json_pensiun_individual($where)
     {
-        $this->datatables->select('id_pengajuan_pensiun, status_pengajuan, waktu_pengajuan_pensiun, keterangan_pengajuan_pensiun, username, id_berkas_pengajuan_pensiun, laporan_pengajuan_pensiun');
+        $this->datatables->select('id_pengajuan_pensiun, status_pengajuan, waktu_pengajuan_pensiun, username, keterangan_pengajuan_pensiun, id_berkas_pengajuan_pensiun, laporan_pengajuan_pensiun');
         $this->datatables->from($this->table_pensiun.' as psn');
-        $this->datatables->join('tbl_user as us', 'us.id_users = psn.id_users');
+        $this->datatables->join('tbl_user as us', 'us.id_users = psn.id_users', 'LEFT');
         $this->datatables->where('psn.id_pegawai', $where);
         return $this->datatables->generate();   
     }

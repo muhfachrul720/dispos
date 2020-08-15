@@ -40,6 +40,10 @@ Class Auth extends CI_Controller{
                     # code...
                     redirect('Akademik');
                 }
+                  else if ($user['id_user_level'] == 11)
+                {
+                    redirect('Jurusan');
+                }   
                 
             }else{
                 redirect('Auth');

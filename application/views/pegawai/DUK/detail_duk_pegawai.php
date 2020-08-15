@@ -10,7 +10,7 @@
             <h4 class="h3 mb-0 text-gray-800">Detail DUK Pegawai</h4>
             <div>
             <div class="dropdown mx-2" style="float:left">
-                <button class="btn btn-sm btn-danger dropdown-toggle" type="button" id="dropdownMenuOutlineButton3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> Dropdown </button>
+                <button class="btn btn-sm btn-danger dropdown-toggle" type="button" id="dropdownMenuOutlineButton3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> Update Data DUK Pegawai </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuOutlineButton3">
                     <a class="dropdown-item" href="<?=base_url()?>dashboard_p/form_data_pegawai">Update Data Pegawai</a>
                     <a class="dropdown-item" href="<?=base_url()?>dashboard_p/form_data_cpns">Update Data CPNS</a>
@@ -31,9 +31,9 @@
         </div>
 
         <?php
-            if($days = notif_pensiun($tmt_pensiun_peg)){
+            if(notif_pensiun($tmt_pensiun_peg) != null){
         ?>
-            <div class="alert alert-danger">Harap Segera Mengajukan Pensiun. Sisa Waktu untuk mengajukan Pensiun tersisa : <?= $days?> Hari &nbsp <a href="">Ajukan Pensiunan Sekarang</a> </div>
+            <div class="alert alert-danger">Harap Segera Mengajukan Pensiun. Sisa Waktu untuk mengajukan Pensiun tersisa : <?= notif_pensiun($tmt_pensiun_peg) ?> Hari &nbsp <a href="">Ajukan Pensiunan Sekarang</a> </div>
         <?php
             };
         ?>

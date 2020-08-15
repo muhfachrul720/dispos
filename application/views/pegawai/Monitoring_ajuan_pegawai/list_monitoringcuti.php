@@ -1,15 +1,9 @@
 <div class="container-fluid">
-    <?php if($dosen != 12){?>
-
-        <h2 class="" style="margin-top:25vh; margin-bottom:30vh; text-align:center;">Hanya Karyawan Berstatus Dosen Yang Dapat Mengakses Jadwal Mengajar</h2>
-
-    <?php } else { ?>
-
     <div class="card shadow mb-4 p-5" style="font-size:14px">
 
         <div class="header">
-            <h3 class="mb-3">List Jadwal Mengajar</h3>
-            <p class="mb-0">Dashboard Untuk Melihat Jadwal Mengajar Dosen Yang Bersangkutan</p>
+            <h3 class="mb-3">List Ajuan Cuti</h3>
+            <p class="mb-0">List List Ajuan Cuti</p>
         </div>
         <hr>
         <div class="body">
@@ -18,12 +12,11 @@
                     <thead>
                     <tr>
                         <th width="40px">No</th>
-                        <th>Nama Mata Kuliah</th>
-                        <th>Semester</th>
-                        <th>Sks</th>
-                        <th>Jadwal (Hari)</th>
-                        <th>Jadwal (Jam)</th>
-                        <th>Dosen</th>
+                        <th>Nama Pegawai</th>
+                        <th>Waktu</th>
+                        <th>Jenis</th>
+                        <th>Status</th>
+                        <th>Download</th>
                     </tr>
                     </thead>
                 </table>
@@ -62,15 +55,45 @@
                     },
                     processing: true,
                     serverSide: true,
-                    ajax: {"url": '<?= base_url()?>dashboard_p/json_jadwal_mengajar', "type": "POST"},
+                    ajax: {"url": '<?= base_url()?>pegawai/json_mon_cuti', "type": "POST", data : {'id' : <?= $this->session->userdata('id_pegawai')?>}},
                     columns: [
-                        {"data" : 'id_jadwal_kuliah', orderable:false},
-                        {"data" : 'nama_mata_kuliah'},
-                        {"data" : 'semester_mata_kuliah'},
-                        {"data" : 'sks_mata_kuliah'},
-                        {"data" : 'hari_jadwal_kuliah'},
-                        {"data" : 'waktu_jadwal_kuliah'},
-                        {"data" : 'nama_lengkap_peg'},
+                        {"data" : 'waktu_pengajuan_cuti', orderable:false},
+                        {"data" : 'nama_tanpa_gelar_peg'},
+                        {"data" : 'waktu_pengajuan_cuti'},
+                        {
+                            "data" : 'jenis_pengajuan_cuti',
+                            "render" : function(data, type, row){
+                                if(data == 1) return 'Cuti Besar';
+                                else if(data == 2) return 'Cuti Tahunan';
+                                else if(data == 3) return 'Cuti Sakit';
+                                else if(data == 4) return 'Cuti Melahirkan';
+                                else if(data == 5) return 'Cuti Karena Alasan Penting';
+                                else if(data == 6) return 'Cuti Di Luar Tanggungan Negara';
+
+                                return  ;
+                            }
+                        },
+                        {
+                            "data" : 'status_cuti',
+                            "render" : function(data, type, row){
+                                if(data == 1){
+                                    return '<label class="badge badge-success">Telah Diperiksa</label>';
+                                }
+                                else {
+                                    return '<label class="badge badge-danger">Ditolak</label>';
+                                }
+                            }
+                        },
+                        {
+                            "data" : 'id_pengajuan_cuti',
+                            "render" : function(data, type, row){
+                                if(row.status_cuti == 1){
+                                    return '<a href="<?= base_url()?>dashboard_p/print_pdf_cuti/'+data+'" style="font-size:12px" class="btn btn-sm btn-info">Download</a>';
+                                }else {
+                                    return '';
+                                };
+                            }
+                        }
                     ],
                     order: [[0, 'asc']],
                     rowCallback: function(row, data, iDisplayIndex) {
@@ -91,5 +114,3 @@
 
     </div>
 </div>
-
-<?php }; ?>

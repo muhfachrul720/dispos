@@ -5,7 +5,12 @@
         $notifTime = strtotime('-1 years', strtotime(date('Y-m-d', strtotime($endTime))));
         
         if(strtotime(date('Y-m-d')) >= $notifTime){
-            echo $days = floor(($endTime - time()) / 86400);
+            $days = floor((strtotime($endTime) - time()) / 86400) + 1;
+            if($days == 0){
+                return '0';
+            }
+
+            return $days;
         }
         else {
             return null;
@@ -26,6 +31,22 @@
         return $age;
         } else {
             return 0;
+        }
+    }
+
+    function convert_gol_to_roman($gol)
+    {
+        if($gol == 1){
+            return 'I';
+        }
+        else if($gol == 2) {
+            return 'II';
+        }
+        else if($gol == 3){
+            return 'III';
+        }
+        else if($gol == 4){
+            return 'IV';
         }
     }
 

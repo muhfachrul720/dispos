@@ -1,15 +1,9 @@
 <div class="container-fluid">
-    <?php if($dosen != 12){?>
-
-        <h2 class="" style="margin-top:25vh; margin-bottom:30vh; text-align:center;">Hanya Karyawan Berstatus Dosen Yang Dapat Mengakses Jadwal Mengajar</h2>
-
-    <?php } else { ?>
-
     <div class="card shadow mb-4 p-5" style="font-size:14px">
 
         <div class="header">
-            <h3 class="mb-3">List Jadwal Mengajar</h3>
-            <p class="mb-0">Dashboard Untuk Melihat Jadwal Mengajar Dosen Yang Bersangkutan</p>
+            <h3 class="mb-3">Monitoring Ajuan Pensiun</h3>
+            <p class="mb-0">List Ajuan Pensiun Pegawai yang telah ditinjau</p>
         </div>
         <hr>
         <div class="body">
@@ -18,12 +12,10 @@
                     <thead>
                     <tr>
                         <th width="40px">No</th>
-                        <th>Nama Mata Kuliah</th>
-                        <th>Semester</th>
-                        <th>Sks</th>
-                        <th>Jadwal (Hari)</th>
-                        <th>Jadwal (Jam)</th>
-                        <th>Dosen</th>
+                        <th>Nama Pegawai</th>
+                        <th>Nip</th>
+                        <th>Waktu</th>
+                        <th>Status</th>
                     </tr>
                     </thead>
                 </table>
@@ -62,15 +54,26 @@
                     },
                     processing: true,
                     serverSide: true,
-                    ajax: {"url": '<?= base_url()?>dashboard_p/json_jadwal_mengajar', "type": "POST"},
+                    ajax: {"url": '<?= base_url()?>pegawai/json_ajuan_mon_pensiun', "type": "POST", data : {'id' : <?= $this->session->userdata('id_pegawai')?>}},
                     columns: [
-                        {"data" : 'id_jadwal_kuliah', orderable:false},
-                        {"data" : 'nama_mata_kuliah'},
-                        {"data" : 'semester_mata_kuliah'},
-                        {"data" : 'sks_mata_kuliah'},
-                        {"data" : 'hari_jadwal_kuliah'},
-                        {"data" : 'waktu_jadwal_kuliah'},
-                        {"data" : 'nama_lengkap_peg'},
+                        {"data" : 'waktu_pengajuan_pensiun', orderable:false},
+                        {"data" : 'nama_tanpa_gelar_peg'},
+                        {"data" : 'nip_peg'},
+                        {"data" : 'waktu_pengajuan_pensiun'},
+                        {
+                            "data" : 'status_pengajuan',
+                            "render" : function(data, type, row){
+                                if(data == 1){
+                                    return '<label class="badge badge-success">Telah Diperiksa</label>' ;
+                                }
+                                else if(data == 2){
+                                    return '<label class="badge badge-danger">Ditolak</label>' ;
+                                }
+                                else {
+                                    return '<label class="badge badge-warning">Akan Dikoreksi</label>' ;
+                                }
+                            }
+                        },
                     ],
                     order: [[0, 'asc']],
                     rowCallback: function(row, data, iDisplayIndex) {
@@ -91,5 +94,3 @@
 
     </div>
 </div>
-
-<?php }; ?>
