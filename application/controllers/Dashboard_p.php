@@ -24,6 +24,7 @@ class Dashboard_p extends CI_Controller {
 		}
 
 		$data['jumlah_anak'] = $this->m_pegawai->count_child($data['id_keluarga'])->num_rows();
+		$data['sk_kemendikbud'] = $this->m_pegawai->get_sk_pensi($this->session->userdata('id_pegawai'))->row_array();
 
 		$this->template->load('template_admin', 'pegawai/duk/detail_duk_pegawai', $data);	
 	}

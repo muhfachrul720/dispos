@@ -85,6 +85,13 @@ class M_akademik extends CI_Model{
         return $this->db->get($this->table_matkul);
     }
 
+    // =================================== Other =======================================
+    public function get_jurusan($id)
+    {
+        $this->db->where('id_user', $id);
+        return $this->db->get($this->table_jurusan);
+    }
+
 }
 
 ?>

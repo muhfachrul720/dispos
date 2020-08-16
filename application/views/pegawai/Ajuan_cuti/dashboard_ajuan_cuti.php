@@ -280,8 +280,10 @@
                                     "render" : function(data, type, row){
                                         if(data == 1){
                                             return '<span style="font-size:12px" class="badge badge-success">Telah Diperiksa</span>';
-                                        }else {
+                                        }else if(data == 2) {
                                             return '<span style="font-size:12px" class="badge badge-danger">Ditolak</span>';
+                                        }else {
+                                            return '<span style="font-size:12px" class="badge badge-primary">Submit Pengajuan</span>';
                                         };
                                     }
                                 },

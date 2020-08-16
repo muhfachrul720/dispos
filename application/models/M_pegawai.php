@@ -164,8 +164,8 @@ class M_pegawai extends CI_Model{
     public function json_jab_fungsi($id)
     {
         $this->datatables->where('id_pegawai', $id);
-        $this->datatables->from($this->table_jfungsi);
-        $this->datatables->join('tbl_kategori_jabatan_fung', 'id_kategori_jabatan_fung = nama_jab_fungsional');
+        $this->datatables->from($this->table_jfungsi.' as jab');
+        $this->datatables->join('tbl_kategori_jabatan_fung', 'id_kategori_jabatan_fung = jab.id_kategori_jab_fungsional');
         return $this->datatables->generate();
     }
 
@@ -202,7 +202,7 @@ class M_pegawai extends CI_Model{
     {
         $this->datatables->select('id_pengajuan_cuti, status_cuti, waktu_pengajuan_cuti, keterangan_pengajuan_cuti, username');
         $this->datatables->from('tbl_pengajuan_cuti as cuti');
-        $this->datatables->join('tbl_user as us', 'us.id_users = cuti.id_users');
+        $this->datatables->join('tbl_user as us', 'us.id_users = cuti.id_users', 'LEFT');
         $this->datatables->where('cuti.id_pegawai', $where);
         return $this->datatables->generate();   
     }
@@ -265,7 +265,6 @@ class M_pegawai extends CI_Model{
         $this->db->join('tbl_berkas_pengajuan_pensiun as brk', 'pns.id_berkas_pengajuan_pensiun = brk.id_berkas_pengajuan_pensiun');
         
         return $this->db->get();
-
     }
 
     // ====================================== Tambahan ==================================
@@ -274,6 +273,16 @@ class M_pegawai extends CI_Model{
         $this->db->select('id_jab_struktural as dosen');
         $this->db->from($this->table_name);
         $this->db->where('id_pegawai', $id);
+        return $this->db->get();
+    }
+
+    public function get_sk_pensi($id)
+    {
+        $this->db->select('laporan_pengajuan_pensiun');
+        $this->db->from('tbl_pengajuan_pensiun');
+        $this->db->where('id_pegawai', $id);
+        $this->db->order_by('id_pengajuan_pensiun','DESC');
+        $this->db->limit('1');
         return $this->db->get();
     }
 }

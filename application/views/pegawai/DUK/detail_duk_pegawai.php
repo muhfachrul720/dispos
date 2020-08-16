@@ -31,9 +31,17 @@
         </div>
 
         <?php
-            if(notif_pensiun($tmt_pensiun_peg) != null){
+            if(notif_pensiun($tmt_pensiun_peg) != null && $status_kepegawaian_peg != 'Pensiun'){
         ?>
             <div class="alert alert-danger">Harap Segera Mengajukan Pensiun. Sisa Waktu untuk mengajukan Pensiun tersisa : <?= notif_pensiun($tmt_pensiun_peg) ?> Hari &nbsp <a href="">Ajukan Pensiunan Sekarang</a> </div>
+        <?php
+            } else if($status_kepegawaian_peg == 'Pensiun' && $sk_kemendikbud['laporan_pengajuan_pensiun'] == null) {
+        ?>
+            <div class="alert alert-success">Terimakasih Data Pengajuan Pensiun Anda Telah Masuk, Silahkan Menunggu Surat Resmi Dari Kemendikbud</div>
+        <?php
+            } else if ($status_kepegawaian_peg == 'Pensiun' && $sk_kemendikbud['laporan_pengajuan_pensiun'] != null){;
+        ?>
+            <div class="alert alert-success">SK Anda Telah Diupload, Silahkan Mendownload SK Anda dengan Menekan <a href="<?= base_url()?>upload/report_pensiun/<?= $sk_kemendikbud['laporan_pengajuan_pensiun'] ?>" download>Tombol ini</a></div>
         <?php
             };
         ?>

@@ -143,7 +143,7 @@ class Jurusan extends CI_Controller {
 		
 		if($this->m_akademik->delete('tbl_info_jadwal_kuliah', array('id_jadwal_kuliah' => $id))){
 			$this->session->set_flashdata('msg', 1);
-			redirect('jurusan/jadwal_kuliah');
+			redirect('jurusan/data_jadwal_mengajar');
 		} 
 	}  
 
@@ -172,6 +172,7 @@ class Jurusan extends CI_Controller {
 			);
 			$data['title'] = 'Tambah Mata Kuliah';
 			$data['action'] = 'jurusan/create_matkul';
+			$data['jurusan'] = $this->m_akademik->get_jurusan($this->session->userdata('id_users'))->result_array();
 			
 			$this->template->load('template_admin', 'jurusan/Mata_kuliah/form_matakuliah', $data);
 		}
@@ -180,6 +181,7 @@ class Jurusan extends CI_Controller {
 			$data = $this->m_akademik->get_matkul_byid($id)->row_array();
 			$data['title'] = 'Edit Mata Kuliah';
 			$data['action'] = 'jurusan/update_matkul';
+			$data['jurusan'] = $this->m_akademik->get_jurusan($this->session->userdata('id_users'))->result_array();
 
 			$this->template->load('template_admin', 'jurusan/Mata_kuliah/form_matakuliah', $data);
 		}

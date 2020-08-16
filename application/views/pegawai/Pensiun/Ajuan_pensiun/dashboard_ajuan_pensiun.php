@@ -237,19 +237,13 @@
                                             return "<a href='<?= base_url('dashboard_p/ajukan_pensiun')?>/"+data+"' class='btn btn-warning btn-sm'>Edit</a>";
                                         }
                                         else if(row.status_pengajuan == 1) {
-                                            return "<a href='<?= base_url()?>upload/report_pensiun/"+row.laporan_pengajuan_pensiun+"' class='btn btn-success btn-sm' download>Download Laporan</a>";
+                                            return "<a href='<?= base_url()?>upload/report_pensiun/"+row.laporan_pengajuan_pensiun+"' class='btn btn-success btn-sm' download>Download SK</a>";
                                         }
                                         else {
                                             return '';
                                         };
                                     }
                                 },
-                                // {
-                                //     "data" : 'id_pengajuan_pensiun',
-                                //     "render" : function(data, type, row){
-                                //         return '<a href="<?=base_url()?>pegawai/tinjau_pensiun/'+data+'" class="btn btn-sm btn-primary">Tinjau</a>' ;
-                                //     }
-                                // },
                             ],
                             order: [[0, 'asc']],
                             rowCallback: function(row, data, iDisplayIndex) {

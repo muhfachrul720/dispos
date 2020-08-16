@@ -72,7 +72,7 @@
                         {
                             "data" : 'id_jadwal_kuliah',
                             "render" : function(data, type, row){
-                                return '<a href="<?= base_url()?>jurusan/form_jadkul/'+data+'" class="btn btn-sm btn-warning mx-2"><i class="mdi mdi-pencil"></i></a><a href="<?= base_url()?>akademik/hapus_jadkul/'+data+'" class="btn btn-sm btn-danger"><i class="mdi mdi-delete"></i></a>' ;
+                                return '<a href="<?= base_url()?>jurusan/form_jadkul/'+data+'" class="btn btn-sm btn-warning mx-2"><i class="mdi mdi-pencil"></i></a><a href="<?= base_url()?>jurusan/hapus_jadkul/'+data+'" class="btn btn-sm btn-danger"><i class="mdi mdi-delete"></i></a>' ;
                             }
                         },
                     ],

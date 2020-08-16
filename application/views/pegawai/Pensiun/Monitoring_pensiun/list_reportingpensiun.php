@@ -74,7 +74,8 @@
                                     return '<button type="button" class="btn btn-primary" data-book-id="'+row.id_pengajuan_pensiun+'" data-toggle="modal" data-target="#exampleModalCenter">Upload SK Pensiun Kemendikbud</button>'
                                 }
                                 else {
-                                    return 'Bua';
+                                    return '<a href="<?= base_url()?>upload/report_pensiun/'+data+'" class="btn btn-success download">SK Telah di Upload Download Disini</a>'
+                                    // return '<p class="mb-1" style="font-size:12px">SK Kemendikbud Upload</p><a class="btn btn-success" href="<?= base_url()?>upload/report_pensiun/'+data+'" download>Download</a>';
                                 }
                             }
                         },
