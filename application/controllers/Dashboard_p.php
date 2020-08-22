@@ -13,9 +13,53 @@ class Dashboard_p extends CI_Controller {
 		$this->load->model('user_model');
 	}
 
+	function upload_file_multiple($name, $path, $dir){
+
+		$config['upload_path']          = $path;
+		$config['allowed_types']        = 'gif|jpg|png|pdf';
+		$config['overwrite']			= true;
+
+		if(!is_dir($dir)){
+			mkdir($path, 077, TRUE);
+		}
+
+		$this->load->library('upload', $config);
+
+		if($bool = $this->upload->do_upload($name)){
+			return $this->upload->data();
+			// echo $bool;
+		}else {
+			// redirect('dashboard_p/ajukan_pensiun');
+			return $this->upload->data();
+			// echo $bool;
+		}
+
+	}
+
+	function looping_upload($path, $dir){
+
+		foreach($_FILES as $key => $val){
+
+			if($_FILES[$key]['name'] != ''){
+
+				$_FILES[$key]['name'] = $key.'.'.pathinfo($_FILES[$key]['name'], PATHINFO_EXTENSION);
+
+				$upload = $this->upload_file_multiple($key, $path, $dir);
+
+				$array[$key] = $upload['file_name'];
+				
+			}
+			else {
+				$array[$key] = '';
+			}
+		}
+
+		return $array;
+	}
+
 	// ================================ Duk Pegawai =====================================
 	public function index()
-	{
+	{	
 		$data = $this->m_pegawai->get_pegawai_individual($this->session->userdata('id_users'));
 
 		if(isset($data['pangkat_cpns'])){
@@ -29,12 +73,9 @@ class Dashboard_p extends CI_Controller {
 		$this->template->load('template_admin', 'pegawai/duk/detail_duk_pegawai', $data);	
 	}
 
-	public function json_jab_fungsi()
+	public function json_jabatan()
 	{
-		header('Content-Type: application/json');
-		$id = $this->input->post('id');
-
-        $data = $this->m_pegawai->json_jab_fungsi($id);
+        $data = $this->m_pegawai->json_jabatan_byid($this->session->userdata('id_pegawai'));
 		echo $data;
 	}
 
@@ -533,7 +574,7 @@ class Dashboard_p extends CI_Controller {
 			$data_peg = array(
 				'nip_peg' 				=> $post['nip'],
 				'nama_tanpa_gelar_peg' 	=> $post['name'],
-				'nama_lengkap_peg'		=> $post['profgelar'].$post['frontgelar'].$post['hajigelar'].' '.$post['name'].'.'.$post['backgelar'],
+				'nama_lengkap_peg'		=> $post['profgelar'].' '.$post['hajigelar'].' '.$post['doktorgelar'].' '.$post['name'].' '.$post['magistergelar'].' '.$post['strata1gelar'],
 				'jk_peg' 				=> $post['gender'],
 				'agama_peg' 			=> $post['religion'],
 				'tempat_lahir_peg' 		=> $post['birthplace'],
@@ -561,9 +602,10 @@ class Dashboard_p extends CI_Controller {
 			// Gelar
 			$data_gel = array(
 				'prof_gelar' 			=> $post['profgelar'],
-				'depan_gelar' 			=> $post['frontgelar'],
 				'h_hj_gelar' 			=> $post['hajigelar'],
-				'belakang_gelar' 		=> $post['backgelar'],
+				'doktor_gelar' 			=> $post['doktorgelar'],
+				'magister_gelar' 			=> $post['magistergelar'],
+				'strata_1_gelar' 		=> $post['strata1gelar'],
 			);
 
 			$check2 = $this->m_pegawai->update('tbl_gelar',array('id_gelar' => $post['idgelar']), $data_gel);
@@ -578,29 +620,37 @@ class Dashboard_p extends CI_Controller {
 			}
 	}
 
-	// ======================================================== Ajuan Pensiun =====================================
-	function upload_file_multiple($id, $date, $name, $number = 0){
+	public function create_tmt_pensiun()
+	{
+		$post = $this->input->post();
 
-		$config['upload_path']          = './upload/berkas_pensiun/pegawai_'.$id.'tgl_'.$date;
-		$config['allowed_types']        = 'gif|jpg|png|pdf';
-		$config['overwrite']			= true;
+		// var_dump($post);
 
-		if(!is_dir('upload/berkas_pensiun/pegawai_'.$id.'tgl_'.$date)){
-			mkdir('./upload/berkas_pensiun/pegawai_'.$id.'tgl_'.$date, 077, TRUE);
+		$this->cuti_rules($post);
+		$this->form_validation->set_error_delimiters('<small class="text-danger">', '</small>');
+
+		if($this->form_validation->run() == FALSE){
+			redirect('dashboard_p');
 		}
+		else {
+			// $limit = $post['dosen'] != 12 ? 58 : 
+			if($post['prof'] == 1) $limit = 70; else if($post['dosen'] == 12) $limit = 65; else $limit = 58;
 
-		$this->load->library('upload', $config);
+			$tmt = date('Y-m-d', strtotime('+'.$limit.' years', strtotime($post['umur'])));
 
-		if($bool = $this->upload->do_upload($name)){
-			return $this->upload->data();
-			// echo $bool;
-		}else {
-			// redirect('dashboard_p/ajukan_pensiun');
-			return $this->upload->data();
-			// echo $bool;
+			$data = array(
+				'tgl_lahir_peg' => $post['umur'],
+				'tmt_pensiun_peg' => $tmt,
+				'notif_pensiun_peg' => strtotime('-1 years', strtotime(date('Y-m-d', strtotime($tmt)))),
+			);
+
+			$this->m_pegawai->update('tbl_pegawai', array('id_pegawai' => $this->session->userdata('id_pegawai')), $data);
+
+			redirect('dashboard_p');
 		}
-
 	}
+
+	// ======================================================== Ajuan Pensiun =====================================
 	
 	public function ajukan_pensiun($id = null)
 	{
@@ -633,6 +683,9 @@ class Dashboard_p extends CI_Controller {
 		$id = $this->session->userdata('id_pegawai');
 		$date = str_replace(':','_',date('y-m-d h:m:s'));
 
+		$path = './upload/berkas_pensiun/pegawai_'.$id.'tgl_'.$date;
+		$dir = 'upload/berkas_pensiun/pegawai_'.$id.'tgl_'.$date;
+
 		if($_FILES != null){
 
 			foreach($_FILES as $key => $val){
@@ -641,10 +694,10 @@ class Dashboard_p extends CI_Controller {
 
 					$_FILES[$key]['name'] = $key.'.'.pathinfo($_FILES[$key]['name'], PATHINFO_EXTENSION);
 
-					$upload = $this->upload_file_multiple($id, $date, $key);
+					$upload = $this->upload_file_multiple($key, $path, $dir);
 
 					if($key == 'skjbt'){
-						$upload = $this->upload_file_multiple($id, $date, $key);
+						$upload = $this->upload_file_multiple($key, $path, $dir);
 					}
 
 					$array[$key] = $upload['file_name'];
@@ -706,6 +759,9 @@ class Dashboard_p extends CI_Controller {
 	{
 		$id = $this->session->userdata('id_pegawai');
 		$date = substr(str_replace(':','_', $this->input->post('time')), 2);
+		
+		$path = './upload/berkas_pensiun/pegawai_'.$id.'tgl_'.$date;
+		$dir = 'upload/berkas_pensiun/pegawai_'.$id.'tgl_'.$date;
 
 		$column = array(
 			'supuk' => 'surat_pimpinan_uker',
@@ -736,10 +792,10 @@ class Dashboard_p extends CI_Controller {
 
 					$_FILES[$key]['name'] = $key.'.'.pathinfo($_FILES[$key]['name'], PATHINFO_EXTENSION);
 
-					$upload = $this->upload_file_multiple($id, $date, $key);
+					$upload = $this->upload_file_multiple($key, $path, $dir);
 
 					if($key == 'skjbt'){
-						$upload = $this->upload_file_multiple($id, $date, $key);
+						$upload = $this->upload_file_multiple($key, $path, $dir);
 					}
 
 					$array[$key] = $upload['file_name'];
@@ -761,7 +817,7 @@ class Dashboard_p extends CI_Controller {
 
 				if($this->m_pegawai->update('tbl_pengajuan_pensiun', array('id_pengajuan_pensiun' => $this->input->post('id_aju')), $data_ajpen)){
 					$this->session->set_flashdata('msg', 1);
-					$this->ajukan_pensiun($this->input->post('id_aju'));
+					$this->ajukan_pensiun();
 				}
 				else {
 					$this->session->set_flashdata('msg', 2);
@@ -785,7 +841,7 @@ class Dashboard_p extends CI_Controller {
 	{
 		$data = $this->m_pegawai->get_datapeg_cuti($this->session->userdata('id_pegawai'));
 
-		$this->template->load('template_admin', 'pegawai/ajuan_cuti/dashboard_ajuan_cuti', $data);	
+		$this->template->load('template_admin', 'pegawai/cuti/ajuan_cuti/dashboard_ajuan_cuti', $data);	
 	}
 
 	public function json_cuti_individual()
@@ -808,6 +864,7 @@ class Dashboard_p extends CI_Controller {
 	public function create_ajuan_cuti()
 	{
 		$post = $this->input->post();
+
 		$this->cuti_rules($post);
 		$this->form_validation->set_error_delimiters('<small class="text-danger">', '</small>');
 
@@ -816,21 +873,10 @@ class Dashboard_p extends CI_Controller {
 		}
 		else {
 			$date = date_diff(date_create($post['startdate']), date_create($post['enddate']));
-			$thn = null;
-
-			if(isset($post['thncuti'])){
-				$thn = $post['thncuti'];
-				
-				if($thn == 1)$thn = date('Y');
-				else if($thn == 2)$thn = date('Y', strtotime("-1 year"));
-				else $thn = date('Y', strtotime("-2 year"));
-
-			}
 
 			$data_ajcuti = array(
 				'id_pegawai' => $this->session->userdata('id_pegawai'),
 				'jenis_pengajuan_cuti' => $post['jeniscuti'],
-				'tahun_pengajuan_cuti' => $thn,
 				'alasan_pengajuan_cuti' => $post['alasancuti'],
 				'alamat_pengajuan_cuti' => $post['addresscuti'],
 				'telepon_pengajuan_cuti' => $post['phonecuti'],
@@ -1133,7 +1179,204 @@ class Dashboard_p extends CI_Controller {
 
 		echo $data;
 	}
+
+	// ================================================= Ajukan Naik Pangkat ==========================================
+	public function ajuan_naikpangkat_reguler()
+	{
+		$this->template->load('template_admin', 'pegawai/kenaikan_pangkat/fungsional/form');
+	}
+
+	// >>>>>>>>> Fungsional
+	public function ajuan_naikpangkat_fungsional($id = null)
+	{	
+
+		$data = $this->m_pegawai->get_datapeg_cuti($this->session->userdata('id_pegawai'));
+		$data['action'] = 'dashboard_p/create_naikpangkat_fungsional';
+		
+		$this->template->load('template_admin', 'pegawai/kenaikan_pangkat/fungsional/form', $data);
+	}
+
+	public function json_naikpangkat_fungsional()
+	{
+        $data = $this->m_pegawai->json_naikfung_pegawai($this->session->userdata('id_pegawai'));
+		echo $data;
+	}
+
+	public function create_naikpangkat_fungsional()
+	{
+		$id = $this->session->userdata('id_pegawai');
+		$date = str_replace(':','_',date('y-m-d h:m:s'));
+
+		$path = './upload/berkas_naikpangkat/fungsional/pegawai_'.$id.'tgl_'.$date;
+		$dir = 'upload/berkas_naikpangkat/fungsional/pegawai_'.$id.'tgl_'.$date;
+
+		if($_FILES != null){
+			$array = $this->looping_upload($path, $dir);
+
+			$data_berkas = array(
+				'skpangkat' 	=> $array['skpangkat'],
+				'skjabfung' 	=> $array['skjabfung'],
+				'skjft' 		=> $array['skjft'],
+				'skp'			=> $array['skp'],
+				'pak'			=> $array['pak']
+			);
+
+			if($id_berkas = $this->m_pegawai->insert($data_berkas, 'tbl_berkas_pengajuan_fungsional')){
+
+				$data_ajpen = array(
+					'id_pegawai' => $id,
+					'id_berkas_ajuan' => $id_berkas,
+					'waktu_pengajuan_fungsional' => date('Y-m-d h:m:s'),
+				);
+
+				$this->m_pegawai->insert($data_ajpen, 'tbl_aju_naikpangkat_fungsional');
+
+				$this->session->set_flashdata('msg', 1);
+				redirect('dashboard_p/ajuan_naikpangkat_fungsional');
+			} 
+			else {
+				$this->session->set_flashdata('msg', 2);
+				redirect('dashboard_p/ajukan_naikpangkat_fungsional');
+			}
+			
+		}
+		else {
+			$this->session->set_flashdata('msg', 2);
+			redirect('dashboard_p/ajukan_naikpangkat_fungsional');
+		}
+	}
+	
+	// >>>>>>>>>> Struktural
+	public function ajuan_naikpangkat_struktural()
+	{
+		$data = $this->m_pegawai->get_datapeg_cuti($this->session->userdata('id_pegawai'));
+		$data['action'] = 'dashboard_p/create_naikpangkat_struktural';
+		
+		$this->template->load('template_admin', 'pegawai/kenaikan_pangkat/struktural/form', $data);
+	}
+
+	public function json_naikpangkat_struktural()
+	{
+        $data = $this->m_pegawai->json_naikstruk_pegawai($this->session->userdata('id_pegawai'));
+		echo $data;
+	}
+
+	public function create_naikpangkat_struktural()
+	{
+		$id = $this->session->userdata('id_pegawai');
+		$date = str_replace(':','_',date('y-m-d h:m:s'));
+
+		$path = './upload/berkas_naikpangkat/struktural/pegawai_'.$id.'tgl_'.$date;
+		$dir = 'upload/berkas_naikpangkat/struktural/pegawai_'.$id.'tgl_'.$date;
+
+		if($_FILES != null){
+			$array = $this->looping_upload($path, $dir);
+
+			$data_berkas = array(
+				'skpangkat' 	=> $array['skpangkat'],
+				'srtjab' 		=> $array['skjab'],
+				'srtdukjab' 	=> $array['srtdukjab'],
+				'srtlatih' 		=> $array['srtlatih'],
+				'srttgs'		=> $array['srttgs'],
+				'skp'			=> $array['skp']
+			);
+
+			if($id_berkas = $this->m_pegawai->insert($data_berkas, 'tbl_berkas_pengajuan_struktural')){
+
+				$data_ajpen = array(
+					'id_pegawai' => $id,
+					'id_berkas_ajuan' => $id_berkas,
+					'waktu_pengajuan_struktural' => date('Y-m-d h:m:s'),
+					'usulan_jabatan_struktural' => $this->input->post('usuljab'),
+ 				);
+
+				$this->m_pegawai->insert($data_ajpen, 'tbl_aju_naikpangkat_struktural');
+
+				$this->session->set_flashdata('msg', 1);
+				redirect('dashboard_p/ajuan_naikpangkat_struktural');
+			} 
+			else {
+				$this->session->set_flashdata('msg', 2);
+				redirect('dashboard_p/ajukan_naikpangkat_struktural');
+			}
+			
+		}
+		else {
+			$this->session->set_flashdata('msg', 2);
+			redirect('dashboard_p/ajukan_naikpangkat_struktural');
+		}
+	}
+
+	// >>>>>>>>>>>>>> Ijazah
+	public function ajuan_naikpangkat_ijazah()
+	{
+		$data = $this->m_pegawai->get_datapeg_cuti($this->session->userdata('id_pegawai'));
+		$data['action'] = 'dashboard_p/create_naikpangkat_ijazah';
+
+		$this->template->load('template_admin', 'pegawai/kenaikan_pangkat/ijazah/form', $data);	
+	}
+
+	public function json_naikpangkat_ijazah()
+	{
+        $data = $this->m_pegawai->json_naikijazah_pegawai($this->session->userdata('id_pegawai'));
+		echo $data;
+	}
+
+	public function create_naikpangkat_ijazah()
+	{
+		$id = $this->session->userdata('id_pegawai');
+		$date = str_replace(':','_',date('y-m-d h:m:s'));
+
+		$path = './upload/berkas_naikpangkat/ijazah/pegawai_'.$id.'tgl_'.$date;
+		$dir = 'upload/berkas_naikpangkat/ijazah/pegawai_'.$id.'tgl_'.$date;
+
+		if($_FILES != null){
+			$array = $this->looping_upload($path, $dir);
+
+			$data_berkas = array(
+				'skpangkat' 	=> $array['skpangkat'],
+				'ijazah' 		=> $array['ijazah'],
+				'srtlulus' 		=> $array['srtlulus'],
+				'srtbelajar'	=> $array['srtbelajar'],
+				'srttgs'		=> $array['srttgs'],
+				'skp'			=> $array['skp']
+			);
+
+			if($id_berkas = $this->m_pegawai->insert($data_berkas, 'tbl_berkas_pengajuan_ijazah')){
+
+				$data_ajpen = array(
+					'id_pegawai' => $id,
+					'id_berkas_ajuan' => $id_berkas,
+					'waktu_pengajuan_ijazah' => date('Y-m-d h:m:s'),
+				);
+
+				$this->m_pegawai->insert($data_ajpen, 'tbl_aju_naikpangkat_ijazah');
+
+				$this->session->set_flashdata('msg', 1);
+				redirect('dashboard_p/ajuan_naikpangkat_ijazah');
+			} 
+			else {
+				$this->session->set_flashdata('msg', 2);
+				redirect('dashboard_p/ajukan_naikpangkat_ijazah');
+			}
+			
+		}
+		else {
+			$this->session->set_flashdata('msg', 2);
+			redirect('dashboard_p/ajukan_naikpangkat_ijazah');
+		}
+	}
+
+	// ================================== Other ===================================
+	public function mpdf(){
+		{
+			$mpdf = new \Mpdf\Mpdf();
+			$mpdf->WriteHTML('<h1>KCDEV: Testing Composer dan MPDF</h1>');
+			$mpdf->Output();
+		}
+	}
 }
+
 
 // 
 

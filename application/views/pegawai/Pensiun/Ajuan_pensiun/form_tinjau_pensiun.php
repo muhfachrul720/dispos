@@ -26,8 +26,8 @@
                                             <td><small>File Belum Diupload</small></td>
                                         <?php } else {?>
                                             <td>
-                                                <a href="<?= $src.$berkas['surat_pimpinan_uker'] ?>" class="btn btn-sm btn-info" style="font-size:12px">Lihat File</a>
-                                                <a href="" class="btn btn-sm btn-info" style="font-size:12px" download>Download</a>
+                                                <a href="<?= $src.$berkas['surat_pimpinan_uker'] ?>" class="btn btn-sm btn-info" style="font-size:12px" target="_blank">Lihat File</a>
+                                                <a href="<?= $src.$berkas['surat_pimpinan_uker'] ?>" class="btn btn-sm btn-info" style="font-size:12px" download>Download</a>
                                             </td>
                                         <?php }?>
                                     </tr>
@@ -39,8 +39,8 @@
                                             <td><small>File Belum Diupload</small></td>
                                         <?php } else {?>
                                             <td>
-                                                <a href="<?= $src.$berkas['surat_permohonan_pns'] ?>" class="btn btn-sm btn-info" style="font-size:12px">Lihat File</a>
-                                                <a href="" class="btn btn-sm btn-info" style="font-size:12px" download>Download</a>
+                                                <a href="<?= $src.$berkas['surat_permohonan_pns'] ?>" class="btn btn-sm btn-info" style="font-size:12px" target="_blank">Lihat File</a>
+                                                <a href="<?= $src.$berkas['surat_pimpinan_uker'] ?>" class="btn btn-sm btn-info" style="font-size:12px" download>Download</a>
                                             </td>
                                         <?php }?>
                                     </tr>
@@ -52,8 +52,8 @@
                                             <td><small>File Belum Diupload</small></td>
                                         <?php } else {?>
                                             <td>
-                                                <a href="<?= $src.$berkas['dpcp'] ?>" class="btn btn-sm btn-info" style="font-size:12px">Lihat File</a>
-                                                <a href="" class="btn btn-sm btn-info" style="font-size:12px" download>Download</a>
+                                                <a href="<?= $src.$berkas['dpcp'] ?>" class="btn btn-sm btn-info" style="font-size:12px" target="_blank">Lihat File</a>
+                                                <a href="<?= $src.$berkas['surat_pimpinan_uker'] ?>" class="btn btn-sm btn-info" style="font-size:12px" download>Download</a>
                                             </td>
                                         <?php }?>
                                     </tr>
@@ -65,8 +65,8 @@
                                             <td><small>File Belum Diupload</small></td>
                                         <?php } else {?>
                                             <td>
-                                                <a href="<?= $src.$berkas['skcpns_skpangkat_akhir'] ?>" class="btn btn-sm btn-info" style="font-size:12px">Lihat File</a>
-                                                <a href="" class="btn btn-sm btn-info" style="font-size:12px" download>Download</a>
+                                                <a href="<?= $src.$berkas['skcpns_skpangkat_akhir'] ?>" class="btn btn-sm btn-info" style="font-size:12px" target="_blank">Lihat File</a>
+                                                <a href="<?= $src.$berkas['surat_pimpinan_uker'] ?>" class="btn btn-sm btn-info" style="font-size:12px" download>Download</a>
                                             </td>
                                         <?php }?>
                                     </tr>
@@ -78,8 +78,8 @@
                                             <td><small>File Belum Diupload</small></td>
                                         <?php } else {?>
                                             <td>
-                                                <a href="<?= $src.$berkas['sk_jabatan'] ?>" class="btn btn-sm btn-info" style="font-size:12px">Lihat File</a>
-                                                <a href="" class="btn btn-sm btn-info" style="font-size:12px" download>Download</a>
+                                                <a href="<?= $src.$berkas['sk_jabatan'] ?>" class="btn btn-sm btn-info" style="font-size:12px" target="_blank">Lihat File</a>
+                                                <a href="<?= $src.$berkas['surat_pimpinan_uker'] ?>" class="btn btn-sm btn-info" style="font-size:12px" download>Download</a>
                                             </td>
                                         <?php }?>
                                     </tr>
@@ -91,8 +91,8 @@
                                             <td><small>File Belum Diupload</small></td>
                                         <?php } else {?>
                                             <td>
-                                                <a href="<?= $src.$berkas['karpeg'] ?>" class="btn btn-sm btn-info" style="font-size:12px">Lihat File</a>
-                                                <a href="" class="btn btn-sm btn-info" style="font-size:12px" download>Download</a>
+                                                <a href="<?= $src.$berkas['karpeg'] ?>" class="btn btn-sm btn-info" style="font-size:12px" target="_blank">Lihat File</a>
+                                                <a href="<?= $src.$berkas['surat_pimpinan_uker'] ?>" class="btn btn-sm btn-info" style="font-size:12px" download>Download</a>
                                             </td>
                                         <?php }?>
                                     </tr>
@@ -104,8 +104,8 @@
                                             <td><small>File Belum Diupload</small></td>
                                         <?php } else {?>
                                             <td>
-                                                <a href="<?= $src.$berkas['surat_nikah_cerai'] ?>" class="btn btn-sm btn-info" style="font-size:12px">Lihat File</a>
-                                                <a href="" class="btn btn-sm btn-info" style="font-size:12px" download>Download</a>
+                                                <a href="<?= $src.$berkas['surat_nikah_cerai'] ?>" class="btn btn-sm btn-info" style="font-size:12px" target="_blank">Lihat File</a>
+                                                <a href="<?= $src.$berkas['surat_pimpinan_uker'] ?>" class="btn btn-sm btn-info" style="font-size:12px" download>Download</a>
                                             </td>
                                         <?php }?>
                                     </tr>
@@ -117,8 +117,8 @@
                                             <td><small>File Belum Diupload</small></td>
                                         <?php } else {?>
                                             <td>
-                                                <a href="<?= $src.$berkas['surat_kenal_anak'] ?>" class="btn btn-sm btn-info" style="font-size:12px">Lihat File</a>
-                                                <a href="" class="btn btn-sm btn-info" style="font-size:12px" download>Download</a>
+                                                <a href="<?= $src.$berkas['surat_kenal_anak'] ?>" class="btn btn-sm btn-info" style="font-size:12px" target="_blank">Lihat File</a>
+                                                <a href="<?= $src.$berkas['surat_pimpinan_uker'] ?>" class="btn btn-sm btn-info" style="font-size:12px" download>Download</a>
                                             </td>
                                         <?php }?>
                                     </tr>
@@ -130,8 +130,8 @@
                                             <td><small>File Belum Diupload</small></td>
                                         <?php } else {?>
                                             <td>
-                                                <a href="<?= $src.$berkas['kartu_keluarga'] ?>" class="btn btn-sm btn-info" style="font-size:12px">Lihat File</a>
-                                                <a href="" class="btn btn-sm btn-info" style="font-size:12px" download>Download</a>
+                                                <a href="<?= $src.$berkas['kartu_keluarga'] ?>" class="btn btn-sm btn-info" style="font-size:12px" target="_blank">Lihat File</a>
+                                                <a href="<?= $src.$berkas['surat_pimpinan_uker'] ?>" class="btn btn-sm btn-info" style="font-size:12px" download>Download</a>
                                             </td>
                                         <?php }?>
                                     </tr>
@@ -143,8 +143,8 @@
                                             <td><small>File Belum Diupload</small></td>
                                         <?php } else {?>
                                             <td>
-                                                <a href="<?= $src.$berkas['pas_foto'] ?>" class="btn btn-sm btn-info" style="font-size:12px">Lihat File</a>
-                                                <a href="" class="btn btn-sm btn-info" style="font-size:12px" download>Download</a>
+                                                <a href="<?= $src.$berkas['pas_foto'] ?>" class="btn btn-sm btn-info" style="font-size:12px" target="_blank">Lihat File</a>
+                                                <a href="<?= $src.$berkas['surat_pimpinan_uker'] ?>" class="btn btn-sm btn-info" style="font-size:12px" download>Download</a>
                                             </td>
                                         <?php }?>
                                     </tr>
@@ -156,8 +156,8 @@
                                             <td><small>File Belum Diupload</small></td>
                                         <?php } else {?>
                                             <td>
-                                                <a href="<?= $src.$berkas['formulir_permintaan_pembayaran_pensiun'] ?>" class="btn btn-sm btn-info" style="font-size:12px">Lihat File</a>
-                                                <a href="" class="btn btn-sm btn-info" style="font-size:12px" download>Download</a>
+                                                <a href="<?= $src.$berkas['formulir_permintaan_pembayaran_pensiun'] ?>" class="btn btn-sm btn-info" style="font-size:12px" target="_blank">Lihat File</a>
+                                                <a href="<?= $src.$berkas['surat_pimpinan_uker'] ?>" class="btn btn-sm btn-info" style="font-size:12px" download>Download</a>
                                             </td>
                                         <?php }?>
                                     </tr>
@@ -169,8 +169,8 @@
                                             <td><small>File Belum Diupload</small></td>
                                         <?php } else {?>
                                             <td>
-                                                <a href="<?= $src.$berkas['foto_kopi_buku_rekening'] ?>" class="btn btn-sm btn-info" style="font-size:12px">Lihat File</a>
-                                                <a href="" class="btn btn-sm btn-info" style="font-size:12px" download>Download</a>
+                                                <a href="<?= $src.$berkas['foto_kopi_buku_rekening'] ?>" class="btn btn-sm btn-info" style="font-size:12px" target="_blank">Lihat File</a>
+                                                <a href="<?= $src.$berkas['surat_pimpinan_uker'] ?>" class="btn btn-sm btn-info" style="font-size:12px" download>Download</a>
                                             </td>
                                         <?php }?>
                                     </tr>
@@ -182,8 +182,8 @@
                                             <td><small>File Belum Diupload</small></td>
                                         <?php } else {?>
                                             <td>
-                                                <a href="<?= $src.$berkas['penilaian_prestasi'] ?>" class="btn btn-sm btn-info" style="font-size:12px">Lihat File</a>
-                                                <a href="" class="btn btn-sm btn-info" style="font-size:12px" download>Download</a>
+                                                <a href="<?= $src.$berkas['penilaian_prestasi'] ?>" class="btn btn-sm btn-info" style="font-size:12px" target="_blank">Lihat File</a>
+                                                <a href="<?= $src.$berkas['surat_pimpinan_uker'] ?>" class="btn btn-sm btn-info" style="font-size:12px" download>Download</a>
                                             </td>
                                         <?php }?>
                                     </tr>
@@ -195,8 +195,8 @@
                                             <td><small>File Belum Diupload</small></td>
                                         <?php } else {?>
                                             <td>
-                                                <a href="<?= $src.$berkas['surat_pernyataan_tidak_dijatuhi_hukum'] ?>" class="btn btn-sm btn-info" style="font-size:12px">Lihat File</a>
-                                                <a href="" class="btn btn-sm btn-info" style="font-size:12px" download>Download</a>
+                                                <a href="<?= $src.$berkas['surat_pernyataan_tidak_dijatuhi_hukum'] ?>" class="btn btn-sm btn-info" style="font-size:12px" target="_blank">Lihat File</a>
+                                                <a href="<?= $src.$berkas['surat_pimpinan_uker'] ?>" class="btn btn-sm btn-info" style="font-size:12px" download>Download</a>
                                             </td>
                                         <?php }?>
                                     </tr>
@@ -208,8 +208,8 @@
                                             <td><small>File Belum Diupload</small></td>
                                         <?php } else {?>
                                             <td>
-                                                <a href="<?= $src.$berkas['surat_pernyataan_tidak_dijatuhi_hukum'] ?>" class="btn btn-sm btn-info" style="font-size:12px">Lihat File</a>
-                                                <a href="" class="btn btn-sm btn-info" style="font-size:12px" download>Download</a>
+                                                <a href="<?= $src.$berkas['surat_pernyataan_tidak_dijatuhi_hukum'] ?>" class="btn btn-sm btn-info" style="font-size:12px" target="_blank">Lihat File</a>
+                                                <a href="<?= $src.$berkas['surat_pimpinan_uker'] ?>" class="btn btn-sm btn-info" style="font-size:12px" download>Download</a>
                                             </td>
                                         <?php }?>
                                     </tr>
@@ -221,8 +221,8 @@
                                             <td><small>File Belum Diupload</small></td>
                                         <?php } else {?>
                                             <td>
-                                                <a href="<?= $src.$berkas['surat_kematian'] ?>" class="btn btn-sm btn-info" style="font-size:12px">Lihat File</a>
-                                                <a href="" class="btn btn-sm btn-info" style="font-size:12px" download>Download</a>
+                                                <a href="<?= $src.$berkas['surat_kematian'] ?>" class="btn btn-sm btn-info" style="font-size:12px" target="_blank">Lihat File</a>
+                                                <a href="<?= $src.$berkas['surat_pimpinan_uker'] ?>" class="btn btn-sm btn-info" style="font-size:12px" download>Download</a>
                                             </td>
                                         <?php }?>
                                     </tr>
@@ -234,8 +234,8 @@
                                             <td><small>File Belum Diupload</small></td>
                                         <?php } else {?>
                                             <td>
-                                                <a href="<?= $src.$berkas['surat_keterangan_janda_duda_anak_orangtua'] ?>" class="btn btn-sm btn-info" style="font-size:12px">Lihat File</a>
-                                                <a href="" class="btn btn-sm btn-info" style="font-size:12px" download>Download</a>
+                                                <a href="<?= $src.$berkas['surat_keterangan_janda_duda_anak_orangtua'] ?>" class="btn btn-sm btn-info" style="font-size:12px" target="_blank">Lihat File</a>
+                                                <a href="<?= $src.$berkas['surat_pimpinan_uker'] ?>" class="btn btn-sm btn-info" style="font-size:12px" download>Download</a>
                                             </td>
                                         <?php }?>
                                     </tr>
@@ -247,8 +247,8 @@
                                             <td><small>File Belum Diupload</small></td>
                                         <?php } else {?>
                                             <td>
-                                                <a href="<?= $src.$berkas['surat_ahli_waris'] ?>" class="btn btn-sm btn-info" style="font-size:12px">Lihat File</a>
-                                                <a href="" class="btn btn-sm btn-info" style="font-size:12px" download>Download</a>
+                                                <a href="<?= $src.$berkas['surat_ahli_waris'] ?>" class="btn btn-sm btn-info" style="font-size:12px" target="_blank">Lihat File</a>
+                                                <a href="<?= $src.$berkas['surat_pimpinan_uker'] ?>" class="btn btn-sm btn-info" style="font-size:12px" download>Download</a>
                                             </td>
                                         <?php }?>
                                     </tr>

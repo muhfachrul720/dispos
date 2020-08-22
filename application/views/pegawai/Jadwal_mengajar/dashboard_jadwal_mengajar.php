@@ -5,7 +5,7 @@
 
     <?php } else { ?>
 
-    <div class="card shadow mb-4 p-5" style="font-size:14px">
+        <div class="card shadow mb-4 p-5" style="font-size:14px">
 
         <div class="header">
             <h3 class="mb-3">List Jadwal Mengajar</h3>
@@ -22,8 +22,11 @@
                         <th>Semester</th>
                         <th>Sks</th>
                         <th>Jadwal (Hari)</th>
-                        <th>Jadwal (Jam)</th>
+                        <th>Jam Masuk</th>
+                        <th>Jam Keluar</th>
                         <th>Dosen</th>
+                        <th>Jurusan</th>
+                        <th>Total Jam</th>
                     </tr>
                     </thead>
                 </table>
@@ -69,8 +72,21 @@
                         {"data" : 'semester_mata_kuliah'},
                         {"data" : 'sks_mata_kuliah'},
                         {"data" : 'hari_jadwal_kuliah'},
-                        {"data" : 'waktu_jadwal_kuliah'},
+                        {"data" : 'jam_masuk_kuliah'},
+                        {"data" : 'jam_keluar_kuliah'},
                         {"data" : 'nama_lengkap_peg'},
+                        {"data" : 'nama_jurusan'},
+                        {
+                            "data" : 'jam_masuk_kuliah',
+                            "render" : function(data, type, row){
+                                var times = (new Date("01/01/2007 " + row.jam_keluar_kuliah) - new Date("01/01/2007 " + row.jam_masuk_kuliah))/1000/60;
+                                if(times > 60){
+                                    var hours = Math.floor(times / 60);
+                                    var minutes = times % 60;
+                                }
+                                return hours + " Jam <br>" + minutes + " Menit";
+                            },
+                        },
                     ],
                     order: [[0, 'asc']],
                     rowCallback: function(row, data, iDisplayIndex) {
@@ -89,7 +105,7 @@
             } );
         </script>
 
-    </div>
+        </div>
 </div>
 
 <?php }; ?>

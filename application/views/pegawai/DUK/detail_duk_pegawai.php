@@ -1,6 +1,32 @@
-<?php if($status_kepegawaian_peg == null){?>
+<?php if(isset($status_kepegawaian_peg) == null){?>
     <div class="container-fluid">
         <h2 style="text-align:center; margin-top:25vh">Anda Belum <br> Berstatus Aktif Sebagai Pegawai <br> Silahkan Menghubungi Admin Untuk Mengaktifkan Akun Anda</h2>
+    </div>
+<?php } else if($status_kepegawaian_peg != null && $tmt_pensiun_peg == null){ ?>
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-body pb-2" style="text-align:center;">
+                <h4>Silahkan Mengisi Tanggal Lahir Untuk Melanjutkan</h4>
+                <p class="mb-4" style="color:red">Pengisian Tanggal Lahir Harus Sesuai Karena Berhubungan dengan TMT Pensiun</p>
+                
+                <?= form_open('dashboard_p/create_tmt_pensiun')?>
+
+                    <input type="hidden" name="tmtmasuk" value="<?= $tmt_masuk_peg?>">
+                    <input type="hidden" name="dosen" value="<?= $id_kat_jab_struktural?>">
+                    <input type="hidden" name="prof" value="<?= $id_kategori_jab_fungsional?>">
+                    
+                    <div class="form-group row justify-content-center">
+                        <div class="col-4">
+                            <input type="date" name="umur" class="form-control form-control-sm" style="text-align:center">
+                        </div>
+                        <div class="col-4">
+                            <input type="submit" value="Lanjutkan" class="btn btn-primary w-100" style="padding:13px 0;">
+                        </div>
+                    </div>
+
+                <?= form_close()?>
+            </div>
+        </div>
     </div>
 <?php }else {?>
     <div class="container-fluid">
@@ -14,12 +40,11 @@
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuOutlineButton3">
                     <a class="dropdown-item" href="<?=base_url()?>dashboard_p/form_data_pegawai">Update Data Pegawai</a>
                     <a class="dropdown-item" href="<?=base_url()?>dashboard_p/form_data_cpns">Update Data CPNS</a>
-                    <a class="dropdown-item" href="<?=base_url()?>dashboard_p/form_data_pmk">Update Data PMK</a>
+                    <a class="dropdown-item" href="<?=base_url()?>dashboard_p/form_data_pmk">Update Data Penyesuaian Masa Kerja</a>
                     <a class="dropdown-item" href="<?=base_url()?>dashboard_p/form_data_kgb">Update Data KGB</a>
                     <a class="dropdown-item" href="<?=base_url()?>dashboard_p/form_data_uker">Update Data Unit Kerja</a>
                     <a class="dropdown-item" href="<?=base_url()?>dashboard_p/form_data_impassing">Update Data Impassing</a>
                     <a class="dropdown-item" href="<?=base_url()?>dashboard_p/form_data_panghir">Update Data Pangkat Terakhir</a>
-                    <a class="dropdown-item" href="<?=base_url()?>dashboard_p/form_d">Update Data Jabatan Fungsional</a>
                     <a class="dropdown-item" href="<?=base_url()?>dashboard_p/form_data_peter">Update Data Pendidikan Terakhir</a>
                     <a class="dropdown-item" href="<?=base_url()?>dashboard_p/form_data_tgs_tambahan">Update Data Tugas Tambahan Dosen</a>
                     <a class="dropdown-item" href="<?=base_url()?>dashboard_p/form_data_diklat">Update Data Diklat Pelatihan</a>
@@ -44,6 +69,18 @@
             <div class="alert alert-success">SK Anda Telah Diupload, Silahkan Mendownload SK Anda dengan Menekan <a href="<?= base_url()?>upload/report_pensiun/<?= $sk_kemendikbud['laporan_pengajuan_pensiun'] ?>" download>Tombol ini</a></div>
         <?php
             };
+        ?>
+
+        <?php 
+            if(notif_kenaikanpangkat($tmt_jab_fungsional) != false){
+                echo '<div class="alert alert-info"><small>Anda Dapat Mengajukan Kenaikan Pangkat Untuk Jabatan Fungsional Silahkan Mengajukan Pengajuan<a href=""> &nbsp Ajukan Kenaikan Pangkat Sekarang</a></small></div>';
+            }
+        ?>
+    
+        <?php 
+            if(notif_kenaikanpangkat($tmt_jab_struktural == null ? $tmt_jab_fungsional : $tmt_jab_struktural) != false){
+                echo '<div class="alert alert-info"><small>Anda Dapat Mengajukan Kenaikan Pangkat Untuk Jabatan Fungsional Silahkan Mengajukan Pengajuan<a href=""> &nbsp Ajukan Kenaikan Pangkat Sekarang</a></small></div>';
+            }
         ?>
 
         <!-- Data Pegawai -->
@@ -139,20 +176,20 @@
         <!-- Data PMK -->
         <div class="card mb-4">
             <div class="card-header" style="background-color:#4e73df; color:white;font-weight:bold">
-                Data PMK Pegawai
+                Data Penyesuaian Masa Kerja Pegawai
             </div>
             <div class="card-body">
                 <div class="row mb-3 px-3 justify-content-between">
                     <div class="col-3 p-0 border-bottom">
-                        <label for=""><small style="font-weight:bold">No PMK :</small></label>
+                        <label for=""><small style="font-weight:bold">Nomor Penyesuaian Masa Kerja :</small></label>
                         <p style="margin-bottom:10px;"><?= $no_pmk?></p>
                     </div>
                     <div class="col-3 p-0 border-bottom">
-                        <label for=""><small style="font-weight:bold">Tanggal PMK :</small></label>
+                        <label for=""><small style="font-weight:bold">Tanggal Penyesuaian Masa Kerja :</small></label>
                         <p style="margin-bottom:10px;"><?= $tgl_pmk?></p>
                     </div>
                     <div class="col-3 p-0 border-bottom">
-                        <label for=""><small style="font-weight:bold">Terhitung PMK (TMT) :</small></label>
+                        <label for=""><small style="font-weight:bold">Terhitung Penyesuaian Masa Kerja (TMT) :</small></label>
                         <p style="margin-bottom:10px;"><?= $tmt_pmk?></p>
                     </div>
                 </div>
@@ -292,7 +329,7 @@
         <!-- Jabatan Fungsional -->
         <div class="card mb-4">
             <div class="card-header" style="background-color:#4e73df; color:white;font-weight:bold">
-                Data Jabatan Fungsional
+                Data Jabatan
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -302,7 +339,8 @@
                         <th width="5px">No</th>
                         <th>Nama Jabatan (Fungsional)</th>
                         <th>TMT Jabatan (Fungsional)</th>
-                        <th>Tunjangan Jabatan (Fungsional)</th>
+                        <th>Nama Jabatan (Struktural)</th>
+                        <th>TMT Jabatan (Struktural)</th>
                     </tr>
                 </thead>
                 </table>
@@ -340,12 +378,23 @@
                         },
                         processing: true,
                         serverSide: true,
-                        ajax: {"url": '<?= base_url()?>dashboard_p/json_jab_fungsi', "type": "POST", data : {'id' : <?= $id_jab_fungsional?>}},
+                        ajax: {"url": '<?= base_url()?>dashboard_p/json_jabatan', "type": "POST"},
                         columns: [
-                        {'data' : 'id_jab_fungsional'},
+                        {'data' : 'id_jab'},
                         {'data' : 'nama_kategori_fung'},
-                        {'data' : 'tmt_jab_fungsional'},
-                        {'data' : 'tunjangan_jab_fungsional'},
+                        {
+                            'data' : 'tmt_jab_fungsional',
+                            "render" : function(data, type, row){
+                               return dateIndo(data);
+                            },
+                        },
+                        {'data' : 'nama_jabatan_struktur'},
+                        {
+                            'data' : 'tmt_jab_struktural',
+                            'render' : function(data, type, row){
+                                return dateIndo(data);
+                            }
+                        },
                         ],
                         order: [[0, 'asc']],
                         rowCallback: function(row, data, iDisplayIndex) {
@@ -364,16 +413,6 @@
                 $('#jobfungsi').DataTable();
                 } );
             </script>
-
-            </div>
-        </div>
-
-        <!-- Jabatan Struktural -->
-        <div class="card mb-4">
-            <div class="card-header" style="background-color:#4e73df; color:white;font-weight:bold">
-                Data Jabatan Struktural
-            </div>
-            <div class="card-body">
 
             </div>
         </div>

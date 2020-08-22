@@ -107,7 +107,7 @@ class User extends CI_Controller
                     'id_kgb' => $this->m_pegawai->insert($idpeg, 'tbl_kgb'),
                     'id_impassing' => $this->m_pegawai->insert($idpeg, 'tbl_impassing'),
                     'id_pangkat_terakhir' => $this->m_pegawai->insert($idpeg, 'tbl_pangkat_terakhir'),
-                    'id_jab_fungsional' => $this->m_pegawai->insert($idpeg, 'tbl_jab_fungsional'),
+                    'id_jabatan' => $this->m_pegawai->insert($idpeg, 'tbl_jabatan'),
                     'id_tgs_tambahan_dosen' => $this->m_pegawai->insert($idpeg, 'tbl_tgs_tambahan_dosen'),
                     'id_peter' => $this->m_pegawai->insert($idpeg, 'tbl_pendidikan_terakhir'),
                     'id_user' => $last_id,

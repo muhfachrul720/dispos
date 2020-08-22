@@ -7,10 +7,11 @@
         <div class="row mb-3 px-3">
             <div class="col-6">
                 <label for=""><small style="font-weight:bold">Klasifikasi Jabatan :</small></label>
-                <?php echo cmb_dinamis('klafjab', 'tbl_kategori_klasifikasi_jabatan', 'nama_klasifikasi_jabatan', 'id_klasifikasi', $klasifikasi_jbt,'DESC') ?>
+                <input type="text" name="klafjab" class="form-control form-control-sm" value="<?= $klasifikasi_jbt?>">
+                <!-- <?php echo cmb_dinamis('klafjab', 'tbl_kategori_klasifikasi_jabatan', 'nama_klasifikasi_jabatan', 'id_klasifikasi', $klasifikasi_jbt,'DESC') ?> -->
             </div>
             <div class="col-6">
-                <label for=""><small style="font-weight:bold">Tugas Tambahan :</small></label>
+                <label for=""><small style="font-weight:bold">Unit Kerja Tugas Tambahan :</small></label>
                 <?php echo cmb_dinamis('tgstbh', 'tbl_kategori_tugastambahan', 'nama_kategori_tugastambahan', 'id_kategori_tugastambahan', $tugas_tambahan,'DESC') ?>
             </div>
         </div>  

@@ -71,7 +71,7 @@
                         {
                             "data": "id_peg",
                             "render" : function(data, type, row){
-                                return '<a href="<?=base_url()?>pegawai/form_data_pegawai/'+data+'" class="btn btn-sm btn-warning"><i class="far fa-edit"></i></a> <a href="<?=base_url()?>pegawai/form_data_pegawai/'+data+'" class="btn btn-sm btn-success"><i class="far fa-file-excel"></i></a>';
+                                return '<a href="<?=base_url()?>pegawai/form_data_pegawai/'+data+'" class="btn btn-sm btn-warning"><i class="mdi mdi-pencil"></i></a> <a href="<?=base_url()?>pegawai/form_data_pegawai/'+data+'" class="btn btn-sm btn-success"><i class="mdi mdi-file-excel"></i></a>';
                             },
                         },
                     ],

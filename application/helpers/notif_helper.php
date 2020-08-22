@@ -16,6 +16,18 @@
             return null;
         }
     }
+
+    function notif_kenaikanpangkat($time){
+
+        $endTime = date('Y-m-d', strtotime('+2 years', strtotime($time)));
+        $notifTime = date('Y-m-d', strtotime('-30 days', strtotime($endTime)));
+        
+        if(strtotime(date('Y-m-d')) >= strtotime($notifTime)){
+            return true;      
+        }
+
+        return false;
+    }
     
     function get_age($birthDate)
     {

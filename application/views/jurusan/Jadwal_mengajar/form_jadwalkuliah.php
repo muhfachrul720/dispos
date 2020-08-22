@@ -27,7 +27,7 @@
             ?> 
 
             <div class="row form-group">
-                <div class="col-4">
+                <div class="col-6">
                     <label style="font-weight:bold" for="">Nama Dosen :</label>
                     <select name="dosen" id="" class="form-control form-control-sm" style="height:35px">
                         <option value="<?= $id_pegawai ?>" selected><?= $nama_lengkap_peg ?></option>
@@ -36,25 +36,31 @@
                         <?php }?>
                     </select>
                 </div>
-                <div class="col-4">
+                <div class="col-6">
                     <label style="font-weight:bold" for="">Nama Mata Kuliah :</label>
-                    <?php echo cmb_dinamis('matkul', 'tbl_mata_kuliah', 'nama_mata_kuliah', 'id_mata_kuliah', $id_mata_kuliah,'DESC') ?>
-                </div>
-                <div class="col-4">
-                    <label style="font-weight:bold" for="">Nama Jurusan :</label>
-                    <?php echo cmb_dinamis('jurusan', 'tbl_jurusan', 'nama_jurusan', 'id_jurusan', $id_jurusan,'DESC') ?>
+                    <select name="matkul" id="" class="form-control">
+                        <?php for($i = 0; $i < count($matkul) ; $i++){?>
+                            <option value="<?= $matkul[$i]['id_mata_kuliah']?>"><?= $matkul[$i]['nama_mata_kuliah']?></option>
+                        <?php };?>
+                    </select>
+                    <!-- <?php echo cmb_dinamis('matkul', 'tbl_mata_kuliah', 'nama_mata_kuliah', 'id_mata_kuliah', $id_mata_kuliah,'DESC') ?> -->
                 </div>
             </div>
             <div class="row form-group">
-                <div class="col-6">
+                <div class="col-4">
                     <label style="font-weight:bold" for="">Hari Pengajaran :</label>
                     <?php echo form_dropdown('date', array('senin' => 'Senin', 'selasa' => 'Selasa', 'rabu' => 'Rabu', 'kamis' => 'Kamis', 'jumat' => 'Jumat', 'sabtu' => 'Sabtu', 'minggu' => 'Minggu'), $hari_jadwal_kuliah, array('class' => 'form-control')); ?>
                     <?php echo form_error('date') ?>
                 </div>
-                <div class="col-6">
-                    <label style="font-weight:bold" for="">Jam Pengajaran :</label>
-                    <input type="time" name="time" class="form-control form-control-sm" value="<?= $waktu_jadwal_kuliah ?>">
-                    <?php echo form_error('time') ?>
+                <div class="col-4">
+                    <label style="font-weight:bold" for="">Jam Masuk :</label>
+                    <input type="time" name="timeIn" class="form-control form-control-sm" value="<?= $jam_masuk_kuliah ?>">
+                    <?php echo form_error('timeIn') ?>
+                </div>
+                <div class="col-4">
+                    <label style="font-weight:bold" for="">Jam Keluar :</label>
+                    <input type="time" name="timeOut" class="form-control form-control-sm" value="<?= $jam_keluar_kuliah ?>">
+                    <?php echo form_error('timeOut') ?>
                 </div>
                 <!-- <div class="col-4">
                     <label style="font-weight:bold" for="">Ruang Pengajaran :</label>

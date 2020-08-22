@@ -49,11 +49,15 @@
                 </div>
                 <div class="col-4">
                     <label style="font-weight:bold" for="">Jurusan</label>
-                    <select name="" id="" class="form-control">
-                        <?php for($i = 0; $i < count($jurusan); $i++){?>
-                            <option value="<?= $jurusan[$i]['id_jurusan']?>"><?= $jurusan[$i]['nama_jurusan']?></option>
-                        <?php };?>
+                    <select name="jurusan" id="" class="form-control" readonly>
+                        <option value="<?= $jurusan['id_jurusan']?>"><?= $jurusan['nama_jurusan'] ?></option>
                     </select>
+                    <!-- <select name="jurusan" id="" class="form-control">
+                    <option value="<?=  $id_jurusan ?>" selected><?=  $nama_jurusan ?></option>
+                        <?php //for($i = 0; $i < count($jurusan); $i++){?>
+                            <option value="<?=  $jurusan[$i]['id_jurusan']?>"><?= $jurusan[$i]['nama_jurusan']?></option>
+                        <?php // };?>
+                    </select> -->
                     <?php echo form_error('jurusan') ?>
                 </div>
             </div>

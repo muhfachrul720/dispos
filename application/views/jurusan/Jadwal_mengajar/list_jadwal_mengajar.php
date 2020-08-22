@@ -19,8 +19,11 @@
                         <th>Semester</th>
                         <th>Sks</th>
                         <th>Jadwal (Hari)</th>
-                        <th>Jadwal (Jam)</th>
+                        <th>Jam Masuk</th>
+                        <th>Jam Keluar</th>
                         <th>Dosen</th>
+                        <th>Jurusan</th>
+                        <th>Total Jam</th>
                         <th>Aksi</th>
                     </tr>
                     </thead>
@@ -60,15 +63,28 @@
                     },
                     processing: true,
                     serverSide: true,
-                    ajax: {"url": '<?= base_url()?>jurusan/json_jadwal_mengajar', "type": "POST"},
+                    ajax: {"url": '<?= base_url()?>jurusan/json_jadwal_mengajar', "type": "POST", data : {id : <?= $this->session->userdata('id_user_level')?>}},
                     columns: [
                         {"data" : 'id_jadwal_kuliah', orderable:false},
                         {"data" : 'nama_mata_kuliah'},
                         {"data" : 'semester_mata_kuliah'},
                         {"data" : 'sks_mata_kuliah'},
                         {"data" : 'hari_jadwal_kuliah'},
-                        {"data" : 'waktu_jadwal_kuliah'},
+                        {"data" : 'jam_masuk_kuliah'},
+                        {"data" : 'jam_keluar_kuliah'},
                         {"data" : 'nama_lengkap_peg'},
+                        {"data" : 'nama_jurusan'},
+                        {
+                            "data" : 'jam_masuk_kuliah',
+                            "render" : function(data, type, row){
+                                var times = (new Date("01/01/2007 " + row.jam_keluar_kuliah) - new Date("01/01/2007 " + row.jam_masuk_kuliah))/1000/60;
+                                if(times > 60){
+                                    var hours = Math.floor(times / 60);
+                                    var minutes = times % 60;
+                                }
+                                return hours + " Jam <br>" + minutes + " Menit";
+                            },
+                        },
                         {
                             "data" : 'id_jadwal_kuliah',
                             "render" : function(data, type, row){

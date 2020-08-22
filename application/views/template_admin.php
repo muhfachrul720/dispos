@@ -46,6 +46,15 @@
     white-space: normal !important;
     }
 
+    .naikpangkat th { font-size: 12px !important; }
+    .naikpangkat td { font-size: 12px !important; }
+    .naikpangkat td label, .naikpangkat td a { font-size: 12px !important; }
+
+    .co-label {
+      margin-bottom: 20px 
+      font-weight:bold;
+    }
+
   </style>
   <body>
     <div class="container-scroller">
@@ -151,6 +160,19 @@
     <!-- Page level custom scripts -->
     <script src="<?php echo base_url(); ?>assets/assets-sbadmin/js/demo/datatables-demo.js"></script>
     <!-- <script>s -->
+    <script>
+      var bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+
+      function dateIndo(date){
+        var year = date.split('-')[0];
+        var day = date.split('-')[2];
+        var temp = parseInt(date.split('-')[1]);  
+
+        var month = bulan[temp - 1];
+
+        return day +' '+ month +' '+ year;
+      }
+    </script>
 
   </body>
 </html>

@@ -1,7 +1,7 @@
 <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
 <div class="card shadow mb-4">
     <div class="card-header py-3" style="background-color:#4e73df; color:white; font-weight:bold">
-        <h6 class="m-0 font-weight-bold">Update Data PMK</h6>
+        <h6 class="m-0 font-weight-bold">Update Data Diklat Pelatihan</h6>
     </div>
     <div class="card-body px-4 py-3">
         <div class="row mb-3 px-3">

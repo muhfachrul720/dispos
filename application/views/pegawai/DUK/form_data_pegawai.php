@@ -1,79 +1,93 @@
 <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
+
+<?php if($this->session->userdata('id_user_level') == 5){ ?> 
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3" style="background-color:#4e73df; color:white; font-weight:bold">
+        <h6 class="m-0 font-weight-bold px-3">Update Data Pegawai</h6>
+    </div>
+    <div class="card-body px-4 py-3">
+    <input type="hidden" name="idpeg" value="<?= $id_pegawai?>">
+    <div class="row mb-3 px-3">
+        <div class="col-5">
+            <label for=""><small style="font-weight:bold">Nama Pegawai :</small></label>
+            <p style="margin:0"><?= $nama_tanpa_gelar_peg?></p>
+        </div>
+        <div class="col-5">
+            <label for=""><small style="font-weight:bold">Nip (Nomor Induk Pegawai) :</small></label>
+            <p style="margin:0"><?= $nip_peg?></p>
+        </div>
+    </div>
+    <div class="row mb-3 px-3">
+        <div class="col-5">
+            <label for=""><small style="font-weight:bold">Status Kepegawaian :</small></label>
+            <?php echo form_dropdown('statuspeg', array('Aktif' => 'Aktif', 'Tidak Aktif' => 'Tidak Aktif'), $status_kepegawaian_peg, array('class' => 'form-control form-control-sm')); ?>
+            <!-- <input name="statuspeg" type="text" class="form-control form-control-sm" value="<?= $status_kepegawaian_peg?>"> -->
+        </div>
+        <div class="col-5">
+            <label for=""><small style="font-weight:bold">Terhitung Masuk (TMT) :</small></label>
+            <input id="tmtIn" name="tmtmasuk" type="date" class="form-control form-control-sm" value="<?= $tmt_masuk_peg?>">
+        </div>
+        <div class="col-2">
+            <label for="" style="color:white"> asdas </label>
+            <input type="button" id="detailBtn" class="btn btn-info w-100" value="Selengkapnya" style="height:60%">
+        </div>
+    </div>
+    <div class="row mb-3 px-3">
+        <div class="col-12">
+            <div style="height:0; overflow:hidden;" id="detailInfo">
+                <label for=""><small style="font-weight:bold">Meninggal Dunia :</small></label>
+                <input name="deaddate" type="date" class="form-control form-control-sm" value="<?= $tgl_meninggal_dunia_peg?>">    
+            </div>
+        </div>
+        <script>
+            $('#detailBtn').on('click', function(){
+                $('#detailInfo').css('height', 'auto');
+            });
+        </script>
+    </div>
+    </div>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3 px-4" style="background-color:#4e73df; color:white; font-weight:bold">
+        <h6 class="m-0 font-weight-bold px-3">Update Jabatan</h6>
+    </div>
+    <div class="card-body px-4 py-3">
+        <div class="row mb-3 px-3">
+            <div class="col-3">
+                <label for=""><small style="font-weight:bold">Jabatan Fungsional</small></label>
+                <?= cmb_dinamis('jabfungsi', 'tbl_kategori_jabatan_fung', 'nama_kategori_fung', 'id_kategori_jabatan_fung', $id_kategori_jab_fungsional,'DESC') ?>
+            </div>
+            <div class="col-3">
+                <label for=""><small style="font-weight:bold">TMT Jabatan Fungsional</small></label>
+                <input type="date" name="tmtfungsional" class="form-control" value="<?= $tmt_jab_fungsional?>" style="height:40px; padding:0px 10px">
+            </div>
+            <div class="col-3">
+                <label for=""><small style="font-weight:bold">Jabatan Struktural</small></label>
+                <?= cmb_dinamis('jabstruktur', 'tbl_kategori_jabatan_struktur', 'nama_jabatan_struktur', 'id_kat_jbt_struktur', $id_kat_jab_struktural,'DESC') ?>
+            </div>
+            <div class="col-3">
+                <label for=""><small style="font-weight:bold">TMT Jabatan Struktural</small></label>
+                <input type="date" name="tmtstruktural" class="form-control" value="<?= $tmt_jab_struktural?>"  style="height:40px; padding:0px 10px">
+            </div>
+        </div>
+    </div>
+</div>
+<?php } else {?>
+
 <div class="card shadow mb-4">
         <div class="card-header py-3" style="background-color:#4e73df; color:white; font-weight:bold">
             <h6 class="m-0 font-weight-bold">Update Data Pegawai</h6>
         </div>
         <div class="card-body px-4 py-3">
-
-            <?php if($this->session->userdata('id_user_level') == 5){ ?> 
-            <input type="hidden" name="idpeg" value="<?= $id_pegawai?>">
-            <div class="row mb-3 px-3">
-                <div class="col-5">
-                    <label for=""><small style="font-weight:bold">Nama Pegawai :</small></label>
-                    <p style="margin:0"><?= $nama_tanpa_gelar_peg?></p>
-                </div>
-            </div>
-            <div class="row mb-3 px-3">
-                <div class="col-4">
-                    <label for=""><small style="font-weight:bold">Status Kepegawaian :</small></label>
-                    <?php echo form_dropdown('statuspeg', array('Aktif' => 'Aktif', 'Tidak Aktif' => 'Tidak Aktif'), $status_kepegawaian_peg, array('class' => 'form-control form-control-sm')); ?>
-                    <!-- <input name="statuspeg" type="text" class="form-control form-control-sm" value="<?= $status_kepegawaian_peg?>"> -->
-                </div>
-                <div class="col-3">
-                    <label for=""><small style="font-weight:bold">Terhitung Masuk (TMT) :</small></label>
-                    <input id="tmtIn" name="tmtmasuk" type="date" class="form-control form-control-sm" value="<?= $tmt_masuk_peg?>">
-                </div>
-                <script>
-                    
-                    <?php if($dosen == 12) {?>
-                        var limit = 20;
-                    <?php }else {?>
-                        var limit = 10;
-                    <?php }?>
-
-                    $('#tmtIn').on('change', function(){
-                        var tmtIn = new Date($(this).val());
-
-                        var year = tmtIn.getFullYear();
-                        var month = tmtIn.getMonth();
-                        var day = tmtIn.getDate();
-
-                        var tmtOut = new Date((year + limit), month, day + 1);
-                        document.getElementById('tmtOut').valueAsDate = tmtOut;
-                    });
-
-                </script>
-                <div class="col-3">
-                    <label for=""><small style="font-weight:bold">Terhitung Pensiun (TMT) :</small></label>
-                    <input id="tmtOut" name="tmtpensi" type="date" class="form-control form-control-sm" value="<?= $tmt_pensiun_peg?>">
-                    <!-- <input id="tmtOut" name="tmtpensi" type="text" class="form-control form-control-sm" value="<?= $tmt_pensiun_peg?>"> -->
-                </div>
-                <div class="col-2">
-                    <label for="" style="color:white"> asdas </label>
-                    <input type="button" id="detailBtn" class="btn btn-info w-100" value="Selengkapnya" style="height:60%">
-                </div>
-            </div>
-            <div class="row mb-3 px-3" style="height:0; overflow:hidden;" id="detailInfo">
-                <div class="col-12">
-                    <label for=""><small style="font-weight:bold">Tanggal Meninggal Dunia :</small></label>
-                    <input name="deaddate" type="date" class="form-control form-control-sm" value="<?= $tgl_meninggal_dunia_peg?>">
-                </div>
-                <script>
-                    $('#detailBtn').on('click', function(){
-                        $('#detailInfo').css('height', 'auto');
-                    });
-                </script>
-            </div>
-            <hr>
-            <?php } else {?>
-            
             <input type="hidden" name="id" value="<?= $id_pegawai?>">
             <div class="row mb-3 px-3">
                 <div class="col-6">
                     <label for=""><small style="font-weight:bold">Nama Lengkap :</small></label>
                     <input name="name" type="text" class="form-control form-control-sm" value="<?= $nama_tanpa_gelar_peg?>">
                 </div>
-                   <div class="col-6">
+                <div class="col-6">
                     <label for=""><small style="font-weight:bold">Nip (Nomor Induk Pegawai) :</small></label>
                     <input name="nip" type="text" class="form-control form-control-sm" value="<?= $nip_peg?>">
                 </div>
@@ -99,7 +113,7 @@
                 </div>
                 <div class="col-4">
                     <label for=""><small style="font-weight:bold">Tanggal Lahir :</small></label>
-                    <input name="birthdate" type="date" class="form-control form-control-sm" value="<?= $tgl_lahir_peg?>">
+                    <input name="birthdate" type="date" class="form-control form-control-sm" value="<?= $tgl_lahir_peg?>" disabled>
                 </div>
             </div>
             <hr style="mx-2">
@@ -163,23 +177,26 @@
     <div class="card-body px-4 py-3">
         <div class="row mb-3 px-3">
             <div class="col-6">
-                <label for=""><small style="font-weight:bold">Prof Gelar :</small></label>
+                <label for=""><small style="font-weight:bold">Gelar Prof :</small></label>
                 <?php echo form_dropdown('profgelar', array('' => 'Tidak Ada', 'Prof.' => 'Prof.'), $prof_gelar, array('class' => 'form-control form-control-sm')); ?>
             </div>
             <div class="col-6">
-                <label for=""><small style="font-weight:bold">Gelar Depan :</small></label>
-                <?php echo form_dropdown('frontgelar', array('' => 'Tidak Ada', 'Dr.' => 'Dr.'), $depan_gelar, array('class' => 'form-control form-control-sm')); ?>
-            </div>  
+                <label for=""><small style="font-weight:bold">Gelar Haji :</small></label>
+                <?php echo form_dropdown('hajigelar', array('' => 'Tidak Ada', 'H.' => 'H.', 'Hj.' => 'Hj.'), $h_hj_gelar, array('class' => 'form-control form-control-sm')); ?>
+            </div>
         </div>
         <div class="row mb-3 px-3">
-            <div class="col-6">
-                <label for=""><small style="font-weight:bold">Gelar Haji :</small></label>
-                <?php echo form_dropdown('hajigelar', array('' => 'Tidak Ada', 'H.' => 'H.'), $h_hj_gelar, array('class' => 'form-control form-control-sm')); ?>
+            <div class="col-4">
+                <label for=""><small style="font-weight:bold">Gelar Doktor :</small></label>
+                <input type="text" name="doktorgelar" value="<?= $doktor_gelar?>" class="form-control form-control-sm">
             </div>
-            <div class="col-6">
-                <label for=""><small style="font-weight:bold">Gelar Depan :</small></label>
-                <input type="text" name="backgelar" value="<?= $belakang_gelar?>" class="form-control form-control-sm">
-                <!-- <?php echo form_dropdown('frontgelar', array('' => 'Tidak Ada', 'Dr.' => 'Dr.'), $depan_gelar, array('class' => 'form-control form-control-sm')); ?> -->
+            <div class="col-4">
+                <label for=""><small style="font-weight:bold">Gelar Magister :</small></label>
+                <input type="text" name="magistergelar" value="<?= $magister_gelar?>" class="form-control form-control-sm">
+            </div>  
+            <div class="col-4">
+                <label for=""><small style="font-weight:bold">Gelar Strata I :</small></label>
+                <input type="text" name="strata1gelar" value="<?= $strata_1_gelar?>" class="form-control form-control-sm">
             </div>  
         </div>
     </div>
@@ -196,4 +213,4 @@
         <?php };?>
     </div>
 </div>
-</form> 
+</form>     

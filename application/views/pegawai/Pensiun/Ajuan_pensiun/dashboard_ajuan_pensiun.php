@@ -1,6 +1,5 @@
 <!-- <?php // echo $this->session->userdata('id_pegawai'); die;?> -->
 <div class="container-fluid">
-    <?php //var_dump($result); die;?>
     <?php if($this->session->flashdata('msg') == 1){?>
         <div class="alert alert-success" role="alert">
             Pengajuan Anda Berhasil Dikirim Silahkan Menunggu Verifikasi Dari Admin
@@ -20,108 +19,102 @@
     </li>
     </ul>
     <div class="tab-content" id="myTabContent">
-        <div class="tab-pane show active fade border border-top-0 p-5" style="background-color:white; font-size:14px" id="home" role="tabpanel" aria-labelledby="home-tab">
-            <div class="header mb-3">
-                <h3 class="mb-2">Form Pengajuan Pensiun </h3>
-                <p>Silahkan Mengupload syarat syarat yang diperlukan dalam mengurus Pensiunan Secara Lengkap dan benar</p>
-                <?php if(isset($ajuan)) {?> 
-                    <div class="alert alert-info alert-sm" role="alert">
+        <div class="tab-pane show active fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <div class="card border-top-0 mb-3 pt-3 px-3 pb-1">
+                <div class="card-body">
+                    <h3 class="">Form Pengajuan Pensiun </h3>
+                    <p>Silahkan Mengupload syarat syarat yang diperlukan dalam mengurus Pensiunan Secara Lengkap dan benar</p>
+                    <?php if(isset($ajuan)) {?> 
+                    <small>Catatan Koreksi</small>
+                    <div class="alert alert-info alert-sm mt-2" role="alert">
                         <?= $ajuan['keterangan_pengajuan_pensiun']?>
                     </div>
                 <?php }?> 
+                </div>
             </div>  
-            <hr>
+            
             <?= form_open_multipart($action)?>
-            <div class="body">
-                <?php if(isset($result)) {?>
+
+            <?php if(isset($result)) {?>
                     <?= form_hidden('id', $ajuan['id_berkas_pengajuan_pensiun'])?>
                     <?= form_hidden('time', $ajuan['waktu_pengajuan_pensiun'])?>
                     <?= form_hidden('id_aju', $ajuan['id_pengajuan_pensiun'])?>
-                <?php }?>
-                <script>
-                        function getExtension(fileName){
-                            return fileName.substr( (fileName.lastIndexOf('.') +1) );
-                        }
-
-                        function previewFile(input, ext = null, targetPdf = null, targetImg = null, checkempty = null){
-                            if(input.files && input.files[0]){
-                                var reader = new FileReader();
-
-                                reader.onload = function(e){
-                                    $(checkempty).css('display', 'none');
-                                    if(ext == 'pdf'){
-                                        $(targetPdf).attr('src', e.target.result);
-                                        $(targetPdf).css('display', 'block');
-                                    }
-                                    else {
-                                        $(targetImg).attr('src', e.target.result);
-                                        $(targetImg).css('display', 'block');
-                                    }
-                                }
-                                reader.readAsDataURL(input.files[0]);
-                            }
-                        };
-                </script>
-
-                        <?php 
-                            $checker = array(
-                                array('Surat Usul Pimpinan Unit Kerja', 'supuk', isset($result['surat_pimpinan_uker']) ? $result['surat_pimpinan_uker'] : '' ),
-                                array('Surat Permohonan PNS Yang Bersangkutan', 'sppyb', isset($result['surat_permohonan_pns']) ? $result['surat_permohonan_pns'] : ''),
-                                array('Daftar Perorangan Calon Penerima Pensiun', 'dpcpp', isset($result['dpcp']) ? $result['dpcp'] : ''),
-                                array('SK CPNS - SK Pangkat Terakhir (Legalisir)', 'skcpskpt', isset($result['skcpns_skpangkat_akhir']) ? $result['skcpns_skpangkat_akhir'] : ''),
-                                array('SK Jabatan (Fungsional/Struktural) (Legalisir)', 'skjbt', isset($result['sk_jabatan']) ? $result['sk_jabatan'] : ''),
-                                array('Kartu Pegawai (Karpeg) / KPE (Legalisir)', 'kpe', isset($result['karpeg']) ? $result['karpeg'] : ''),
-                                array('Akta / Surat Nikah/ Cerai (Legalisir)', 'askc', isset($result['surat_nikah_cerai']) ? $result['surat_nikah_cerai'] : ''),
-                                array('Akta / Surat Kenal Lahir Anak < 25 Tahun (Legalisir)', 'askla25', isset($result['surat_kenal_anak']) ? $result['surat_kenal_anak'] : ''),
-                                array('Kartu Keluarga / Daftar Susunan Keluarga Yang Disahkan', 'kkdskys', isset($result['kartu_keluarga']) ? $result['kartu_keluarga'] : ''),
-                                array('Pas Foto Berwarna 3x4', 'pfb3x4', isset($result['pas_foto']) ? $result['pas_foto'] : ''),
-                                array('Formulir Permintaan Pembayaran Pensiun', 'fppp', isset($result['formulir_permintaan_pembayaran_pensiun']) ? $result['formulir_permintaan_pembayaran_pensiun'] : ''),
-                                array('Foto Kopi Buku Rekening', 'fkbr', isset($result['foto_kopi_buku_rekening']) ? $result['foto_kopi_buku_rekening'] : ''),
-                                array('Penilaian Prestasi 1 Tahun Terakhir (Legalisir)', 'pp1tr', isset($result['penilaian_prestasi']) ? $result['penilaian_prestasi'] : ''),
-                                array('Surat Pernyataan Tidak Pernah dijatuhi Hukuman Disiplin Tingkat Sedang / Berat 1 Tahun Terakhir', 'sptpdhdts', isset($result['surat_pernyataan_tidak_dijatuhi_hukum']) ? $result['surat_pernyataan_tidak_dijatuhi_hukum'] : ''),
-                                array('Surat Pernyataan Tidak Sedang Menjalani Proses Pidana atau pernah Dipidana Penjara Berdasarkan Putusan Pengadilan Yang Telah Berkekuatan Hukum ', 'sptsmppapdpbpp', isset($result['surat_pernyataan_tidak_berproses_pidana']) ? $result['surat_pernyataan_tidak_berproses_pidana'] : ''),
-                                array('Ahli Waris Yang Sah (Bagi Pensiun Janda / Duda)', 'awys', isset($result['surat_ahli_waris']) ? $result['surat_ahli_waris'] : ''),
-                                array('Akta / Surat Kematian (Bagi Pensiun Janda / Duda)', 'ask', isset($result['surat_kematian']) ? $result['surat_kematian'] : ''),
-                                array('Surat Keterangan Janda / Duda / Anak / Orang Tua (Bagi Pensiun Janda / Duda)', 'skjdaot', isset($result['surat_keterangan_janda_duda_anak_orangtua']) ? $result['surat_keterangan_janda_duda_anak_orangtua'] : ''),
-                            );
-
-                            for($i=0; $i<count($checker); $i++){ 
-
-                        ?>
-                                <div class="form-group row">
-                                    <div class="col-6 my-auto">
-                                        <?= $checker[$i][0]?>
-                                    </div>
-                                    <div class="col-3 my-auto" style="text-align:center">
-                                        <label for="previewFile<?= $i ?>" class="btn btn-sm btn-info w-100 mt-1">Upload</label>
-                                        <input type="file" class="uploadFile" style="display:none" name="<?= $checker[$i][1]?>" id="previewFile<?= $i ?>" accept="image/jpeg,image/gif,image/png,application/pdf">
-                                        <script>
-                                            $('#previewFile<?= $i ?>').on('change', function(e){
-                                                    var fileName = e.target.files[0].name;
-                                                    previewFile(this, getExtension(fileName), '#pPdf<?= $i ?>', '#pImg<?= $i ?>', '#isNotEmpty<?= $i ?>');
-                                                });
-                                        </script>
-                                    </div>
-                                    <div class="col-3">
-                                    <?php 
-                                        if($checker[$i][2] != '') { 
-                                        $src = base_url().'upload/berkas_pensiun/pegawai_'.$ajuan['id_pegawai'].'tgl_'.substr(str_replace(':','_',$ajuan['waktu_pengajuan_pensiun']), 2).'/'.$checker[$i][2];
-                                    ?>
-                                        <div id="isNotEmpty<?= $i ?>">
-                                            <small>File Telah Diupload.. !</small>
-                                            <a href="<?= isset($src) ? $src : ''?> " class="btn btn-info btn-sm mx-2 mt-1">Lihat File</a>
+            <?php }?>
+            
+            <?php 
+                $checker = array(
+                    array('Surat Usul Pimpinan Unit Kerja', 'supuk', isset($result['surat_pimpinan_uker']) ? $result['surat_pimpinan_uker'] : '' ),
+                    array('Surat Permohonan PNS Yang Bersangkutan', 'sppyb', isset($result['surat_permohonan_pns']) ? $result['surat_permohonan_pns'] : ''),
+                    array('Daftar Perorangan Calon Penerima Pensiun', 'dpcpp', isset($result['dpcp']) ? $result['dpcp'] : ''),
+                    array('SK CPNS - SK Pangkat Terakhir (Legalisir)', 'skcpskpt', isset($result['skcpns_skpangkat_akhir']) ? $result['skcpns_skpangkat_akhir'] : ''),
+                    array('SK Jabatan (Fungsional/Struktural) (Legalisir)', 'skjbt', isset($result['sk_jabatan']) ? $result['sk_jabatan'] : ''),
+                    array('Kartu Pegawai (Karpeg) / KPE (Legalisir)', 'kpe', isset($result['karpeg']) ? $result['karpeg'] : ''),
+                    array('Akta / Surat Nikah/ Cerai (Legalisir)', 'askc', isset($result['surat_nikah_cerai']) ? $result['surat_nikah_cerai'] : ''),
+                    array('Akta / Surat Kenal Lahir Anak < 25 Tahun (Legalisir)', 'askla25', isset($result['surat_kenal_anak']) ? $result['surat_kenal_anak'] : ''),
+                    array('Kartu Keluarga / Daftar Susunan Keluarga Yang Disahkan', 'kkdskys', isset($result['kartu_keluarga']) ? $result['kartu_keluarga'] : ''),
+                    array('Pas Foto Berwarna 3x4', 'pfb3x4', isset($result['pas_foto']) ? $result['pas_foto'] : ''),
+                    array('Formulir Permintaan Pembayaran Pensiun', 'fppp', isset($result['formulir_permintaan_pembayaran_pensiun']) ? $result['formulir_permintaan_pembayaran_pensiun'] : ''),
+                    array('Foto Kopi Buku Rekening', 'fkbr', isset($result['foto_kopi_buku_rekening']) ? $result['foto_kopi_buku_rekening'] : ''),
+                    array('Penilaian Prestasi 1 Tahun Terakhir (Legalisir)', 'pp1tr', isset($result['penilaian_prestasi']) ? $result['penilaian_prestasi'] : ''),
+                    array('Surat Pernyataan Tidak Pernah dijatuhi Hukuman Disiplin Tingkat Sedang / Berat 1 Tahun Terakhir', 'sptpdhdts', isset($result['surat_pernyataan_tidak_dijatuhi_hukum']) ? $result['surat_pernyataan_tidak_dijatuhi_hukum'] : ''),
+                    array('Surat Pernyataan Tidak Sedang Menjalani Proses Pidana atau pernah Dipidana Penjara Berdasarkan Putusan Pengadilan Yang Telah Berkekuatan Hukum ', 'sptsmppapdpbpp', isset($result['surat_pernyataan_tidak_berproses_pidana']) ? $result['surat_pernyataan_tidak_berproses_pidana'] : ''),
+                    array('Ahli Waris Yang Sah (Bagi Pensiun Janda / Duda)', 'awys', isset($result['surat_ahli_waris']) ? $result['surat_ahli_waris'] : ''),
+                    array('Akta / Surat Kematian (Bagi Pensiun Janda / Duda)', 'ask', isset($result['surat_kematian']) ? $result['surat_kematian'] : ''),
+                    array('Surat Keterangan Janda / Duda / Anak / Orang Tua (Bagi Pensiun Janda / Duda)', 'skjdaot', isset($result['surat_keterangan_janda_duda_anak_orangtua']) ? $result['surat_keterangan_janda_duda_anak_orangtua'] : ''),
+                );
+            ?>
+           
+            <div class="row">
+                <div class="col-7">
+                    <div class="row">
+                        <div class="col-12 mb-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="title" style="text-align:center; ">Berkas Pengajuan</h5>
+                                    <hr>
+                                    <?php for($i = 0; $i < count($checker); $i++){?>
+                                    <div class="row mb-3">
+                                        <div class="col-9">
+                                            <small><?= $checker[$i][0]?></small>
                                         </div>
-                                    <?php }?>
-                                        <img id="pImg<?= $i ?>" src="" alt="" width="100px" height="130px" style="display:none; margin:auto; border:solid 1px gray">
-                                        <iframe id="pPdf<?= $i ?>" src="" width="100%" height="200px" style="display:none; margin:auto;"></iframe>  
+                                        <div class="col-3">
+                                            <?php if($checker[$i][2] != '') { ?>
+                                                <label for="file<?= $i ?>" class="btn btn-sm btn-primary m-auto" style="font-size:12px">Edit File</label>
+                                                <i id="check<?= $i ?>" class="mdi mdi-checkbox-marked-outline btn btn-success btn-sm w-25"></i>
+                                            <?php } else { ?>
+                                                <label for="file<?= $i ?>" class="btn btn-sm btn-warning m-auto" style="font-size:12px">Upload File</label>
+                                                <i id="check<?= $i ?>" class="mdi mdi-close btn btn-danger btn-sm w-25"></i>
+                                            <?php }; ?>
+
+                                            <input type="file" name="<?= $checker[$i][1]?>" class="uploadFile" id="file<?= $i ?>" style="display:none;" accept="application/pdf">
+                                        </div>
                                     </div>
+                                    <script>
+                                        $('#file<?= $i ?>').on('change', function(e){
+                                            var check = $('#check<?= $i ?>'); 
+                                            check.removeClass('btn-danger').addClass('btn-success');
+                                            check.removeClass('mdi-close').addClass('mdi-checkbox-marked-outline');
+                                        });
+                                    </script>
+                                    <?php };?>
                                 </div>
-
-                        <?php };?>
-
-                        <hr>                    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-5">
+                    <div class="card">
+                        <div class="card-body px-2 py-3" style="text-align:center">
+                            <h5 class="pt-0 pb-3">Tekan Tombol Dibawah Untuk Mengajukan Pengajuan Pensiun</h5>
+                                <?php if(isset($ajuan)) {?> 
+                                    <input type="submit" class="btn btn-success w-75 mb-2" value="Ajukan Koreksi">
+                                <?php } else {?> 
+                                    <input type="submit" id="submit" class="btn btn-secondary w-75 mb-2" value="Silahkan Mengisi Form" disabled>
+                                <?php }; ?> 
+                            <a href="<?= base_url()?>dashboard_p" class="btn btn-secondary" style="width:75%">Kembali</a>
+                        </div>
                         <script>
-                            $('.uploadFile').on('change', function(){
+                                $('.uploadFile').on('change', function(){
                                 var num = 0;
                                 $('.uploadFile').each(function(){
                                     if($(this).get(0).files.length != 0){
@@ -131,24 +124,16 @@
                                 
                                 if(num >= 18){
                                     $('#submit').prop('disabled', false);
+                                    $('#submit').addClass('btn-success');
+                                    $('#submit').removeClass('btn-secondary');
                                     $('#submit').val('Ajukan');
                                 }
                             });
                         </script>
-                        <div class="form-group row">
-                            <div class="col-5 my-auto">
-                                <?php if(isset($ajuan)) {?> 
-                                    <input id="submit" type="submit" class="btn btn-success w-100" value="Ajukan">    
-                                <?php } else {?> 
-                                    <input id="submit" type="submit" class="btn btn-success w-100" value="Silahkan Mengupload Semua File" disabled>    
-                                <?php }; ?> 
-                            </div>
-                            <div class="col-6 my-auto pt-2">
-                                 <label for="">Dengan Ini Saya Mengajukan Pensiun</label>               
-                            </div>
-                        </div>
-
+                    </div>
+                </div>
             </div>
+
             <?= form_close()?>
         </div>
       

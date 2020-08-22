@@ -31,31 +31,36 @@ class Jurusan extends CI_Controller {
 
 	public function json_jadwal_mengajar()
 	{
-		$data = $this->m_akademik->json_jadwal_mengajar();
+		$data = $this->m_akademik->json_jadwal_mengajar($this->input->post('id'));
 		
 		echo $data;
 	}
 
 	public function form_jadkul($id = null)
 	{
+		$jurusan = $this->m_akademik->get_jurusan($this->session->userdata('id_users'))->row_array();
+
 		if($id == null){
+
 			$data = array(
 				'id_mata_kuliah' => '',
 				'id_pegawai' => 0,
 				'hari_jadwal_kuliah' => '',
-				'waktu_jadwal_kuliah' => '',
+				'jam_masuk_kuliah' => 0,
+				'jam_keluar_kuliah' => 0,
 				'nama_lengkap_peg' => 'Silahkan Memilih Dosen Pengajar',
-				'id_jurusan' => '',
+				'matkul' => $this->m_akademik->get_matkul($jurusan['id_jurusan'])->result_array(),
+				'dosen' => $this->m_akademik->get_dosen()->result_array(),
+				'title' => 'Tambah Jadwal Mengajar',
+				'action' => 'jurusan/create_jadkul', 
 			);
-			$data['dosen'] = $this->m_akademik->get_dosen()->result_array();
-			$data['title'] = 'Tambah Jadwal Mengajar';
-			$data['action'] = 'jurusan/create_jadkul';
 			
 			$this->template->load('template_admin', 'jurusan/jadwal_mengajar/form_jadwalkuliah', $data);
 		}
 		else {
 			$data = $this->m_akademik->get_jadkul_byid($id)->row_array();
 			$data['dosen'] = $this->m_akademik->get_dosen()->result_array();
+			$data['matkul'] = $this->m_akademik->get_matkul($jurusan['id_jurusan'])->result_array();
 			$data['title'] = 'Edit Jadwal Mengajar';
 			$data['action'] = 'jurusan/update_jadkul';
 			
@@ -72,8 +77,8 @@ class Jurusan extends CI_Controller {
 			redirect('jurusan/form_jadkul');
 		}	
 		else {
-
-			$this->form_validation->set_rules('time', 'time', 'required|trim');
+			$this->form_validation->set_rules('timeIn', 'Jam Masuk', 'required|trim');
+			$this->form_validation->set_rules('timeOut', 'Jam Keluar', 'required|trim');
 			$this->form_validation->set_error_delimiters('<small class="text-danger">', '</small>');
 
 			if($this->form_validation->run() == FALSE){
@@ -85,8 +90,8 @@ class Jurusan extends CI_Controller {
 					'id_mata_kuliah' => $post['matkul'],
 					'id_pegawai' => $post['dosen'],
 					'hari_jadwal_kuliah' => $post['date'],
-					'waktu_jadwal_kuliah' => $post['time'],
-					'jurusan_jadwal_kuliah' => $post['jurusan'],
+					'jam_masuk_kuliah' => $post['timeIn'],
+					'jam_keluar_kuliah' => $post['timeOut']
 				);
 
 				if($this->m_akademik->insert('tbl_info_jadwal_kuliah', $data_jadkul)){
@@ -110,8 +115,8 @@ class Jurusan extends CI_Controller {
 			$this->form_jadkul($post['id']);
 		}	
 		else {
-
-			$this->form_validation->set_rules('time', 'time', 'required|trim');
+			$this->form_validation->set_rules('timeIn', 'Jam Masuk', 'required|trim');
+			$this->form_validation->set_rules('timeOut', 'Jam Keluar', 'required|trim');
 			$this->form_validation->set_error_delimiters('<small class="text-danger">', '</small>');
 
 			if($this->form_validation->run() == FALSE){
@@ -123,7 +128,8 @@ class Jurusan extends CI_Controller {
 					'id_mata_kuliah' => $post['matkul'],
 					'id_pegawai' => $post['dosen'],
 					'hari_jadwal_kuliah' => $post['date'],
-					'waktu_jadwal_kuliah' => $post['time'],
+					'jam_masuk_kuliah' => $post['timeIn'],
+					'jam_keluar_kuliah' => $post['timeOut']
 				);
 
 				if($this->m_akademik->update('tbl_info_jadwal_kuliah', array('id_jadwal_kuliah' => $post['id']), $data_jadkul)){
@@ -156,8 +162,7 @@ class Jurusan extends CI_Controller {
 	
 	public function json_mata_kuliah()
 	{
-		header('Content-Type: application/json');
-		$data = $this->m_akademik->json_mata_kuliah();
+		$data = $this->m_akademik->json_mata_kuliah($this->input->post('id'));
 		
 		echo $data;
 	}
@@ -169,10 +174,13 @@ class Jurusan extends CI_Controller {
 				'nama_mata_kuliah' => '',
 				'semester_mata_kuliah' => 0,
 				'sks_mata_kuliah' => 0,
+				// 'id_jurusan' => 0,
+				// 'nama_jurusan' => 'Silahkan Pilih Jurusan',
 			);
 			$data['title'] = 'Tambah Mata Kuliah';
 			$data['action'] = 'jurusan/create_matkul';
-			$data['jurusan'] = $this->m_akademik->get_jurusan($this->session->userdata('id_users'))->result_array();
+			// $data['jurusan'] = $this->m_akademik->get_jurusan($this->session->userdata('id_users'))->result_array();
+			$data['jurusan'] = $this->m_akademik->get_jurusan($this->session->userdata('id_users'))->row_array();
 			
 			$this->template->load('template_admin', 'jurusan/Mata_kuliah/form_matakuliah', $data);
 		}
@@ -181,7 +189,7 @@ class Jurusan extends CI_Controller {
 			$data = $this->m_akademik->get_matkul_byid($id)->row_array();
 			$data['title'] = 'Edit Mata Kuliah';
 			$data['action'] = 'jurusan/update_matkul';
-			$data['jurusan'] = $this->m_akademik->get_jurusan($this->session->userdata('id_users'))->result_array();
+			$data['jurusan'] = $this->m_akademik->get_jurusan($this->session->userdata('id_users'))->row_array();
 
 			$this->template->load('template_admin', 'jurusan/Mata_kuliah/form_matakuliah', $data);
 		}
@@ -203,6 +211,7 @@ class Jurusan extends CI_Controller {
 				'nama_mata_kuliah' => $post['matkul'],
 				'semester_mata_kuliah' => $post['semester'],
 				'sks_mata_kuliah' => $post['sks'],
+				'id_jurusan' => $post['jurusan']
 			);
 
 			if($this->m_akademik->insert('tbl_mata_kuliah', $data_matkul)){
@@ -232,6 +241,7 @@ class Jurusan extends CI_Controller {
 				'nama_mata_kuliah' => $post['matkul'],
 				'semester_mata_kuliah' => $post['semester'],
 				'sks_mata_kuliah' => $post['sks'],
+				'id_jurusan' => $post['jurusan'],
 			);
 
 			if($this->m_akademik->update('tbl_mata_kuliah', array('id_mata_kuliah' => $post['id']), $data_matkul)){

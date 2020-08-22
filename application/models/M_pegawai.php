@@ -5,7 +5,7 @@ class M_pegawai extends CI_Model{
 
     protected $table_name = 'tbl_pegawai as pgw';
     protected $table_pensiun = 'tbl_pengajuan_pensiun';
-    protected $table_jfungsi = 'tbl_jab_fungsional';
+    protected $table_jfungsi = 'tbl_jabatan';
 
     // ================================================ Basic CRUD ======================================= 
     public function delete($table, $where)
@@ -47,11 +47,6 @@ class M_pegawai extends CI_Model{
         return $this->db->get('tbl_pengajuan_pensiun');
     }
 
-    public function count_naikpangkat()
-    {
-        
-    }
-
     public function count_pegawai()
     {
         $this->db->select('id_pegawai');
@@ -59,6 +54,39 @@ class M_pegawai extends CI_Model{
         $this->db->or_where('status_kepegawaian_peg', 'Tidak Aktif');
         return $this->db->get('tbl_pegawai');
     }
+
+    public function count_fung()
+    {
+        $this->db->select('id_ajuan_fungsional');
+        $this->db->where('status_pengajuan_fungsional', null);
+        $this->db->or_where('status_pengajuan_fungsional', 4);
+        return $this->db->get('tbl_aju_naikpangkat_fungsional');
+    }
+
+    public function count_struk()
+    {
+        $this->db->select('id_ajuan_struktural');
+        $this->db->where('status_pengajuan_struktural', null);
+        $this->db->or_where('status_pengajuan_struktural', 4);
+        return $this->db->get('tbl_aju_naikpangkat_struktural');
+    }
+
+    public function count_ijazah()
+    {
+        $this->db->select('id_ajuan_ijazah');
+        $this->db->where('status_pengajuan_ijazah', null);
+        $this->db->or_where('status_pengajuan_ijazah', 4);
+        return $this->db->get('tbl_aju_naikpangkat_ijazah');
+    }
+    
+    // public function count_reguler()
+    // {
+    //     $this->db->select('id_ajuan_fungsional');
+    //     $this->db->where('status_pengajuan', null);
+    //     $this->db->or_where('status_pengajuan', 4);
+    //     return $this->db->get('tbl_aju_naikpangkat_fungsional');
+    // }
+
 
     // ========================================== Monitoring Pegawai ================================================
     public function json_ajuan_mon_pensiun()
@@ -91,14 +119,24 @@ class M_pegawai extends CI_Model{
         return $this->datatables->generate();
     }
 
-    public function json_mon_cuti()
+    public function json_mon_cuti($check = false)
     {
-        $this->datatables->select('id_pengajuan_cuti, nama_tanpa_gelar_peg, status_cuti, waktu_pengajuan_cuti, jenis_pengajuan_cuti');
+        $this->datatables->select('id_pengajuan_cuti, nama_tanpa_gelar_peg, status_cuti, waktu_pengajuan_cuti, jenis_pengajuan_cuti, nip_peg, tgl_cuti, jml_hari_cuti, jml_bln_cuti, jml_thn_cuti');
         $this->datatables->from('tbl_pengajuan_cuti as cuti');
         $this->datatables->join($this->table_name, 'pgw.id_pegawai = cuti.id_pegawai');
         $this->datatables->where('status_cuti', 1);
-        $this->datatables->or_where('status_cuti', 2);
+        if($check == true){$this->datatables->or_where('status_cuti', 2);}
         return $this->datatables->generate();
+    }
+
+    public function json_mon_naikpangkat($table, $column)
+    {
+        $this->datatables->select('this.*, nama_tanpa_gelar_peg, nip_peg');
+        $this->datatables->from($table.' as this');
+        $this->datatables->join('tbl_pegawai as pgw', 'pgw.id_pegawai = this.id_pegawai');
+        $this->datatables->where('this.'.$column, 1);
+        $this->datatables->where('status_kenaikan_pangkat', 0);
+        return $this->datatables->generate();   
     }
 
     // ========================================== DUK Pegawai ========================================================
@@ -106,6 +144,18 @@ class M_pegawai extends CI_Model{
         $this->datatables->select('id_users, pgw.id_pegawai as id_peg, nama_tanpa_gelar_peg, status_kepegawaian_peg, tmt_pensiun_peg, gaji_pokok_peg, tgl_meninggal_dunia_peg');
         $this->datatables->from($this->table_name);
         $this->datatables->join('tbl_user', 'id_users = id_user');
+        return $this->datatables->generate();
+    }
+
+    public function json_jab()
+    {
+        $this->datatables->select('pgw.id_pegawai as id_peg, nama_tanpa_gelar_peg, nip_peg, tmt_jab_fungsional, tmt_jab_struktural, nama_kategori_fung, nama_jabatan_struktur');
+        $this->datatables->from($this->table_name);
+        
+        $this->datatables->join('tbl_jabatan as jab', 'pgw.id_jabatan = jab.id_jab');
+        $this->datatables->join('tbl_kategori_jabatan_fung as fung', 'jab.id_kategori_jab_fungsional = fung.id_kategori_jabatan_fung');
+        $this->datatables->join('tbl_kategori_jabatan_struktur as stru', 'jab.id_kat_jab_struktural = stru.id_kat_jbt_struktur');
+        
         return $this->datatables->generate();
     }
     
@@ -120,7 +170,7 @@ class M_pegawai extends CI_Model{
         $this->db->join('tbl_kgb as kgb', 'pgw.id_kgb = kgb.id_kgb');
         $this->db->join('tbl_impassing as imp', 'pgw.id_impassing = imp.id_impassing');
         $this->db->join('tbl_unit_kerja as uker', 'pgw.id_uker = uker.id_uker');
-        
+        $this->db->join('tbl_jabatan as jab', 'pgw.id_jabatan = jab.id_jab');
         $this->db->join('tbl_pangkat_terakhir as pgkt', 'pgw.id_pangkat_terakhir = pgkt.id_pangkat_terakhir');
         $this->db->join('tbl_tgs_tambahan_dosen as tgstbh', 'pgw.id_tgs_tambahan_dosen = tgstbh.id_tgs_tambahan_dosen');
         $this->db->join('tbl_diklat_pelatihan as dklt', 'pgw.id_diklat = dklt.id_diklat');
@@ -132,14 +182,18 @@ class M_pegawai extends CI_Model{
 
     public function get_infopegawai_adminonly($where)
     {
-        $this->db->select('id_user, tmt_masuk_peg, id_jab_struktural as dosen, nama_tanpa_gelar_peg, status_kepegawaian_peg, tmt_pensiun_peg, gaji_pokok_peg, tgl_meninggal_dunia_peg, id_pegawai');
-        $this->db->where('id_pegawai', $where);
-        return $this->db->get($this->table_name);
+        $this->db->select('id_user, pgw.id_pegawai, id_jabatan, tmt_masuk_peg, nama_tanpa_gelar_peg, nip_peg, status_kepegawaian_peg, gaji_pokok_peg, tgl_meninggal_dunia_peg, pgw.id_pegawai, tmt_jab_fungsional, id_kategori_jab_fungsional, tmt_jab_struktural, id_kat_jab_struktural');
+        $this->db->from($this->table_name);
+        $this->db->join('tbl_jabatan as jab', 'pgw.id_pegawai = jab.id_pegawai');
+        $this->db->where('pgw.id_pegawai', $where);
+        $this->db->order_by('jab.id_jab', 'DESC');
+        $this->db->limit('1');
+        return $this->db->get();
     }
     
     public function get_datapegandgelar($where)
     {
-        $this->db->select('pgw.*, prof_gelar, depan_gelar, belakang_gelar, h_hj_gelar, gelar.id_gelar');
+        $this->db->select('pgw.*, prof_gelar, doktor_gelar, magister_gelar, strata_1_gelar, h_hj_gelar, gelar.id_gelar');
         $this->db->where('id_user', $where);
         $this->db->join('tbl_gelar as gelar', 'pgw.id_gelar = gelar.id_gelar');
         return $this->db->get($this->table_name)->row_array();
@@ -161,11 +215,12 @@ class M_pegawai extends CI_Model{
         return $this->db->get('tbl_anak')->result_array();
     }
     
-    public function json_jab_fungsi($id)
+    public function json_jabatan_byid($id)
     {
         $this->datatables->where('id_pegawai', $id);
         $this->datatables->from($this->table_jfungsi.' as jab');
         $this->datatables->join('tbl_kategori_jabatan_fung', 'id_kategori_jabatan_fung = jab.id_kategori_jab_fungsional');
+        $this->datatables->join('tbl_kategori_jabatan_struktur', 'id_kat_jbt_struktur= jab.id_kat_jab_struktural');
         return $this->datatables->generate();
     }
 
@@ -191,10 +246,18 @@ class M_pegawai extends CI_Model{
     // =================================================== Cuti ==================================================
     public function get_datapeg_cuti($id)
     {
-        $this->db->select('nama_tanpa_gelar_peg, nip_peg, thn_masa_kerja_pensiun_peg, program_studi_uker');
+        $this->db->select('nama_kategori_fung, nama_jabatan_struktur, nama_tanpa_gelar_peg, nip_peg, thn_masa_kerja_pensiun_peg, program_studi_uker');
         $this->db->from($this->table_name);
+
         $this->db->join('tbl_unit_kerja as uker', 'pgw.id_uker = uker.id_uker');
+        $this->db->join('tbl_jabatan as jab', 'pgw.id_jabatan = jab.id_jab');
+        $this->db->join('tbl_kategori_jabatan_fung as fung', 'jab.id_kategori_jab_fungsional = fung.id_kategori_jabatan_fung');
+        $this->db->join('tbl_kategori_jabatan_struktur as struk', 'jab.id_kat_jab_struktural = struk.id_kat_jbt_struktur');
+
+        $this->db->order_by('jab.id_jab', 'DESC');
+        $this->db->limit(1);
         $this->db->where('pgw.id_pegawai', $id);
+
         return $this->db->get()->row_array();
     }
 
@@ -218,10 +281,19 @@ class M_pegawai extends CI_Model{
 
     public function get_data_cuti_individual($id)
     {
-        $this->db->select('cuti.*, nama_tanpa_gelar_peg, nip_peg, thn_masa_kerja_pensiun_peg, program_studi_uker');
+        $this->db->select('cuti.*, nama_kategori_fung, nama_jabatan_struktur, nama_tanpa_gelar_peg, nip_peg, thn_masa_kerja_pensiun_peg, program_studi_uker');
         $this->db->from('tbl_pengajuan_cuti as cuti');
+
         $this->db->join($this->table_name, 'pgw.id_pegawai = cuti.id_pegawai');
         $this->db->join('tbl_unit_kerja as uker', 'pgw.id_uker = uker.id_uker');
+        $this->db->join('tbl_jabatan as jab', 'pgw.id_jabatan = jab.id_jab');
+        $this->db->join('tbl_kategori_jabatan_fung as fung', 'jab.id_kategori_jab_fungsional = fung.id_kategori_jabatan_fung');
+        $this->db->join('tbl_kategori_jabatan_struktur as struk', 'jab.id_kat_jab_struktural = struk.id_kat_jbt_struktur');
+
+        $this->db->order_by('jab.id_jab', 'DESC');
+        $this->db->limit(1);
+
+
         $this->db->where('id_pengajuan_cuti', $id);
         return $this->db->get()->row_array();
     }
@@ -267,12 +339,64 @@ class M_pegawai extends CI_Model{
         return $this->db->get();
     }
 
+    // ====================================== Ajuan Naik Pangkat =================================
+    public function json_ajuan_naikpangkat($where, $table, $column)
+    {
+        // $this->datatables->select('id_ajuan_fungsional, status_pengajuan_fungsional, waktu_pengajuan_fungsional, username, keterangan_pengajuan_fungsional, report_pengajuan_fungsional');
+        $this->datatables->select('this.*, nama_tanpa_gelar_peg, nip_peg');
+        $this->datatables->from($table);
+        $this->datatables->join('tbl_pegawai as pgw', 'pgw.id_pegawai = this.id_pegawai');
+        $this->datatables->where('this.'.$column, null);
+        return $this->datatables->generate();   
+        
+    }
+
+    public function get_ajuan_naikpangkat($table, $join, $where)
+    {
+        $this->db->select('berkas.*, aju.*, nama_tanpa_gelar_peg, nip_peg, thn_masa_kerja_pensiun_peg, program_studi_uker, pgw.id_pegawai');
+        $this->db->from($table.' as aju');
+        $this->db->join('tbl_pegawai as pgw', 'pgw.id_pegawai = aju.id_pegawai');
+        $this->db->join($join.' as berkas', 'aju.id_berkas_ajuan = berkas.id_berkas');
+        $this->db->join('tbl_unit_kerja as uker', 'pgw.id_uker = uker.id_uker');
+        $this->db->where($where);
+        return $this->db->get();
+    }
+
+    public function json_naikfung_pegawai($where)
+    {
+        $this->datatables->select('id_ajuan_fungsional, status_pengajuan_fungsional, waktu_pengajuan_fungsional, username, keterangan_pengajuan_fungsional, report_pengajuan_fungsional');
+        $this->datatables->from('tbl_aju_naikpangkat_fungsional as fung');
+        $this->datatables->join('tbl_user as us', 'us.id_users = fung.id_users', 'LEFT');
+        $this->datatables->where('fung.id_pegawai', $where);
+        return $this->datatables->generate();   
+    }
+
+    public function json_naikstruk_pegawai($where)
+    {
+        $this->datatables->select('id_ajuan_struktural, status_pengajuan_struktural, waktu_pengajuan_struktural, username, keterangan_pengajuan_struktural, report_pengajuan_struktural');
+        $this->datatables->from('tbl_aju_naikpangkat_struktural as struk');
+        $this->datatables->join('tbl_user as us', 'us.id_users = struk.id_users', 'LEFT');
+        $this->datatables->where('struk.id_pegawai', $where);
+        return $this->datatables->generate();   
+    }
+
+    public function json_naikijazah_pegawai($where)
+    {
+        $this->datatables->select('id_ajuan_ijazah, status_pengajuan_ijazah, waktu_pengajuan_ijazah, username, keterangan_pengajuan_ijazah, report_pengajuan_ijazah');
+        $this->datatables->from('tbl_aju_naikpangkat_ijazah as ija');
+        $this->datatables->join('tbl_user as us', 'us.id_users = ija.id_users', 'LEFT');
+        $this->datatables->where('ija.id_pegawai', $where);
+        return $this->datatables->generate();   
+    }
+    
+
     // ====================================== Tambahan ==================================
     public function check_dosen($id)
     {
-        $this->db->select('id_jab_struktural as dosen');
+        $this->db->select('id_kat_jab_struktural as dosen');
         $this->db->from($this->table_name);
-        $this->db->where('id_pegawai', $id);
+        $this->db->join('tbl_jabatan as jab', 'pgw.id_jabatan = jab.id_jab');
+        $this->db->where('pgw.id_pegawai', $id);
         return $this->db->get();
     }
 
@@ -283,6 +407,25 @@ class M_pegawai extends CI_Model{
         $this->db->where('id_pegawai', $id);
         $this->db->order_by('id_pengajuan_pensiun','DESC');
         $this->db->limit('1');
+        return $this->db->get();
+    }
+
+    public function get_idpegawai($table, $where)
+    {
+        $this->db->select('id_pegawai');
+        $this->db->from($table);
+        $this->db->where($where);
+        return $this->db->get()->row_array();
+    }
+
+    public function get_jabatan_pegawai($where)
+    {
+        $this->db->select('id_pegawai, id_jab, tmt_jab_fungsional, id_kategori_jab_fungsional, tmt_jab_struktural, id_kat_jab_struktural');
+        $this->db->from('tbl_jabatan');
+        $this->db->where('id_pegawai', $where);
+        $this->db->order_by('id_jab', 'DESC');
+        $this->db->limit('1');
+
         return $this->db->get();
     }
 }

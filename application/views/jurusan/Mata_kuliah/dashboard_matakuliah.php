@@ -62,7 +62,7 @@
                     },
                     processing: true,
                     serverSide: true,
-                    ajax: {"url": '<?= base_url()?>jurusan/json_mata_kuliah', "type": "POST"},
+                    ajax: {"url": '<?= base_url()?>jurusan/json_mata_kuliah', "type": "POST", data : {id : <?= $this->session->userdata('id_user_level') ?> }},
                     columns: [
                         {"data" : 'id_mata_kuliah', orderable:false},
                         {"data" : 'nama_mata_kuliah'},
