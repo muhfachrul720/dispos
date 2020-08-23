@@ -46,6 +46,28 @@
         }
     }
 
+    function convert_cuti($num)
+    {
+        if($num == 1){
+            return 'Cuti Besar';
+        }
+        else if($num == 2){
+            return 'Cuti Tahunan';
+        }
+        else if($num == 3){
+            return 'Cuti Sakit';
+        }
+        else if($num == 4){
+            return 'Cuti Melahirkan';
+        }
+        else if($num == 5){
+            return 'Cuti Karena Alasan Penting';
+        }
+        else if($num == 6){
+            return 'Cuti Diluar Tanggungan Negara';
+        }
+    }
+
     function convert_gol_to_roman($gol)
     {
         if($gol == 1){

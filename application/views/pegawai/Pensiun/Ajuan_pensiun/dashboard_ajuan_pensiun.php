@@ -86,7 +86,7 @@
                                                 <i id="check<?= $i ?>" class="mdi mdi-close btn btn-danger btn-sm w-25"></i>
                                             <?php }; ?>
 
-                                            <input type="file" name="<?= $checker[$i][1]?>" class="uploadFile" id="file<?= $i ?>" style="display:none;" accept="application/pdf">
+                                            <input type="file" name="<?= $checker[$i][1]?>" class="uploadFile" id="file<?= $i ?>" style="display:none;" accept="image/jpeg,image/png,application/pdf">
                                         </div>
                                     </div>
                                     <script>

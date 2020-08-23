@@ -49,7 +49,7 @@
                                 </div>
                                 <div class="col-5">
                                     <label for=""><small>Usulan Jabatan</small></label>
-                                    <?php echo cmb_dinamis('usuljab', 'tbl_kategori_jabatan_struktur', 'nama_jabatan_struktur', 'id_kat_jbt_struktur', $usulan_jabatan_struktural, 'DESC') ?>
+                                    <?php echo cmb_dinamis('usuljab', 'tbl_kategori_jabatan_struktur', 'nama_jabatan_struktur', 'id_kat_jbt_struktur', $usulan_jabatan_struktural, 'DESC', 'disabled') ?>
                                 </div>
                             </div>
                             <hr>

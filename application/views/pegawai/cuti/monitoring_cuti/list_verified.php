@@ -2,8 +2,16 @@
     <div class="card shadow mb-4 p-5" style="font-size:14px">
 
         <div class="header">
-            <h3 class="mb-3">List Pengajuan Cuti (Terverifikasi)</h3>
-            <p class="mb-0">Dibawah Merupakan List Pengajuan Cuti Yang Telah Diverifikasi dan Diberikan Status Disetujui</p>
+            <div class="row justify-content-between">
+                <div class="col-6">
+                    <h3 class>List Pengajuan Cuti (Terverifikasi)</h3>
+                    <p class="p-0">Dibawah Merupakan List Nama Nama Pegawai Yang Mengambil Cuti, Silahkan Mengupload Surat Persetujuan Cuti</p>
+                </div>
+                <div class="col-6" style="text-align:right">
+                    <a href="<?= base_url()?>cetakexcel/print_excel_cuti_nonsk" class="btn btn-success">Export Pegawai Non SK</a>
+                    <a href="<?= base_url()?>cetakexcel/print_excel_cuti_all" class="btn btn-success">Export Semua Pegawai</a>
+                </div>
+            </div>
         </div>
         <hr>
         <div class="body">
@@ -14,11 +22,11 @@
                         <th width="40px">No</th>
                         <th>Nama Pegawai</th>
                         <th>Nip Pegawai</th>
-                        <th>Waktu Pengajuan</th>
                         <th>Jenis Cuti</th>
                         <th>Terhitung Cuti</th>
                         <th>Jumlah Cuti (Hari)</th>
                         <th>Download</th>
+                        <th>Persetujuan</th>
                     </tr>
                     </thead>
                 </table>
@@ -59,16 +67,9 @@
                     serverSide: true,
                     ajax: {"url": '<?= base_url()?>pegawai/json_mon_cuti', "type": "POST"},
                     columns: [
-                        {"data" : 'waktu_pengajuan_cuti', orderable:false},
+                        {"data" : 'waktu_pengajuan_cuti', orderable:true},
                         {"data" : 'nama_tanpa_gelar_peg'},
                         {"data" : 'nip_peg'},
-                        {
-                            "data" : 'waktu_pengajuan_cuti',
-                            "render" : function(data, type, row){
-                                var date = data.split(' ')[0];
-                                return dateIndo(date);
-                            },
-                        },
                         {
                             "data" : 'jenis_pengajuan_cuti',
                             "render" : function(data, type, row){
@@ -82,7 +83,13 @@
                                 return  ;
                             }
                         },
-                        {"data" : 'tgl_cuti'},
+                        {
+                            "data" : 'tgl_cuti',
+                            "render" : function(data, type, row){
+                                var date = data.split(' ')[0];
+                                return dateIndo(date);
+                            }
+                        },
                         {
                             "data" : 'jml_hari_cuti',
                             "render" : function(data, type, row){
@@ -93,12 +100,24 @@
                             "data" : 'id_pengajuan_cuti',
                             "render" : function(data, type, row){
                                 if(row.status_cuti == 1){
-                                    return '<a href="<?= base_url()?>dashboard_p/print_pdf_cuti/'+data+'" style="font-size:12px" class="btn btn-sm btn-info">Download Formulir</a>';
+                                    return '<a href="<?= base_url()?>pegawai/print_form_cuti/'+data+'" style="font-size:12px" class="btn btn-sm btn-info" target="_blank">Download Formulir</a>';
                                 }else {
                                     return '';
                                 };
                             }
+                        },
+                        {
+                            "data" : 'report_pengajuan_cuti',
+                            "render" : function(data, type, row){
+                                if(data == null){
+                                    return '<button type="button" class="btn btn-primary p-1" data-book-id="'+row.id_pengajuan_cuti+'" data-toggle="modal" data-target="#exampleModalCenter">Upload Persetujuan</button>'
+                                }
+                                else {
+                                    return '<a href="<?= base_url()?>upload/report_cuti/'+data+'" class="btn btn-success p-1" download>Download Persetujuan</a>'
+                                }
+                            }
                         }
+
                     ],
                     order: [[0, 'asc']],
                     rowCallback: function(row, data, iDisplayIndex) {
@@ -118,4 +137,44 @@
         </script>
 
     </div>
+
+        <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Upload Persetujuan</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <?= form_open_multipart('pegawai/upload_surat_cuti');?>
+        <div class="modal-body">
+            <input type="hidden" name="ajupen" id="key">
+            <div style="text-align:center; border:4px dashed rgba(0,0,0,0.3); padding:100px 40px">
+                <p>Tekan Dibawah Untuk Mengupload Berkas</p>
+                <label for="fileUpload" class="btn btn-primary btn-sm m-0" style="font-size:12px">Upload File</label>
+                <input id="fileUpload" type="file" name="sk" style="display:none" accept="application/pdf">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <input type="submit" value="Upload Persetujuan" class="btn btn-primary">
+        </div>
+        <?= form_close()?>
+        </div>
+    </div>
+    </div>
+
+
+    <script>
+
+        $('#exampleModalCenter').on('show.bs.modal', function(e) {
+            var bookId = $(e.relatedTarget).data('book-id');
+
+            $('#key').val(bookId);
+        });
+        
+    </script>
+
 </div>

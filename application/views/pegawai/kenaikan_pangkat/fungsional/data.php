@@ -88,7 +88,7 @@
                                     return '<button type="button" class="btn btn-primary" data-book-id="'+row.id_ajuan_fungsional+'" data-toggle="modal" data-target="#exampleModalCenter">Upload Surat</button>'
                                 }
                                 else {
-                                    return '<a href="<?= base_url()?>upload/report_pensiun/'+data+'" class="btn btn-success py-2" style="font-size:12px !important" download>Download Surat</a>';
+                                    return '<a href="<?= base_url()?>upload/report_naikpangkat/fungsional/'+data+'" class="btn btn-success py-2" style="font-size:12px !important" download>Download Surat</a>';
                                 }
                             }
                         },
@@ -133,7 +133,7 @@
                     <div style="text-align:center; border:4px dashed rgba(0,0,0,0.3); padding:100px 40px">
                         <p>Tekan Dibawah Untuk Mengupload Berkas</p>
                         <label for="fileUpload" class="btn btn-primary btn-sm m-0" style="font-size:12px">Upload Surat</label>
-                        <input id="fileUpload" type="file" name="file" style="display:none" accept="application/pdf">
+                        <input id="fileUpload" type="file" name="sk" style="display:none" accept="application/pdf">
                     </div>
                 </div>
                 <div class="modal-footer">

@@ -113,11 +113,72 @@ class Pegawai extends CI_Controller {
 		);
 
 		if($this->m_pegawai->update('tbl_pengajuan_cuti', array('id_pengajuan_cuti' => $post['id']), $dataverif)){
+			$this->print_form_cuti($post['id']);
 			redirect('pegawai/verifikasi_cuti');
 		} 
 		else {
 			$this->tinjau_cuti($post['id']);
 		}
+	}
+
+	public function upload_surat_cuti()
+	{
+		$post = $this->input->post();
+		
+		if($_FILES['sk']['name'] != ""){
+			$filename = $this->upload_file($post['ajupen'], './upload/report_cuti');
+
+			$datask = array(
+				'report_pengajuan_cuti' => $filename['file_name'],
+			);
+
+			$this->m_pegawai->update('tbl_pengajuan_cuti', array('id_pengajuan_cuti' => $post['ajupen']), $datask);
+
+			redirect('pegawai/mon_cuti');
+		}	
+		else {
+			$this->session->set_flashdata('msg', 'Berhasil Mengupdate Data');
+			redirect('pegawai/mon_cuti');
+		};
+	}
+
+	public function print_form_cuti($id)
+	{
+		$mpdf = new \Mpdf\Mpdf();
+		$data = $this->m_pegawai->get_data_cuti_individual($id);
+		$data['lastday'] = date('Y-m-d', strtotime('+'.$data['jml_thn_cuti'].' years +'.$data['jml_bln_cuti'].' months +'.$data['jml_hari_cuti'].' days', strtotime($data['tgl_cuti'])));
+
+		$data['ket'] = array(
+			'cutibesar' => substr(explode('/', $data['keterangan_pengajuan_cuti'])[0], 2),
+			'cutisakit' => substr(explode('/', $data['keterangan_pengajuan_cuti'])[1], 2),
+			'cutimelahirkan' => substr(explode('/', $data['keterangan_pengajuan_cuti'])[2], 2),
+			'cutialasan' => substr(explode('/', $data['keterangan_pengajuan_cuti'])[3], 2),
+			'cutinegara' => substr(explode('/', $data['keterangan_pengajuan_cuti'])[4], 2),
+		);
+
+		for($i=1; $i <= 6; $i++){
+			if($data['jenis_pengajuan_cuti'] == $i){
+				$data['jenis'][$i] = '<img width="15px" src="'.base_url().'assets/images/check.jpg" alt="">';
+			}
+			else {
+				$data['jenis'][$i] = '';
+			}
+		}
+
+		$html = $this->load->view('pegawai/cuti/cetak_cuti/form_cuti', $data, true);
+
+		$pdfFilePath = "Formulir Pengajuan Cuti.pdf";
+
+		// $mpdf->addPage('P');
+
+		$mpdf->AddPageByArray([
+			'margin-top' => '5',
+			'margin-bottom' => '5',
+		]);
+
+		$mpdf->WriteHTML($html);
+
+		$mpdf->Output($pdfFilePath, "I");
 	}
 
 	// =================================== Pensiun ========================================
@@ -257,6 +318,7 @@ class Pegawai extends CI_Controller {
 	{
 		$pgw = $this->m_pegawai->get_idpegawai('tbl_aju_naikpangkat_struktural', array('id_ajuan_struktural' => $id));
 		$data = $this->m_pegawai->get_jabatan_pegawai($pgw['id_pegawai'])->row_array();	
+		$data['usulan'] = $this->m_pegawai->get_jab_usul($id)->row_array();
 
 		$data['ajuan'] = $id;
 		$data['check'] = 2;
@@ -366,7 +428,7 @@ class Pegawai extends CI_Controller {
 	{
 		$post = $this->input->post();
 		
-		if($_FILES['file']['name'] != ""){
+		if($_FILES['sk']['name'] != ""){
 			$filename = $this->upload_file($post['idaju'], './upload/report_naikpangkat/fungsional');
 
 			$datask = array(
@@ -375,11 +437,11 @@ class Pegawai extends CI_Controller {
 
 			$this->m_pegawai->update('tbl_aju_naikpangkat_fungsional', array('id_ajuan_fungsional' => $post['idaju']), $datask);
 
-			redirect('pegawai/mon_naikpangkat_fungsional');
+			// redirect('pegawai/mon_naikpangkat_fungsional');
 		}	
 		else {
 			$this->session->set_flashdata('msg', 'Berhasil Mengupdate Data');
-			redirect('pegawai/mon_naikpangkat_fungsional');
+			// redirect('pegawai/mon_naikpangkat_fungsional');
 		};
 	}
 
@@ -453,7 +515,7 @@ class Pegawai extends CI_Controller {
 	{
 		$post = $this->input->post();
 		
-		if($_FILES['file']['name'] != ""){
+		if($_FILES['sk']['name'] != ""){
 			$filename = $this->upload_file($post['idaju'], './upload/report_naikpangkat/struktural');
 
 			$datask = array(
@@ -532,7 +594,7 @@ class Pegawai extends CI_Controller {
 
 	public function json_mon_naikpangkat_ijazah()
 	{
-		$data = $this->m_pegawai->json_mon_naikpangkat('tbl_aju_naikpangkat_ijazah', 'status_pengajuan_ijazah');
+		$data = $this->m_pegawai->json_mon_naikpangkat('tbl_aju_naikpangkat_ijazah', 'status_pengajuan_ijazah', 1);
 		echo $data;
 	}
 
@@ -540,7 +602,7 @@ class Pegawai extends CI_Controller {
 	{
 		$post = $this->input->post();
 		
-		if($_FILES['file']['name'] != ""){
+		if($_FILES['sk']['name'] != ""){
 			$filename = $this->upload_file($post['idaju'], './upload/report_naikpangkat/ijazah');
 
 			$datask = array(
@@ -638,9 +700,10 @@ class Pegawai extends CI_Controller {
 	{
 		$id = $this->input->post('id');
 
-        $data = $this->m_pegawai->json_jabatan_byid($id);
+		$data = $this->m_pegawai->json_jabatan_byid($id);
 		echo $data;
 	}
+
 }
 
 /* End of file Pegawai.php */

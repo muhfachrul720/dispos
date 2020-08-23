@@ -65,28 +65,28 @@
                                 <tr>
                                     <td class="px-2">Nama</td>
                                     <td>
-                                        <input type="text" name="name" value="<?= $nama_tanpa_gelar_peg?>" readonly>
+                                        <input type="text" name="name" value="<?= $nama_tanpa_gelar_peg?>" style="background-color: #b2bec3" readonly>
                                         <?php echo form_error('name') ?>
                                     </td>
                                     <td class="px-2">Nip</td>
                                     <td>
-                                        <input type="text" name="nip" value="<?= $nip_peg?>" readonly>
+                                        <input type="text" name="nip" value="<?= $nip_peg?>" style="background-color: #b2bec3" readonly>
                                         <?php echo form_error('nip') ?>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="px-2">Jabatan</td>
-                                    <td><input type="text" name="" value="<?= $nama_kategori_fung?> / <?= $nama_jabatan_struktur ?>" readonly></td>
+                                    <td><input type="text" name="" value="<?= $nama_kategori_fung?> / <?= $nama_jabatan_struktur ?>" style="background-color: #b2bec3" readonly></td>
                                     <td class="px-2">Masa Kerja</td>
                                     <td>
-                                        <input type="text" name="maker" value="<?= $thn_masa_kerja_pensiun_peg?>" readonly>
+                                        <input type="text" name="maker" value="<?= $thn_masa_kerja_pensiun_peg?>" style="background-color: #b2bec3" readonly>
                                         <?php echo form_error('maker') ?>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="px-2">Unit Kerja</td>
                                     <td colspan="3">
-                                        <input type="text" name="uker" style="width:100%" value="<?= $program_studi_uker?>" readonly>
+                                        <input type="text" name="uker" style="width:100%; background-color:#b2bec3" value="<?= $program_studi_uker?>" readonly>
                                         <?php echo form_error('uker') ?>
                                     </td>
                                 </tr>
@@ -99,7 +99,7 @@
                                 </tr>
                                 <tr>
                                     <td class="px-2">1. Cuti Tahunan</td>
-                                    <td style="text-align:center"><input type="radio" name="jeniscuti" id="" class="mt-1" value="2"></td>
+                                    <td style="text-align:center;"><input type="radio" name="jeniscuti" id="" class="mt-1" value="2"></td>
                                     <td class="px-2">2. Cuti Besar</td>
                                     <td style="text-align:center"><input type="radio" name="jeniscuti" id="" class="mt-1" value="1"></td>
                                 </tr>
@@ -124,7 +124,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <textarea name="alasancuti" id="" cols="30" rows="3" class="w-100" placeholder="Masukkan Alasan....."></textarea>
+                                        <textarea name="alasancuti" id="" cols="30" rows="3" class="w-100" style="border:solid 2px #bef202; padding:5px" placeholder="Masukkan Alasan....."></textarea>
                                         <?= form_error('alasancuti')?>
                                     </td>
                                 </tr>
@@ -139,13 +139,13 @@
                                     <td class="px-2">Selama</td>
                                     <td>Akan Dihitung Oleh Sistem</td>
                                     <td class="px-2">Mulai Tanggal</td>
-                                    <td>
-                                        <input type="date" name="startdate" style="border:none">
+                                    <td style="overflow:hidden">
+                                        <input type="date" name="startdate" style="border:solid 2px #bef202; padding:6px 0px">
                                         <?php echo form_error('startdate') ?>
                                     </td>
                                     <td class="px-2">S/d</td>
-                                    <td>
-                                        <input type="date" name="enddate" style="border:none">
+                                    <td style="overflow:hidden">
+                                        <input type="date" name="enddate" style="border:solid 2px #bef202; padding:6px 0px">
                                         <?php echo form_error('enddate') ?>
                                     </td>
                                 </tr>
@@ -209,11 +209,11 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <textarea name="addresscuti" id="" cols="20" rows="5" class="w-100" placeholder="Masukkan Alamat"></textarea>
+                                        <textarea name="addresscuti" id="" cols="20" rows="5" style="border:solid 2px #bef202; padding:5px" class="w-100" placeholder="Masukkan Alamat"></textarea>
                                         <?php echo form_error('addresscuti') ?>
                                     </td>
                                     <td>
-                                        <textarea name="phonecuti" id="" cols="20" rows="5" class="w-100" placeholder="Masukkan Telepon"></textarea>
+                                        <textarea name="phonecuti" id="" cols="20" rows="5"  style="border:solid 2px #bef202; padding:5px" class="w-100" placeholder="Masukkan Telepon"></textarea>
                                         <?php echo form_error('phonecuti') ?>
                                     </td>
                                 </tr>
@@ -379,10 +379,10 @@
                                     }
                                 },
                                 {
-                                    "data" : 'id_pengajuan_cuti',
+                                    "data" : 'report_pengajuan_cuti',
                                     "render" : function(data, type, row){
-                                        if(row.status_cuti == 1){
-                                            return '<a href="<?= base_url()?>dashboard_p/print_pdf_cuti/'+data+'" style="font-size:12px" class="btn btn-sm btn-info">Download</a>';
+                                        if(data != null ){
+                                            return '<a href="<?= base_url()?>upload/report_cuti/'+data+'" style="font-size:12px" class="btn btn-sm btn-info">Download Persetujuan</a>';
                                         }else {
                                             return '';
                                         };

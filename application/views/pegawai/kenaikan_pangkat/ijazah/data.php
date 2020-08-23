@@ -1,6 +1,5 @@
 <div class="container-fluid">
     <div class="card shadow mb-4 p-5" style="font-size:14px">
-
         <div class="header">
             <h3 class="mb-3">List Ajuan Kenaikan Pangkat Jabatan ijazah (Terverifikasi)</h3>
             <p class="mb-0">List Pengajuan Kenaikan Jabatan Yang telah disetujui </p>
@@ -8,22 +7,20 @@
         <hr>
         <div class="body">
             <div class="table-responsive">
-                <table id="example" style="font-size:0px; width:100%" class="table table-striped table-bordered table-sm text-center">
+                <table id="example" style="font-size:0px; width:100%" class="table table-striped table-bordered table-sm text-center naikpangkat">
                     <thead>
                     <tr>
-                        <th width="10px">No</th>
+                        <th width="0px">No</th>
                         <th>Nama Pegawai</th>
                         <th>Nip Pegawai</th>
                         <th>Waktu</th>
-                        <th>Keterangan</th>
                         <th>Status</th>
-                        <th width="200px">Aksi</th>
+                        <th>Aksi</th>
                     </tr>
                     </thead>
                 </table>
             </div>
         </div>
-
         <script type="text/javascript">
             $(document).ready(function() {
                 $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
@@ -68,7 +65,6 @@
                                 return dateIndo(date);
                             },
                         },
-                        {"data" : 'keterangan_pengajuan_ijazah'},
                         {
                             "data" : 'status_pengajuan_ijazah',
                             "render" : function(data, type, row){
@@ -91,8 +87,7 @@
                                     return '<button type="button" class="btn btn-primary" data-book-id="'+row.id_ajuan_ijazah+'" data-toggle="modal" data-target="#exampleModalCenter">Upload Surat</button>'
                                 }
                                 else {
-                                    return '<a href="<?= base_url()?>upload/report_pensiun/'+data+'" class="btn btn-success download">Download Surat</a>'
-                                    // return '<p class="mb-1" style="font-size:12px">SK Kemendikbud Upload</p><a class="btn btn-success" href="<?= base_url()?>upload/report_pensiun/'+data+'" download>Download</a>';
+                                    return '<a href="<?= base_url()?>upload/report_naikpangkat/ijazah/'+data+'" class="btn btn-success py-2" style="font-size:12px !important" download>Download Surat</a>';
                                 }
                             }
                         },
@@ -108,13 +103,11 @@
                     }); 
             });
         </script>
-
         <script>
             $(document).ready(function() {
                 $('#example').DataTable();
             } );
         </script>
-
     </div>
 
     <!-- Modal -->
@@ -133,7 +126,7 @@
                     <div style="text-align:center; border:4px dashed rgba(0,0,0,0.3); padding:100px 40px">
                         <p>Tekan Dibawah Untuk Mengupload Berkas</p>
                         <label for="fileUpload" class="btn btn-primary btn-sm m-0" style="font-size:12px">Upload Surat</label>
-                        <input id="fileUpload" type="file" name="file" style="display:none" accept="application/pdf">
+                        <input id="fileUpload" type="file" name="sk" style="display:none" accept="application/pdf">
                     </div>
                 </div>
                 <div class="modal-footer">

@@ -2,6 +2,7 @@
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Data Induk Pegawai</h1>
+    <a href="<?= base_url()?>cetakexcel/print_all_pegawai" class="btn btn-success">Export Semua Pegawai</a>
 </div>
 
 <div class="card shadow mb-4">

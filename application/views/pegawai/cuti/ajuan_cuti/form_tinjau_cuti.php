@@ -45,28 +45,28 @@
                             <tr>
                                 <td class="px-2">Nama</td>
                                 <td>
-                                    <input type="text" name="name" value="<?= $nama_tanpa_gelar_peg?>" readonly>
+                                    <input type="text" name="name" value="<?= $nama_tanpa_gelar_peg?>" style="background-color: #dfe6e9" readonly>
                                     <?php echo form_error('name') ?>
                                 </td>
                                 <td class="px-2">Nip</td>
                                 <td>
-                                    <input type="text" name="nip" value="<?= $nip_peg?>" readonly>
+                                    <input type="text" name="nip" value="<?= $nip_peg?>" style="background-color: #dfe6e9" readonly>
                                     <?php echo form_error('nip') ?>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="px-2">Jabatan</td>
-                                <td><input type="text" name="" value="<?= $nama_kategori_fung?> / <?= $nama_jabatan_struktur ?>" readonly></td></td>
+                                <td><input type="text" name="" value="<?= $nama_kategori_fung?> / <?= $nama_jabatan_struktur ?>" style="background-color: #dfe6e9" readonly></td></td>
                                 <td class="px-2">Masa Kerja</td>
                                 <td>
-                                    <input type="text" name="maker" value="<?= $thn_masa_kerja_pensiun_peg?>" readonly>
+                                    <input type="text" name="maker" value="<?= $thn_masa_kerja_pensiun_peg?>" style="background-color: #dfe6e9" readonly>
                                     <?php echo form_error('maker') ?>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="px-2">Unit Kerja</td>
                                 <td colspan="3">
-                                    <input type="text" name="uker" style="width:100%" value="<?= $program_studi_uker?>" readonly>
+                                    <input type="text" name="uker" value="<?= $program_studi_uker?>" style="background-color: #dfe6e9; width:100%" readonly>
                                     <?php echo form_error('uker') ?>
                                 </td>
                             </tr>
@@ -116,7 +116,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <textarea name="alasancuti" id="" cols="30" rows="3" class="w-100" placeholder="Masukkan Alasan....." readonly><?= $alasan_pengajuan_cuti ?></textarea>
+                                    <textarea name="alasancuti" id="" cols="30" rows="3" class="w-100" placeholder="Masukkan Alasan....." style="background-color: #dfe6e9" readonly><?= $alasan_pengajuan_cuti ?></textarea>
                                     <?= form_error('alasancuti')?>
                                 </td>
                             </tr>
@@ -132,12 +132,12 @@
                                 <td>Akan Dihitung Oleh Sistem</td>
                                 <td class="px-2">Mulai Tanggal</td>
                                 <td>
-                                    <input type="date" name="startdate" style="border:none" value="<?= $tgl_cuti ?>" readonly>
+                                    <input type="date" name="startdate" style="border:none" value="<?= $tgl_cuti ?>" style="background-color: #dfe6e9" readonly>
                                     <?php echo form_error('startdate') ?>
                                 </td>
                                 <td class="px-2">S/d</td>
                                 <td>
-                                    <input type="date" name="enddate" style="border:none" value="<?= $lastday?>" readonly> 
+                                    <input type="date" name="enddate" style="border:none" value="<?= $lastday?>" style="background-color: #dfe6e9" readonly> 
                                     <?php echo form_error('enddate') ?>
                                 </td>
                             </tr>
@@ -151,35 +151,35 @@
                             <tr>
                                 <td colspan="3">1. Cuti Tahunan</td>
                                 <td>2. Cuti Besar</td>
-                                <td><input type="text" name="ket[]" class="w-100"></td>
+                                <td><input type="text" name="ket[]" style="border:solid 2px #bef202; padding:5px" class="w-100"></td>
                             </tr>
                             <tr>
                                 <td>Tahun</td>
                                 <td>Sisa</td>
                                 <td>Keterangan</td>
                                 <td>3. Cuti Sakit</td>
-                                <td><input type="text" name="ket[]" class="w-100"></td>
+                                <td><input type="text" name="ket[]" style="border:solid 2px #bef202; padding:5px" class="w-100"></td>
                             </tr>
                             <tr>
                                 <td>N-2</td>
-                                <td><input type="number" min="0" name="kuota_n-2" class="w-100"></td>
+                                <td><input type="number" min="0" style="border:solid 2px #bef202; padding:5px" name="kuota_n-2" class="w-100"></td>
                                 <td>Hari</td>
                                 <td>4. Cuti Melahirkan</td>
-                                <td><input type="text" name="ket[]" class="w-100"></td>
+                                <td><input type="text" name="ket[]" style="border:solid 2px #bef202; padding:5px" class="w-100"></td>
                             </tr>
                             <tr>
                                 <td>N-1</td>
-                                <td><input type="number" min="0" name="kuota_n-1" class="w-100"></td>
+                                <td><input type="number" min="0" style="border:solid 2px #bef202; padding:5px" name="kuota_n-1" class="w-100"></td>
                                 <td>Hari </td>
                                 <td>5. Cuti Karena Alasan Penting</td>
-                                <td><input type="text" name="ket[]" class="w-100"></td>
+                                <td><input type="text" name="ket[]" style="border:solid 2px #bef202; padding:5px" class="w-100"></td>
                             </tr>
                             <tr>
                                 <td>N</td>
-                                <td><input type="number" min="0" name="kuota_n" class="w-100"></td>
+                                <td><input type="number" min="0" style="border:solid 2px #bef202; padding:5px" name="kuota_n" class="w-100"></td>
                                 <td>Hari</td>
                                 <td>6. Cuti Diluar Tanggungan Negara</td>
-                                <td><input type="text" name="ket[]" class="w-100"></td>
+                                <td><input type="text" name="ket[]" style="border:solid 2px #bef202; padding:5px" class="w-100"></td>
                             </tr>
                         </table>
 
@@ -201,11 +201,11 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <textarea name="addresscuti" id="" cols="20" rows="5" class="w-100" placeholder="Masukkan Alamat" readonly><?= $alamat_pengajuan_cuti?></textarea>
+                                    <textarea name="addresscuti" id="" cols="20" rows="5" class="w-100" placeholder="Masukkan Alamat" style="background-color: #dfe6e9" readonly><?= $alamat_pengajuan_cuti?></textarea>
                                     <?php echo form_error('addresscuti') ?>
                                 </td>
                                 <td>
-                                    <textarea name="phonecuti" id="" cols="20" rows="5" class="w-100" placeholder="Masukkan Telepon" readonly><?= $telepon_pengajuan_cuti ?></textarea>
+                                    <textarea name="phonecuti" id="" cols="20" rows="5" class="w-100" placeholder="Masukkan Telepon" style="background-color: #dfe6e9" readonly><?= $telepon_pengajuan_cuti ?></textarea>
                                     <?php echo form_error('phonecuti') ?>
                                 </td>
                             </tr>

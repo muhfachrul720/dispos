@@ -32,6 +32,10 @@
                         <?= form_hidden('tmtfung', $tmt_jab_fungsional)?>
 
                         <div class="form-group row">
+                            <div class="col-12 mb-3">
+                                <label for=""><small>Jabatan Struktural</small></label>
+                                <?php echo cmb_dinamis('', 'tbl_kategori_jabatan_struktur', 'nama_jabatan_struktur', 'id_kat_jbt_struktur', $usulan, 'DESC', 'disabled') ?>
+                            </div>
                             <div class="col-6">
                                 <label for=""><small>Jabatan Struktural</small></label>
                                 <?= cmb_dinamis('jabstruk', 'tbl_kategori_jabatan_struktur', 'nama_jabatan_struktur', 'id_kat_jbt_struktur', $id_kat_jab_struktural,'DESC') ?>

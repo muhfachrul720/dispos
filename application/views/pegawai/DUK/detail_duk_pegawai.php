@@ -66,7 +66,7 @@
         <?php
             } else if ($status_kepegawaian_peg == 'Pensiun' && $sk_kemendikbud['laporan_pengajuan_pensiun'] != null){;
         ?>
-            <div class="alert alert-success">SK Anda Telah Diupload, Silahkan Mendownload SK Anda dengan Menekan <a href="<?= base_url()?>upload/report_pensiun/<?= $sk_kemendikbud['laporan_pengajuan_pensiun'] ?>" download>Tombol ini</a></div>
+            <div class="alert alert-success">SK Anda Telah Diupload, Silahkan Mendownload SK Pensiun Anda dengan Menekan <a href="<?= base_url()?>upload/report_pensiun/<?= $sk_kemendikbud['laporan_pengajuan_pensiun'] ?>" download>Tombol ini</a></div>
         <?php
             };
         ?>
@@ -321,6 +321,35 @@
                     <div class="col-2 p-0 border-bottom">
                         <label for=""><small style="font-weight:bold">Bulan Pangkat Terakhir </small></label>
                         <p style="margin-bottom:10px;"><?= $bln_pangkat_terakhir?></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pendidikan Terakhir -->
+        <div class="card mb-4">
+            <div class="card-header" style="background-color:#4e73df; color:white;font-weight:bold">
+                Data Pendidikan Terakhir
+            </div>
+            <div class="card-body">
+                <div class="row mb-3 px-3 justify-content-between">
+                    <div class="col-3 p-0 border-bottom">
+                        <label for=""><small style="font-weight:bold">Bidang Keilmuan :</small></label>
+                        <p style="margin-bottom:10px;"><?= $bidang_ilmu_peter?></p>
+                    </div>
+                    <div class="col-3 p-0 border-bottom">
+                        <label for=""><small style="font-weight:bold">Jenjang Pendidikan :</small></label>
+                        <p style="margin-bottom:10px;"><?= $strata_peter?></p>
+                    </div>
+                    <div class="col-3 p-0 border-bottom">
+                        <label for=""><small style="font-weight:bold">Tahun Lulus Pendidikan :</small></label>
+                        <p style="margin-bottom:10px;"><?= $thn_lulus_peter?></p>
+                    </div>
+                </div>
+                <div class="row mb-3 px-3 justify-content-between">
+                    <div class="col-5 p-0 border-bottom">
+                        <label for=""><small style="font-weight:bold">Universitas :</small></label>
+                        <p style="margin-bottom:10px;"><?= $univ_peter?></p>
                     </div>
                 </div>
             </div>

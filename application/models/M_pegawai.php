@@ -121,7 +121,7 @@ class M_pegawai extends CI_Model{
 
     public function json_mon_cuti($check = false)
     {
-        $this->datatables->select('id_pengajuan_cuti, nama_tanpa_gelar_peg, status_cuti, waktu_pengajuan_cuti, jenis_pengajuan_cuti, nip_peg, tgl_cuti, jml_hari_cuti, jml_bln_cuti, jml_thn_cuti');
+        $this->datatables->select('id_pengajuan_cuti, waktu_pengajuan_cuti, nama_tanpa_gelar_peg, status_cuti, report_pengajuan_cuti, jenis_pengajuan_cuti, nip_peg, tgl_cuti, jml_hari_cuti, jml_bln_cuti, jml_thn_cuti');
         $this->datatables->from('tbl_pengajuan_cuti as cuti');
         $this->datatables->join($this->table_name, 'pgw.id_pegawai = cuti.id_pegawai');
         $this->datatables->where('status_cuti', 1);
@@ -129,13 +129,15 @@ class M_pegawai extends CI_Model{
         return $this->datatables->generate();
     }
 
-    public function json_mon_naikpangkat($table, $column)
+    public function json_mon_naikpangkat($table, $column, $check = 0)
     {
         $this->datatables->select('this.*, nama_tanpa_gelar_peg, nip_peg');
         $this->datatables->from($table.' as this');
         $this->datatables->join('tbl_pegawai as pgw', 'pgw.id_pegawai = this.id_pegawai');
         $this->datatables->where('this.'.$column, 1);
-        $this->datatables->where('status_kenaikan_pangkat', 0);
+        if($check == 0){
+            $this->datatables->where('status_kenaikan_pangkat', 0);
+        }
         return $this->datatables->generate();   
     }
 
@@ -246,7 +248,7 @@ class M_pegawai extends CI_Model{
     // =================================================== Cuti ==================================================
     public function get_datapeg_cuti($id)
     {
-        $this->db->select('nama_kategori_fung, nama_jabatan_struktur, nama_tanpa_gelar_peg, nip_peg, thn_masa_kerja_pensiun_peg, program_studi_uker');
+        $this->db->select('nama_kategori_fung, nama_jabatan_struktur, nama_tanpa_gelar_peg, nip_peg, thn_masa_kerja_pensiun_peg, program_studi_uker, id_kategori_jabatan_fung, id_kat_jbt_struktur');
         $this->db->from($this->table_name);
 
         $this->db->join('tbl_unit_kerja as uker', 'pgw.id_uker = uker.id_uker');
@@ -263,7 +265,7 @@ class M_pegawai extends CI_Model{
 
     public function json_cuti_individual($where)
     {
-        $this->datatables->select('id_pengajuan_cuti, status_cuti, waktu_pengajuan_cuti, keterangan_pengajuan_cuti, username');
+        $this->datatables->select('id_pengajuan_cuti, status_cuti, waktu_pengajuan_cuti, keterangan_pengajuan_cuti, username, report_pengajuan_cuti');
         $this->datatables->from('tbl_pengajuan_cuti as cuti');
         $this->datatables->join('tbl_user as us', 'us.id_users = cuti.id_users', 'LEFT');
         $this->datatables->where('cuti.id_pegawai', $where);
@@ -426,6 +428,71 @@ class M_pegawai extends CI_Model{
         $this->db->order_by('id_jab', 'DESC');
         $this->db->limit('1');
 
+        return $this->db->get();
+    }
+
+    // ======================= Data Excel =======================
+    public function get_all_pegcuti($status = 0)
+    {
+        $this->db->select('cuti.*, pgw.nama_lengkap_peg, pgw.nama_tanpa_gelar_peg, pgw.nip_peg');
+        $this->db->from('tbl_pengajuan_cuti as cuti');
+        $this->db->join('tbl_pegawai as pgw', 'pgw.id_pegawai = cuti.id_pegawai');
+
+        if($status == 1){
+            $this->db->where('cuti.status_cuti', 1);
+            $this->db->where('cuti.report_pengajuan_cuti');
+        }
+
+        $this->db->order_by('waktu_pengajuan_cuti', 'DESC');
+
+        return $this->db->get();
+    }
+
+    public function get_all_pegpensi($status = 0)
+    {
+        $this->db->select('pensi.*, pgw.nama_lengkap_peg, pgw.nama_tanpa_gelar_peg, pgw.nip_peg, pgw.tmt_masuk_peg, pgw.tmt_pensiun_peg, nama_jabatan_struktur, nama_kategori_fung');
+        $this->db->from('tbl_pengajuan_pensiun as pensi');
+        $this->db->join('tbl_pegawai as pgw', 'pgw.id_pegawai = pensi.id_pegawai');
+        $this->db->join('tbl_jabatan as jab', 'pgw.id_jabatan = jab.id_jab');
+        $this->db->join('tbl_kategori_jabatan_fung as fung', 'jab.id_kategori_jab_fungsional = fung.id_kategori_jabatan_fung');
+        $this->db->join('tbl_kategori_jabatan_struktur as struk', 'jab.id_kat_jab_struktural = struk.id_kat_jbt_struktur');
+
+        if($status == 1){
+            $this->db->where('pensi.status_pengajuan', 1);
+            $this->db->where('pensi.laporan_pengajuan_pensiun');
+        }
+
+        $this->db->order_by('pensi.waktu_pengajuan_pensiun', 'DESC');
+
+        return $this->db->get();
+    }
+
+    public function get_all_pegawai()
+    {  
+        $this->db->join('tbl_user', 'id_users = id_user');
+        $this->db->join('tbl_gelar as gelar', 'pgw.id_gelar = gelar.id_gelar');
+        $this->db->join('tbl_cpns as cpns', 'pgw.id_cpns = cpns.id_cpns');
+        $this->db->join('tbl_pmk as pmk', 'pgw.id_pmk = pmk.id_pmk');
+        $this->db->join('tbl_kgb as kgb', 'pgw.id_kgb = kgb.id_kgb');
+        $this->db->join('tbl_impassing as imp', 'pgw.id_impassing = imp.id_impassing');
+        $this->db->join('tbl_unit_kerja as uker', 'pgw.id_uker = uker.id_uker');
+        $this->db->join('tbl_jabatan as jab', 'pgw.id_jabatan = jab.id_jab');
+        $this->db->join('tbl_pangkat_terakhir as pgkt', 'pgw.id_pangkat_terakhir = pgkt.id_pangkat_terakhir');
+        $this->db->join('tbl_tgs_tambahan_dosen as tgstbh', 'pgw.id_tgs_tambahan_dosen = tgstbh.id_tgs_tambahan_dosen');
+        $this->db->join('tbl_diklat_pelatihan as dklt', 'pgw.id_diklat = dklt.id_diklat');
+        $this->db->join('tbl_keluarga as klg', 'pgw.id_keluarga = klg.id_keluarga');
+        $this->db->join('tbl_pendidikan_terakhir as peter', 'pgw.id_peter = peter.id_peter');
+        
+        return $this->db->get($this->table_name)->row_array();
+    }
+
+    // ======================== OTHER =================== 
+    public function get_jab_usul($where)
+    {
+        $this->db->select('usulan_jabatan_struktural');
+        $this->db->from('tbl_aju_naikpangkat_struktural');
+        $this->db->where('id_ajuan_struktural', $where);
+        
         return $this->db->get();
     }
 }

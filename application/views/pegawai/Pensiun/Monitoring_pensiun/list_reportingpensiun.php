@@ -9,8 +9,17 @@
     <div class="card shadow mb-4 p-5" style="font-size:14px">
 
         <div class="header">
-            <h3 class="mb-3">Monitoring Pensiun Yang Akan Pensiun</h3>
-            <p class="mb-0">List Ajuan Pensiun Pegawai yang telah ditinjau</p>
+            <div class="row justify-content-between">
+                <div class="col-6">
+                    <h3>List Pegawai Pensiun</h3>
+                    <p class="p-0">Dibawah Merupakan List Pegawai Yang Telah Berstatus Pensiun, Silahkan Mengupload SK Pensiun Apabila Tersedia</p>
+                </div>
+                <div class="col-6" style="text-align:right;">
+                    <a href="<?= base_url()?>cetakexcel/print_excel_pensiun_nonsk" class="btn btn-success">Export Pegawai Non SK</a>
+                    <a href="<?= base_url()?>cetakexcel/print_excel_pensiun_all" class="btn btn-success">Export Semua Pegawai</a>
+                </div>
+            </div>
+
         </div>
         <hr>
         <div class="body">

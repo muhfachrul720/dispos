@@ -2,8 +2,8 @@
     <div class="card shadow mb-4 p-5" style="font-size:14px">
 
         <div class="header">
-            <h3 class="mb-3">Monitoring Pensiun Yang Akan Pensiun</h3>
-            <p class="mb-0">List Ajuan Pensiun Pegawai yang telah ditinjau</p>
+            <h3 class="mb-3">Monitoring Notif Alarm Pensiunan</h3>
+            <p class="mb-0">Dibawah Merupakan List Nama Nama Pegawai Yang 1 Tahun Kedepan Akan Pensiun</p>
         </div>
         <hr>
         <div class="body">
