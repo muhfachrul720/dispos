@@ -1,8 +1,16 @@
 <div class="container-fluid">
     <div class="card shadow mb-4 p-5" style="font-size:14px">
-        <div class="header">
-            <h3 class="mb-3">List Ajuan Kenaikan Pangkat Jabatan Fungsional (Terverifikasi)</h3>
-            <p class="mb-0">List Pengajuan Kenaikan Jabatan Yang telah disetujui </p>
+        <div class="header"> 
+            <div class="row justify-content-between">
+                <div class="col-6">
+                    <h3 class="mb-3">List Ajuan Kenaikan Pangkat Jabatan Fungsional (Terverifikasi)</h3>
+                    <p class="mb-0">List Pengajuan Kenaikan Jabatan Yang telah disetujui </p>
+                </div>
+                <div class="col-6" style="text-align:right;">
+                    <a href="<?= base_url()?>cetakexcel/print_excel_fungsional_nonsk" class="btn btn-success">Export Pegawai Non SK</a>
+                    <a href="<?= base_url()?>cetakexcel/print_excel_fungsional_all" class="btn btn-success">Export Semua Pegawai</a>
+                </div>
+            </div>
         </div>
         <hr>
         <div class="body">
@@ -95,7 +103,12 @@
                         {
                             "data" : 'id_ajuan_fungsional',
                             "render" : function(data, type, row){
-                                return '<a href="<?=base_url()?>pegawai/ubah_jabatan_fungsional/'+data+'" style="color:white" class="btn btn-primary">Ubah Jabatan</a>';
+                                if(row.report_pengajuan_fungsional != null){
+                                    return '<a href="<?=base_url()?>pegawai/ubah_jabatan_fungsional/'+data+'" style="color:white" class="btn btn-primary">Ubah Jabatan</a>';
+                                }
+                                else {
+                                    return 'Silahkan Mengupload SK Terlebih Dahulu Sebelum Mengganti Jabatan';
+                                }
                             }   
                         },
                     ],

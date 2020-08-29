@@ -1,7 +1,14 @@
 <div class="container-fluid">
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Data Induk Pegawai</h1>
+    <h1 class="h3 mb-0 text-gray-800">Data Jabatan Pegawai</h1>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <p class="mb-0">Keterangan : </p>
+        <small>Menu ini untuk Mengganti Jabatan Dari Pegawai Silahkan Mengganti Jabatan Pegawai dengan cara Menekan Tombol &nbsp; <span class="btn btn-warning btn-sm">Ganti Jabatan</span>  </small>
+    </div>
 </div>
 
 <div class="card shadow mb-4">
@@ -73,11 +80,11 @@
                         {
                             "data": "id_peg",
                             "render" : function(data, type, row){
-                                return '<a href="<?=base_url()?>pegawai/form_data_pegawai/'+data+'" class="btn btn-sm btn-warning"><i class="mdi mdi-pencil"></i></a> <a href="<?=base_url()?>pegawai/form_data_pegawai/'+data+'" class="btn btn-sm btn-success"><i class="mdi mdi-file-excel"></i></a>';
+                                return '<a href="<?=base_url()?>pegawai/form_data_jabatan/'+data+'" class="btn btn-sm btn-warning">Ganti Jabatan</a>';
                             },
                         },
                     ],
-                    order: [[0, 'asc']],
+                    order: [[2, 'asc']],
                     rowCallback: function(row, data, iDisplayIndex) {
                         var info = this.fnPagingInfo();
                         var page = info.iPage;

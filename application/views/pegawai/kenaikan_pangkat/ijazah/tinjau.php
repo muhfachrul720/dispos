@@ -2,11 +2,6 @@
                 <div class="card-body">
                     <h3 class="">Tinjau Pengajuan Kenaikan Pangkat Penyesuaian ijazah </h3>
                     <p>Halaman Untuk Meninjau Pengajuan Pengajuan Kenaikan Pangkat Jabatan</p>
-                    <!-- <?php if(isset($ajuan)) {?> 
-                        <div class="alert alert-info alert-sm" role="alert">
-                            <?= $ajuan['keterangan_pengajuan_pensiun']?>
-                        </div>
-                    <?php }?>  -->
                 </div>
             </div>  
             

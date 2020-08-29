@@ -18,17 +18,17 @@
         <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Monitoring</a>
     </li>
     </ul>
-    <div class="tab-content" id="myTabContent">
+    <div class="tab-content" id="myTabContent"> 
         <div class="tab-pane show active fade" id="home" role="tabpanel" aria-labelledby="home-tab">
             <div class="card border-top-0 mb-3 pt-3 px-3 pb-1">
                 <div class="card-body">
                     <h3 class="">Form Pengajuan Pangkat Sesuai Dengan Ijazah </h3>
                     <p>Silahkan Mengupload syarat syarat yang diperlukan dalam mengurus Pensiunan Secara Lengkap dan benar</p>
-                    <!-- <?php if(isset($ajuan)) {?> 
+                    <?php if(isset($aju)) {?> 
                         <div class="alert alert-info alert-sm" role="alert">
-                            <?= $ajuan['keterangan_pengajuan_pensiun']?>
-                        </div>
-                    <?php }?>  -->
+                               <small> Keterangan Koreksi : <?= $aju['keterangan_pengajuan_ijazah']?> </small>
+                            </div>
+                    <?php }?> 
                 </div>
             </div>  
             
@@ -42,6 +42,12 @@
                 array('<b>Uraian Tugas Asli</b> Ditandatangani serendah rendahnya Eselon II', 'srttgs'),
                 array('<b>SKP, Capaian SKP, dan Penilaian Prestasi Kerja</b> (2 Tahun terakhir <b>sekurang-kurangnya bernilai baik</b>', 'skp'),
             );?>
+
+            <?php if(isset($aju)){ 
+                echo form_hidden('time', $aju['waktu_pengajuan_ijazah']);
+                echo form_hidden('id', $aju['id_ajuan_ijazah']);
+                echo form_hidden('idbrks', $aju['id_berkas_ajuan']);
+            }?>
            
             <div class="row">
                 <div class="col-7">
@@ -161,8 +167,13 @@
                                             <small><?= $checker[$i][0]?></small>
                                         </div>
                                         <div class="col-5">
-                                            <label for="file<?= $i ?>" class="btn btn-sm btn-primary m-auto" style="font-size:12px">Upload File</label>
-                                            <i id="check<?= $i ?>" class="mdi mdi-close btn btn-danger btn-sm w-25"></i>
+                                                <?php if($berkas[$i] != null){?>
+                                                    <label for="file<?= $i ?>" class="btn btn-sm btn-primary m-auto" style="font-size:12px">Ganti File</label>
+                                                    <i id="check<?= $i ?>" class="mdi mdi-checkbox-marked-outline btn btn-success btn-sm w-25"></i>
+                                                <?php } else {?>
+                                                    <label for="file<?= $i ?>" class="btn btn-sm btn-primary m-auto" style="font-size:12px">Upload File</label>
+                                                    <i id="check<?= $i ?>" class="mdi mdi-close btn btn-danger btn-sm w-25"></i>
+                                                <?php };?>
 
                                             <input type="file" name="<?= $checker[$i][1]?>" class="uploadFile" id="file<?= $i ?>" style="display:none;" accept="application/pdf">
                                         </div>
@@ -172,8 +183,6 @@
                                             var check = $('#check<?= $i ?>'); 
                                             check.removeClass('btn-danger').addClass('btn-success');
                                             check.removeClass('mdi-close').addClass('mdi-checkbox-marked-outline');
-                                            // var fileName = e.target.files[0].name;
-                                            // previewFile(this);
                                         });
                                     </script>
                                     <?php };?>
@@ -183,7 +192,11 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body p-2">
-                                    <input type="submit" id="submit" class="btn btn-secondary w-50" value="Silahkan Mengisi Form" disabled>
+                                    <?php if(isset($aju)) {?>
+                                        <input type="submit" class="btn btn-success w-50" value="Koreksi">
+                                    <?php } else {?>
+                                        <input type="submit" id="submit" class="btn btn-secondary w-50" value="Silahkan Mengisi Form" disabled>
+                                    <?php };?>
                                     <button type="button" class="btn btn-secondary" style="width:49%">Kembali</button>
                                 </div>
                                 <script>
@@ -294,7 +307,7 @@
                                         if(row.status_pengajuan_ijazah == 3){
                                             return "<a href='<?= base_url('dashboard_p/ajuan_naikpangkat_ijazah/')?>/"+data+"' class='btn btn-warning btn-sm'>Edit</a>";
                                         }
-                                        else if(row.status_pengajuan_ijazah == 1) {
+                                        else if(row.report_pengajuan_ijazah != null) {
                                             return "<a href='<?= base_url()?>upload/report_naikpangkat/ijazah/"+row.report_pengajuan_ijazah+"' class='btn btn-success btn-sm' download>Download SK</a>";
                                         }
                                         else {

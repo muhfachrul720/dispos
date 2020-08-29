@@ -326,6 +326,18 @@ class Pegawai extends CI_Controller {
 		$this->template->load('template_admin', 'pegawai/kenaikan_pangkat/jabatan', $data);
 	}
 
+	public function ubah_pangkat_golongan($id)
+	{
+		$pgw = $this->m_pegawai->get_idpegawai('tbl_aju_naikpangkat_reguler', array('id_ajuan_reguler' => $id));
+		$data = $this->m_pegawai->get_panghir_pegawai($pgw['id_pegawai'])->row_array();	
+
+		$data['golongan'] = explode('/', $data['pangkat_terakhir'])[1];
+		$data['ruang'] = explode('/', $data['pangkat_terakhir'])[2];
+		$data['ajuan'] = $id;
+
+		$this->template->load('template_admin', 'pegawai/kenaikan_pangkat/pangkat', $data);
+	}
+
 	public function update_jabatan()
 	{
 		$post = $this->input->post();
@@ -345,14 +357,20 @@ class Pegawai extends CI_Controller {
 			if($post['check'] == 1) {
 				$this->m_pegawai->update('tbl_aju_naikpangkat_fungsional', array('id_ajuan_fungsional' => $post['idajuan']), array('status_kenaikan_pangkat' => 1));
 				redirect('pegawai/mon_naikpangkat_fungsional');
-			} else {
+			} else if($post['check'] == 2){
 				$this->m_pegawai->update('tbl_aju_naikpangkat_struktural', array('id_ajuan_struktural' => $post['idajuan']), array('status_kenaikan_pangkat' => 1));
 				redirect('pegawai/mon_naikpangkat_struktural');
+			}else {
+				redirect('pegawai/data_jabatan');
 			};
 		}
 		else {
 			$this->session->set_flashdata('msg', 'Gagal Mengupdate Data');
-			$post['check'] == 1 ? redirect('pegawai/mon_naikpangkat_fungsional') : redirect('pegawai/mon_naikpangkat_struktural');
+			if($post['check'] == 1) {
+				redirect('pegawai/mon_naikpangkat_fungsional');
+			} else if($post['check'] == 2){
+				redirect('pegawai/mon_naikpangkat_struktural');
+			};
 		}
 
 	}
@@ -437,11 +455,11 @@ class Pegawai extends CI_Controller {
 
 			$this->m_pegawai->update('tbl_aju_naikpangkat_fungsional', array('id_ajuan_fungsional' => $post['idaju']), $datask);
 
-			// redirect('pegawai/mon_naikpangkat_fungsional');
+			redirect('pegawai/mon_naikpangkat_fungsional');
 		}	
 		else {
 			$this->session->set_flashdata('msg', 'Berhasil Mengupdate Data');
-			// redirect('pegawai/mon_naikpangkat_fungsional');
+			redirect('pegawai/mon_naikpangkat_fungsional');
 		};
 	}
 
@@ -622,7 +640,88 @@ class Pegawai extends CI_Controller {
 	// >>>>>>>>>>>> Reguler
 	public function verifikasi_naikpangkat_reguler()
 	{
+		$this->template->load('template_admin', 'pegawai/kenaikan_pangkat/reguler/list');
+	}
+
+	public function json_naikpangkat_reguler()
+	{
+        $data = $this->m_pegawai->json_ajuan_naikpangkat($this->session->userdata('id_pegawai'), 'tbl_aju_naikpangkat_reguler as this', 'status_pengajuan_reguler');
+		echo $data;
+	}
+
+	public function tinjau_naikpangkat_reguler($id)
+	{
+		$data = $this->m_pegawai->get_ajuan_naikpangkat('tbl_aju_naikpangkat_reguler', 'tbl_berkas_pengajuan_reguler', array('id_ajuan_reguler' => $id))->row_array();
+		$data['berkas'] = array($data['sk_pangkat'], $data['skp']);
+
+		$data['action'] = 'pegawai/action_tinjau_naikpangkat_reguler';
+		$this->template->load('template_admin', 'pegawai/kenaikan_pangkat/reguler/tinjau', $data);
+	}
+
+	public function action_tinjau_naikpangkat_reguler()
+	{
+		$post = $this->input->post();
+
+		$this->form_validation->set_rules('keterangan', 'Keterangan', 'trim|required');
+		$this->form_validation->set_error_delimiters('<small class="text-danger">', '</small>');
+
+		if($this->form_validation->run() != FALSE){
+
+			$dataaju = array(
+				'id_users' => $this->session->userdata('id_users'),
+				'status_pengajuan_reguler' => $post['status'],
+				'keterangan_pengajuan_reguler' => $post['keterangan'],
+			);
+			
+			if($this->m_pegawai->update('tbl_aju_naikpangkat_reguler', array('id_ajuan_reguler' => $post['id']), $dataaju)){
+
+				$this->session->set_flashdata('msg', 'Berhasil Mengupdate Data');
+				redirect('pegawai/verifikasi_naikpangkat_reguler');
+			}
+			else {
+				$this->session->set_flashdata('msg', 'Gagal Mengupdate Data');
+				$this->tinjau_pensiun($post['id']);
+			}
+
+		} else {
+
+			$this->tinjau_naikpangkat_reguler($post['id']);
+
+		};
+
+
+	}
+
+	public function mon_naikpangkat_reguler()
+	{
+		$this->template->load('template_admin', 'pegawai/kenaikan_pangkat/reguler/data');
+	}
+
+	public function json_mon_naikpangkat_reguler()
+	{
+		$data = $this->m_pegawai->json_mon_naikpangkat('tbl_aju_naikpangkat_reguler', 'status_pengajuan_reguler');
+		echo $data;
+	}
+
+	public function upload_feedback_reguler()
+	{
+		$post = $this->input->post();
 		
+		if($_FILES['sk']['name'] != ""){
+			$filename = $this->upload_file($post['idaju'], './upload/report_naikpangkat/reguler');
+
+			$datask = array(
+				'report_pengajuan_reguler' => $filename['file_name'],
+			);
+
+			$this->m_pegawai->update('tbl_aju_naikpangkat_reguler', array('id_ajuan_reguler' => $post['idaju']), $datask);
+
+			redirect('pegawai/mon_naikpangkat_reguler');
+		}	
+		else {
+			$this->session->set_flashdata('msg', 'Berhasil Mengupdate Data');
+			redirect('pegawai/mon_naikpangkat_reguler');
+		};
 	}
 
 	// ========================================================== Data Duk =====================================================
@@ -695,12 +794,110 @@ class Pegawai extends CI_Controller {
 		echo $data;
 	}
 
+	public function form_data_jabatan($id)
+	{	
+		$data = $this->m_pegawai->get_jabatan_pegawai($id)->row_array();
+		$data['action'] = base_url('pegawai/update_datapeg');
+		$data['button'] = 'Save';
+		$data['back'] = 'pegawai';
+
+		$this->template->load('template_admin', 'pegawai/duk/form_data_jabatan', $data);	
+	}
+
+	public function data_panghir()
+	{
+		$data['title'] = 'Dashboard Admin';
+
+		$this->template->load('template_admin', 'pegawai/duk/list_panghir_pegawai', $data);
+	}
+
+	public function json_panghir()
+	{
+		$data = $this->m_pegawai->json_panghir();
+
+		echo $data;
+	}
+
+	public function form_data_panghir($id)
+	{
+		$data = $this->m_pegawai->get_panghir_pegawai($id)->row_array();
+		$data['button'] = 'Save';
+		$data['back'] = 'pegawai';
+
+		if(isset($data['pangkat_terakhir'])){
+			$data['golongan'] = explode('/', $data['pangkat_terakhir'])[1];
+			$data['ruang'] = explode('/', $data['pangkat_terakhir'])[2];
+		}
+		else {
+			$data['golongan'] = '';
+			$data['ruang'] = '';
+		}
+
+		$this->template->load('template_admin', 'pegawai/duk/form_data_panghir', $data);	
+	}
+
+	public function update_datapanghir()
+	{
+		$post = $this->input->post();
+
+		$this->form_validation->set_rules('nosk', 'Nomor SK', 'required|trim');
+		$this->form_validation->set_rules('tglsk', 'Tanggal SK', 'required|trim');
+		$this->form_validation->set_rules('giveby', 'Diberikan Oleh', 'required|trim');
+		$this->form_validation->set_rules('tmt', 'TMT', 'required|trim');
+		$this->form_validation->set_error_delimiters('<small class="text-danger">', '</small>');
+
+		if($this->form_validation->run() == false){
+			$this->form_data_panghir($post['idpeg']);
+		} else {
+
+			$data = array(
+				'no_sk_pangkat_terakhir' => $post['nosk'],
+				'tgl_sk_pangkat_terakhir' => $post['tglsk'],
+				'oleh_pejabat_pangkat_terakhir' => $post['giveby'],
+				'pangkat_terakhir' => get_pangkatcpns($post['gol'], $post['ruang']).'/'.$post['gol'].'/'.$post['ruang'],
+				'tmt_pangkat_terakhir' => $post['tmt'],
+				'thn_pangkat_terakhir' => 0,
+				'bln_pangkat_terakhir' => 0,
+				'id_pegawai' => $post['idpeg'],
+			);
+	
+			if($lastid = $this->m_pegawai->insert($data, 'tbl_pangkat_terakhir')){
+
+				$this->m_pegawai->update('tbl_pegawai', array('id_pegawai' => $post['idpeg']), array('id_pangkat_terakhir' => $lastid));
+
+				if(isset($post['ajuan'])){
+
+					$this->m_pegawai->update('tbl_aju_naikpangkat_reguler', array('id_ajuan_reguler' => $post['ajuan']), array('status_kenaikan_pangkat' => 1));
+
+					redirect('pegawai/mon_naikpangkat_reguler');
+				}
+
+				$this->session->set_flashdata('msg', 1);
+				redirect('pegawai/data_panghir');
+			}
+			else {
+				$this->session->set_flashdata('msg', 2);
+				redirect('pegawai/data_panghir');
+			}
+		}
+	}
+
+
+
 	// ======================================================== Other ==========================================================
 	public function json_jab_bypegawai()
 	{
 		$id = $this->input->post('id');
 
 		$data = $this->m_pegawai->json_jabatan_byid($id);
+		echo $data;
+	}
+
+	public function json_panghir_bypegawai()
+	{
+		$id = $this->input->post('id');
+
+		$data = $this->m_pegawai->json_panghir_byid($id);
 		echo $data;
 	}
 

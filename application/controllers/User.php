@@ -100,21 +100,10 @@ class User extends CI_Controller
                     'id_pegawai' => $pegid,   
                 );
                 
-                $dataid = array(
-                    'id_gelar' => $this->m_pegawai->insert($idpeg, 'tbl_gelar'),
-                    'id_cpns' => $this->m_pegawai->insert($idpeg, 'tbl_cpns'),
-                    'id_pmk' => $this->m_pegawai->insert($idpeg, 'tbl_pmk'),
-                    'id_kgb' => $this->m_pegawai->insert($idpeg, 'tbl_kgb'),
-                    'id_impassing' => $this->m_pegawai->insert($idpeg, 'tbl_impassing'),
-                    'id_pangkat_terakhir' => $this->m_pegawai->insert($idpeg, 'tbl_pangkat_terakhir'),
-                    'id_jabatan' => $this->m_pegawai->insert($idpeg, 'tbl_jabatan'),
-                    'id_tgs_tambahan_dosen' => $this->m_pegawai->insert($idpeg, 'tbl_tgs_tambahan_dosen'),
-                    'id_peter' => $this->m_pegawai->insert($idpeg, 'tbl_pendidikan_terakhir'),
-                    'id_user' => $last_id,
-                    'id_diklat' => $this->m_pegawai->insert($idpeg, 'tbl_diklat_pelatihan'),
-                    'id_keluarga' => $this->m_pegawai->insert($idpeg, 'tbl_keluarga'),
-                    'id_uker' => $this->m_pegawai->insert($idpeg, 'tbl_unit_kerja'),
-                );
+                if(){
+                    
+                }
+               
                 
                 $this->m_pegawai->update('tbl_pegawai', array('id_pegawai' => $pegid), $dataid);
                 

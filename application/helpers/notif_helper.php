@@ -28,6 +28,18 @@
 
         return false;
     }
+
+    function notif_kenaikanreguler($time){
+
+        $endTime = date('Y-m-d', strtotime('+4 years', strtotime($time)));
+        $notifTime = date('Y-m-d', strtotime('-30 days', strtotime($endTime)));
+        
+        if(strtotime(date('Y-m-d')) >= strtotime($notifTime)){
+            return true;      
+        }
+
+        return false;
+    }
     
     function get_age($birthDate)
     {
@@ -138,5 +150,36 @@
             return 'Pembina Utama';
         }
     }
+
+    
+    function double_range($limit)
+    {
+        $array = array();
+        $var = '';
+
+        foreach(range('A', 'Z') as $d){
+            array_push($array, $d);
+            if($d == 'Z'){
+                foreach(range('A', 'Z') as $e){
+                    if($var == $limit){
+                        break;
+                    } else {
+                        foreach(range('A', 'Z') as $f){
+                            $var = $e.$f;
+                            if($var == $limit){
+                                array_push($array, $e.$f);
+                                break;
+                            }else{ 
+                                array_push($array, $e.$f);
+                            }
+                        }   
+                    }
+                }
+            }
+        }
+
+        return $array;
+    }
+
 
 ?>

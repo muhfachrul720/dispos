@@ -73,13 +73,19 @@
 
         <?php 
             if(notif_kenaikanpangkat($tmt_jab_fungsional) != false){
-                echo '<div class="alert alert-info"><small>Anda Dapat Mengajukan Kenaikan Pangkat Untuk Jabatan Fungsional Silahkan Mengajukan Pengajuan<a href=""> &nbsp Ajukan Kenaikan Pangkat Sekarang</a></small></div>';
+                echo '<div class="alert alert-info"><small>Anda Dapat Mengajukan Kenaikan Pangkat Untuk Jabatan Fungsional Silahkan Mengajukan Pengajuan<a href="'.base_url('dashboard_p/ajuan_naikpangkat_fungsional').'"> &nbsp Ajukan Kenaikan Pangkat Sekarang</a></small></div>';
             }
         ?>
     
         <?php 
             if(notif_kenaikanpangkat($tmt_jab_struktural == null ? $tmt_jab_fungsional : $tmt_jab_struktural) != false){
-                echo '<div class="alert alert-info"><small>Anda Dapat Mengajukan Kenaikan Pangkat Untuk Jabatan Fungsional Silahkan Mengajukan Pengajuan<a href=""> &nbsp Ajukan Kenaikan Pangkat Sekarang</a></small></div>';
+                echo '<div class="alert alert-info"><small>Anda Dapat Mengajukan Kenaikan Pangkat Untuk Jabatan Struktural Silahkan Mengajukan Pengajuan<a href="'.base_url('dashboard_p/ajuan_naikpangkat_struktural').'"> &nbsp Ajukan Kenaikan Pangkat Sekarang</a></small></div>';
+            }
+        ?>
+
+        <?php 
+            if(notif_kenaikanreguler($tmt_pangkat_terakhir) != false){
+                echo '<div class="alert alert-info"><small>Anda Dapat Mengajukan Kenaikan Pangkat Golongan Silahkan Mengajukan Kenaikan Pangkat Golongan/Reguler<a href="'.base_url('dashboard_p/ajuan_naikpangkat_reguler').'"> &nbsp Ajukan Kenaikan Pangkat Sekarang</a></small></div>';
             }
         ?>
 
@@ -290,7 +296,7 @@
         </div>
 
         <!-- Data Pangkat Akhir -->
-        <div class="card mb-4">
+        <!-- <div class="card mb-4">
             <div class="card-header" style="background-color:#4e73df; color:white;font-weight:bold">
                 Data Pangkat Terakhir
             </div>
@@ -324,7 +330,88 @@
                     </div>
                 </div>
             </div>
+        </div> -->
+        <div class="card shadow mb-4">
+            <div class="card-header" style="background-color:#4e73df; color:white;font-weight:bold">
+                Data Pangkat Akhir
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                
+                <table id="example" style="font-size:12px; width:100%" class="table table-striped table-bordered table-sm text-center" style="width:100%">
+                    <thead>
+                    <tr>
+                        <th width="">No</th>
+                        <th>Pangkat Terakhir</th>
+                        <th>TMT Pangkat Terakhir</th>
+                        <th>No SK</th>
+                        <th>Tgl SK</th>
+                    </tr>
+                    </thead>
+                </table>
+            
+                </div>
+
+                <script type="text/javascript">
+                        $(document).ready(function() {
+                            $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
+                            {
+                                return {
+                                    "iStart": oSettings._iDisplayStart,
+                                    "iEnd": oSettings.fnDisplayEnd(),
+                                    "iLength": oSettings._iDisplayLength,
+                                    "iTotal": oSettings.fnRecordsTotal(),
+                                    "iFilteredTotal": oSettings.fnRecordsDisplay(),
+                                    "iPage": Math.ceil(oSettings._iDisplayStart / oSettings._iDisplayLength),
+                                    "iTotalPages": Math.ceil(oSettings.fnRecordsDisplay() / oSettings._iDisplayLength)
+                                };
+                            };
+
+                            var t = $("#example").dataTable({
+                                initComplete: function() {
+                                    var api = this.api();
+                                    $('#mytable_filter input')
+                                            .off('.DT')
+                                            .on('keyup.DT', function(e) {
+                                                if (e.keyCode == 13) {
+                                                    api.search(this.value).draw();
+                                        }
+                                    });
+                                },
+                                oLanguage: {
+                                    sProcessing: "loading..."
+                                },
+                                processing: true,
+                                serverSide: true,
+                                ajax: {"url": "<?= base_url()?>pegawai/json_panghir_bypegawai", "type": "POST", data : { id : <?= $id_pegawai ?>}},
+                                columns: [
+                                    {"data": "id_pangkat_terakhir"},
+                                    {"data": "pangkat_terakhir"},
+                                    {"data": "tmt_pangkat_terakhir"},
+                                    {"data": "no_sk_pangkat_terakhir"},
+                                    {"data": "tgl_sk_pangkat_terakhir"},
+                                ],
+                                order: [[0, 'asc']],
+                                rowCallback: function(row, data, iDisplayIndex) {
+                                    var info = this.fnPagingInfo();
+                                    var page = info.iPage;
+                                    var length = info.iLength;
+                                    var index = page * length + (iDisplayIndex + 1);
+                                    $('td:eq(0)', row).html(index);
+                                }
+                            });
+                        });
+                </script>
+
+                <script>
+                    $(document).ready(function() {
+                        $('#example').DataTable();
+                    } );
+                </script>
+
+            </div>
         </div>
+       
 
         <!-- Pendidikan Terakhir -->
         <div class="card mb-4">

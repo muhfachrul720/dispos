@@ -1,8 +1,16 @@
 <div class="container-fluid">
     <div class="card shadow mb-4 p-5" style="font-size:14px">
         <div class="header">
-            <h3 class="mb-3">List Ajuan Kenaikan Pangkat Jabatan ijazah (Terverifikasi)</h3>
-            <p class="mb-0">List Pengajuan Kenaikan Jabatan Yang telah disetujui </p>
+            <div class="row justify-content-between">
+                <div class="col-6">
+                    <h3 class="mb-3">List Ajuan Kenaikan Pangkat Jabatan ijazah (Terverifikasi)</h3>
+                    <p class="mb-0">List Pengajuan Kenaikan Jabatan Yang telah disetujui </p>
+                </div>
+                <div class="col-6" style="text-align:right;">
+                    <a href="<?= base_url()?>cetakexcel/print_excel_ijazah_nonsk" class="btn btn-success">Export Pegawai Non SK</a>
+                    <a href="<?= base_url()?>cetakexcel/print_excel_ijazah_all" class="btn btn-success">Export Semua Pegawai</a>
+                </div>
+            </div>
         </div>
         <hr>
         <div class="body">
