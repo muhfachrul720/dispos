@@ -1,7 +1,7 @@
 <?php
 function cmb_dinamis($name,$table,$field,$pk,$selected=null,$order=null, $disabled=null){
     $ci = get_instance();
-    $cmb = "<select name='$name' class='custom-select' $disabled>";
+    $cmb = "<select name='$name' class='form-control form-control-sm' $disabled>";
     if($order){
         $ci->db->order_by($field,$order);
     }

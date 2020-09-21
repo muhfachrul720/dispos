@@ -1,178 +1,167 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>Sidasip - Sistem Informasi Data Fisip</title>
-    <!-- plugins:css -->
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/template/template/assets/vendors/mdi/css/materialdesignicons.min.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/template/template/assets/vendors/flag-icon-css/css/flag-icon.min.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/template/template/assets/vendors/css/vendor.bundle.base.css">
-    <!-- endinject -->
-    <!-- Plugin css for this page -->
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/template/template/assets/vendors/jquery-bar-rating/css-stars.css" />
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/template/template/assets/vendors/font-awesome/css/font-awesome.min.css" />
-    <!-- End plugin css for this page -->
-    <!-- inject:css -->
-    <!-- endinject -->
-    <!-- Layout styles -->
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/template/template/assets/css/demo_2/style.css" />
-    <!-- End layout styles -->
-    <link rel="shortcut icon" href="<?php echo base_url(); ?>assets/template/template/assets/images/favicon.png" />
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Disposisi Surat</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="<?= base_url()?>assets/admin_lte2/plugins/fontawesome-free/css/all.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Tempusdominus Bbootstrap 4 -->
+  <link rel="stylesheet" href="<?= base_url()?>assets/admin_lte2/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="<?= base_url()?>assets/admin_lte2/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <!-- JQVMap -->
+  <link rel="stylesheet" href="<?= base_url()?>assets/admin_lte2/plugins/jqvmap/jqvmap.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="<?= base_url()?>assets/admin_lte2/dist/css/adminlte.min.css">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="<?= base_url()?>assets/admin_lte2/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="<?= base_url()?>assets/admin_lte2/plugins/daterangepicker/daterangepicker.css">
+  <!-- summernote -->
+  <link rel="stylesheet" href="<?= base_url()?>assets/admin_lte2/plugins/summernote/summernote-bs4.css">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
-    <!-- Jquery -->
-    <script src="<?php echo base_url(); ?>assets/assets-sbadmin/vendor/jquery/jquery.min.js"></script>
+  <!-- DataTables -->
+  <link rel="stylesheet" href="<?= base_url() ?>assets/admin_lte2/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="<?= base_url() ?>assets/admin_lte2/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
 
-    <!-- JS BS -->
-    <script src="<?php echo base_url();?>assets/template/template/assets/vendors/js/vendor.bundle.base.js"></script>
+  <script src="<?= base_url()?>assets/admin_lte2/plugins/jquery/jquery.min.js"></script>
 
-     <!-- Datatables -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
-  
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+</head>
+<style>
+  #example tr td:not(:last-child) {
+    padding-top: 10px !important;
+  }
+</style>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
 
-    <!-- Yearpicker script -->
-    <script src="<?= base_url(); ?>assets/plugin-yearpicker/yearpicker.js" async></script>
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+      </li>
+    </ul>
 
-    <link rel="stylesheet" href="<?= base_url(); ?>assets/plugin-yearpicker/yearpicker.css">
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+          <i class="fas fa-th-large"></i>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="<?= base_url()?>auth/logout">
+          <i class="fas fa-sign-out-alt"></i>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <!-- /.navbar -->
 
-  </head>
-  <style>
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="index3.html" class="brand-link">
+      <img src="<?= base_url()?>assets/admin_lte2/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+           style="opacity: .8">
+      <span class="brand-text font-weight-light">AdminLTE 3</span>
+    </a>
 
-    table {width:100% !important; table-layout: fixed !important;}
-    table td, table th {
-    word-wrap:break-word !important;
-    white-space: normal !important;
-    }
-
-    .naikpangkat th { font-size: 12px !important; }
-    .naikpangkat td { font-size: 12px !important; }
-    .naikpangkat td label, .naikpangkat td a { font-size: 12px !important; }
-
-    .co-label {
-      margin-bottom: 20px 
-      font-weight:bold;
-    }
-
-  </style>
-  <body>
-    <div class="container-scroller">
-      <!-- partial:partials/_horizontal-navbar.html -->
-      <div class="horizontal-menu">
-        <nav class="navbar top-navbar col-lg-12 col-12 p-0">
-          <div class="container">
-            <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-              <a class="navbar-brand brand-logo" href="index.html">
-                <img src="<?php echo base_url(); ?>assets/template/template/assets/images/logo-sidasip.png" alt="Sistem Informasi Data Fisip" />
-                <span class="font-12 d-block font-weight-light">Sistem Informasi Data Fisip </span>
-              </a>
-              <a class="navbar-brand brand-logo-mini" href="index.html"><img src="<?php echo base_url(); ?>assets/template/template/assets/images/logo-mini.svg" alt="logo"/></a>
-            </div>
-            <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
-              <ul class="navbar-nav">
-                <li class="nav-item nav-search d-none d-lg-block">
-                  <div class="input-group">
-                    <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
-                      <span class="input-group-text" id="search">
-                        <i class="mdi mdi-magnify"></i>
-                      </span>
-                    </div>
-                    <input type="text" class="form-control" id="navbar-search-input" placeholder="Search" aria-label="search" aria-describedby="search" />
-                  </div>
-                </li>
-              </ul>
-              <ul class="navbar-nav navbar-nav-right">
-                <li class="nav-item nav-profile dropdown">
-                  <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-                    <div class="nav-profile-img">
-                      <img src="<?php echo base_url(); ?>assets/template/template/assets/images/faces/face1.jpg" alt="image" />
-                    </div>
-                    <div class="nav-profile-text">
-                      <p class="text-black font-weight-semibold m-0"> <?= $this->session->userdata('username'); ?> </p>
-                      <span class="font-13 online-color">online <i class="mdi mdi-chevron-down"></i></span>
-                    </div>
-                  </a>
-                  <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
-                    <a class="dropdown-item" href="#">
-                      <i class="mdi mdi-cached mr-2 text-success"></i> Activity Log </a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">
-                      <i class="mdi mdi-logout mr-2 text-primary"></i> Signout </a>
-                  </div>
-                </li>
-              </ul>
-              <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="horizontal-menu-toggle">
-                <span class="mdi mdi-menu"></span>
-              </button>
-            </div>
-          </div>
-        </nav>
-        <nav class="bottom-navbar">
-            <?php include 'template/sidebar.php'; ?>
-        </nav>
-      </div>
-      <!-- partial -->
-      <div class="container-fluid page-body-wrapper">
-        <div class="main-panel">
-          <div class="content-wrapper pb-0">
-              <?php echo $contents; ?>
-          </div>
-          <!-- content-wrapper ends -->
-          <!-- partial:partials/_footer.html -->
-          <footer class="footer">
-            <div class="container">
-              <div class="d-sm-flex justify-content-center justify-content-sm-between">
-                <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © Sidasip 2019 <a href="https://www.bootstrapdash.com/" target="_blank">Fisip UHO</a>. All rights reserved.</span>
-                <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Kendari Coding <i class="mdi mdi-heart text-danger"></i></span>
-              </div>
-            </div>
-          </footer>
-          <!-- partial -->
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="<?= base_url()?>assets/admin_lte2/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
-        <!-- main-panel ends -->
+        <div class="info">
+          <a href="#" class="<?= base_url()?>assets/admin_lte2/d-block"><?= $this->session->userdata('username')?></a>
+        </div>
       </div>
-      <!-- page-body-wrapper ends -->
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+
+        <?php include 'template/sidebar.php'; ?>
+
+      </nav>
+      <!-- /.sidebar-menu -->
     </div>
-    <!-- container-scroller -->
-    <!-- plugins:js -->
-    <!-- endinject -->
-    <!-- Plugin js for this page -->
-    <script src="<?php echo base_url();?>assets/template/template/assets/vendors/jquery-bar-rating/jquery.barrating.min.js"></script>
-    <script src="<?php echo base_url();?>assets/template/template/assets/vendors/chart.js/Chart.min.js"></script>
-    <script src="<?php echo base_url();?>assets/template/template/assets/vendors/flot/jquery.flot.js"></script>
-    <script src="<?php echo base_url();?>assets/template/template/assets/vendors/flot/jquery.flot.resize.js"></script>
-    <script src="<?php echo base_url();?>assets/template/template/assets/vendors/flot/jquery.flot.categories.js"></script>
-    <script src="<?php echo base_url();?>assets/template/template/assets/vendors/flot/jquery.flot.fillbetween.js"></script>
-    <script src="<?php echo base_url();?>assets/template/template/assets/vendors/flot/jquery.flot.stack.js"></script>
-    <!-- End plugin js for this page -->
-    <!-- inject:js -->
-    <script src="<?php echo base_url();?>assets/template/template/assets/js/off-canvas.js"></script>
-    <script src="<?php echo base_url();?>assets/template/template/assets/js/hoverable-collapse.js"></script>
-    <script src="<?php echo base_url();?>assets/template/template/assets/js/misc.js"></script>
-    <script src="<?php echo base_url();?>assets/template/template/assets/js/settings.js"></script>
-    <script src="<?php echo base_url();?>assets/template/template/assets/js/todolist.js"></script>
-    <!-- endinject -->
-    <!-- Custom js for this page -->
-    <script src="<?php echo base_url();?>assets/template/template/assets/js/dashboard.js"></script>
-    <!-- End custom js for this page -->
+    <!-- /.sidebar -->
+  </aside>
 
-    <!-- Page level custom scripts -->
-    <script src="<?php echo base_url(); ?>assets/assets-sbadmin/js/demo/datatables-demo.js"></script>
-    <!-- <script>s -->
-    <script>
-      var bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    
+    <section class="content">
 
-      function dateIndo(date){
-        var year = date.split('-')[0];
-        var day = date.split('-')[2];
-        var temp = parseInt(date.split('-')[1]);  
+        <?php echo $contents; ?>
 
-        var month = bulan[temp - 1];
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+      <small>Copyright Potato</small>
+  </footer>
 
-        return day +' '+ month +' '+ year;
-      }
-    </script>
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
 
-  </body>
+<!-- jQuery -->
+<!-- <script src="<?= base_url()?>assets/admin_lte2/plugins/jquery/jquery.min.js"></script> -->
+<!-- jQuery UI 1.11.4 -->
+<script src="<?= base_url()?>assets/admin_lte2/plugins/jquery-ui/jquery-ui.min.js"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- Bootstrap 4 -->
+<script src="<?= base_url()?>assets/admin_lte2/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- ChartJS -->
+<script src="<?= base_url()?>assets/admin_lte2/plugins/chart.js/Chart.min.js"></script>
+<!-- Sparkline -->
+<script src="<?= base_url()?>assets/admin_lte2/plugins/sparklines/sparkline.js"></script>
+<!-- JQVMap -->
+<script src="<?= base_url()?>assets/admin_lte2/plugins/jqvmap/jquery.vmap.min.js"></script>
+<script src="<?= base_url()?>assets/admin_lte2/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+<!-- jQuery Knob Chart -->
+<script src="<?= base_url()?>assets/admin_lte2/plugins/jquery-knob/jquery.knob.min.js"></script>
+<!-- daterangepicker -->
+<script src="<?= base_url()?>assets/admin_lte2/plugins/moment/moment.min.js"></script>
+<script src="<?= base_url()?>assets/admin_lte2/plugins/daterangepicker/daterangepicker.js"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="<?= base_url()?>assets/admin_lte2/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+<!-- Summernote -->
+<script src="<?= base_url()?>assets/admin_lte2/plugins/summernote/summernote-bs4.min.js"></script>
+<!-- overlayScrollbars -->
+<script src="<?= base_url()?>assets/admin_lte2/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<!-- AdminLTE App -->
+<script src="<?= base_url()?>assets/admin_lte2/dist/js/adminlte.js"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="<?= base_url()?>assets/admin_lte2/dist/js/pages/dashboard.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="<?= base_url()?>assets/admin_lte2/dist/js/demo.js"></script>
+
+<!-- DataTables -->
+<script src="<?= base_url()?>assets/admin_lte2/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="<?= base_url()?>assets/admin_lte2/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="<?= base_url()?>assets/admin_lte2/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="<?= base_url()?>assets/admin_lte2/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+
+</body>
 </html>

@@ -1,116 +1,86 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <title>SIDASIP - SISTEM INFORMASI DATA FISIP</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->  
-    <link rel="icon" type="image/png" href="<?php echo base_url();?>assets/template_login/images/icons/favicon.ico"/>
-<!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/template_login/vendor/bootstrap/css/bootstrap.min.css">
-<!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/template_login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-<!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/template_login/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
-<!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/template_login/vendor/animate/animate.css">
-<!--===============================================================================================-->  
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/template_login/vendor/css-hamburgers/hamburgers.min.css">
-<!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/template_login/vendor/select2/select2.min.css">
-<!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/template_login/css/util.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/template_login/css/main.css">
-<!--===============================================================================================-->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>AdminLTE 3 | Log in</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="<?= base_url()?>/assets/admin_lte2/plugins/fontawesome-free/css/all.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- icheck bootstrap -->
+  <link rel="stylesheet" href="<?= base_url()?>/assets/admin_lte2/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="<?= base_url()?>/assets/admin_lte2/dist/css/adminlte.min.css">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
-<body>
-    
-    <div class="limiter">
-        <div class="container-login100" style="background-image: url('assets/template_login/images/dron_uho.jpg');">
-            <div class="wrap-login100 p-t-10 p-b-30">
+<body class="hold-transition login-page">
+<div class="login-box">
+  <div class="login-logo">
+    <a href="../../index2.html"><b>DISPOSISI</b>Berkas</a>
+  </div>
+  <!-- /.login-logo -->
+  <div class="card">
+    <div class="card-body login-card-body">
+      <p class="login-box-msg">Silahkan Login</p>
 
-                
-
-                <!-- form open -->
-                <?php 
-                    $attributes = array('class' => 'login100-form validate-form');
-                    echo form_open('Auth/cheklogin', $attributes); 
-                ?>
-                <!-- end form open -->
-
-                    <div class="login100-form-avatar">
-                        <img src="<?php echo base_url(); ?>assets/template_login/images/logo.png" alt="FISIP UHO">
-                    </div>
-
-                    <span class="login100-form-title p-t-20 p-b-45">
-                        SIDASIP<br><small style="color: black;">SISTEM INFORMASI DATA FISIP</small> 
-                    </span>
-
-                    <!-- Notif jika login gagal atau berhasil -->
-                 <?php
-                    $status_login = $this->session->userdata('status_login');
-                    if (empty($status_login)) {
-                        $message = "Silahkan login untuk masuk ke aplikasi";
-                    } else {
-                        $message = $status_login;
-                    }
-                    ?>
-                    <p class="text-center w-full txt1 p-b-18"><?php echo $message; ?></p>
-                <!-- end notif -->
-
-                    <div class="wrap-input100 validate-input m-b-10" data-validate = "Username harus di isi">
-                        <input class="input100" type="text" name="username" placeholder="Username">
-                        <span class="focus-input100"></span>
-                        <span class="symbol-input100">
-                            <i class="fa fa-user"></i>
-                        </span>
-                    </div>
-
-                    <div class="wrap-input100 validate-input m-b-10" data-validate = "Password harus di isi">
-                        <input class="input100" type="password" name="password" placeholder="Password">
-                        <span class="focus-input100"></span>
-                        <span class="symbol-input100">
-                            <i class="fa fa-lock"></i>
-                        </span>
-                    </div>
-
-                    <div class="container-login100-form-btn p-t-10">
-                        <button type="submit" class="login100-form-btn">
-                            Login
-                        </button>
-                    </div>
-
-                    <div class="text-center w-full p-t-25 p-b-10">
-                        <a href="#" class="txt1">
-                            Forgot Username / Password?
-                        </a>
-                    </div>
-
-                    <div class="text-center w-full">
-                        <a class="txt1" href="#">
-                            Create new account
-                            <i class="fa fa-long-arrow-right"></i>                      
-                        </a>
-                    </div>
-                <?php 
-                    echo form_close();
-                 ?>
-            </div>
+      <?=  form_open('Auth/cheklogin'); ?>
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Username" name="username">
+        <div class="input-group-append">
+          <div class="input-group-text">
+            <span class="fas fa-envelope"></span>
+          </div>
         </div>
+      </div>
+      <div class="input-group mb-3">
+        <input type="password" class="form-control" placeholder="Password" name="password">
+        <div class="input-group-append">
+          <div class="input-group-text">
+            <span class="fas fa-lock"></span>
+          </div>
+        </div>
+      </div>
+        <div class="row">
+          <div class="col-8 pt-1">
+            <a href="forgot-password.html"><small>I forgot my password</small></a>
+            <!-- <div class="icheck-primary">
+              <input type="checkbox" id="remember">
+              <label for="remember">
+                Remember Me
+              </label>
+            </div> -->
+          </div>
+          <!-- /.col -->
+          <div class="col-4">
+            <button type="submit" class="btn btn-primary btn-block">Login</button>
+          </div>
+          <!-- /.col -->
+        </div>
+        <?=  form_close() ?>
+      
+      <!-- <p class="mb-1">
+        <a href="forgot-password.html"><small>I forgot my password</small></a>
+      </p> -->
+      <!-- <p class="mb-0">
+        <a href="register.html" class="text-center">Register a new membership</a>
+      </p> -->
     </div>
-    
-    
+    <!-- /.login-card-body -->
+  </div>
+</div>
+<!-- /.login-box -->
 
-    
-<!--===============================================================================================-->  
-    <script src="<?php echo base_url(); ?>assets/template_login/vendor/jquery/jquery-3.2.1.min.js"></script>
-<!--===============================================================================================-->
-    <script src="<?php echo base_url(); ?>assets/template_login/vendor/bootstrap/js/popper.js"></script>
-    <script src="<?php echo base_url(); ?>assets/template_login/vendor/bootstrap/js/bootstrap.min.js"></script>
-<!--===============================================================================================-->
-    <script src="<?php echo base_url(); ?>assets/template_login/vendor/select2/select2.min.js"></script>
-<!--===============================================================================================-->
-    <script src="<?php echo base_url(); ?>assets/template_login/js/main.js"></script>
+<!-- jQuery -->
+<script src="<?= base_url()?>/assets/admin_lte2/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="<?= base_url()?>/assets/admin_lte2/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="<?= base_url()?>/assets/admin_lte2/dist/js/adminlte.min.js"></script>
 
 </body>
 </html>

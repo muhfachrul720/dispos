@@ -7,7 +7,7 @@ class User_level_model extends CI_Model
 {
 
     public $table = 'tbl_user_level';
-    public $id = 'id_user_level';
+    public $id = 'id';
     public $order = 'DESC';
 
     function __construct()
@@ -17,13 +17,10 @@ class User_level_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('id_user_level,nama_level');
+        $this->datatables->select('id,name');
         $this->datatables->from('tbl_user_level');
         //add this line for join
         //$this->datatables->join('table2', 'tbl_user_level.field = table2.field');
-        $this->datatables->add_column('action', anchor(site_url('userlevel/akses/$1'),'<i class="fa fa-eye" aria-hidden="true"></i>', array('class' => 'btn btn-success btn-sm'))." 
-            ".anchor(site_url('userlevel/update/$1'),'<i class="mdi mdi-tooltip-edit" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm'))." 
-                ".anchor(site_url('userlevel/delete/$1'),'<i class="mdi mdi-delete-sweep" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'id_user_level');
         return $this->datatables->generate();
     }
 
