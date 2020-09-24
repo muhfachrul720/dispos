@@ -70,7 +70,7 @@
             $this->db->from('tbl_riwayat_perjalanan as rw');
             $this->db->join('tbl_pengajuan_berkas as br', 'rw.id_pengajuan = br.id');
             $this->db->join('tbl_user as us', 'us.id = rw.id_user');
-        $this->db->join('tbl_user_level as lv', 'us.user_level = lv.id');
+            $this->db->join('tbl_user_level as lv', 'us.user_level = lv.id');
             $this->db->join('tbl_user as aw', 'aw.id = br.id_user');
 
             $this->db->where('next_user', $id);
@@ -81,6 +81,13 @@
             }
 
             return $this->db->get();
+        }
+
+        public function get_detail_tinjauan($id)
+        {
+            $this->db->select('br.*');
+            $this->db->from('tbl_pengajuan_berkas');
+            $this->db->where();
         }
 
     }
