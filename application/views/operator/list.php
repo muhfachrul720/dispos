@@ -59,7 +59,7 @@
                         <td><?= $val['jatuh_tempo']?></td>
                         <td><?= $val['posisi_akhir']?></td>
                         <td>
-                            <a href="<?= base_url()?>regular/verifikasi/form_tinjau" class="btn btn-primary btn-sm">Tinjau</a>
+                            <a href="<?= base_url()?>operator/verifikasi/form_tinjau" class="btn btn-primary btn-sm">Tinjau</a>
                         </td>
                     </tr>
                   <?php $no++;

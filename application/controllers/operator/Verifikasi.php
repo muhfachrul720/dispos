@@ -6,6 +6,7 @@
 
             parent::__construct();
             $this->load->model('M_pengajuan');
+            $this->load->model('M_alur');
 
         }
 
@@ -38,7 +39,21 @@
 
         public function form_tinjau()
         {
-            
+            $level = $this->session->userdata('user_level');
+            $where = array();
+            $alur = $this->M_alur->get_receiver($level)->result_array();
+
+            foreach($alur as $al){
+                array_push($where, array('us.user_level' => $al['level_receive']));
+            }
+
+            var_dump($where);
+            die;
+
+            // $where = array(
+            //     array('us.user_level' => 4), 
+            // );
+
         }
 
     }
