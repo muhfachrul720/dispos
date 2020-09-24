@@ -7,7 +7,6 @@
             parent::__construct();
             $this->load->model('M_pengajuan');
             $this->load->model('User_model');
-
         }
 
         // General Function
