@@ -1,5 +1,5 @@
 <?php
-function cmb_dinamis($name,$table,$field,$pk,$selected=null,$order=null, $disabled=null){
+function cmb_dinamis($name,$table,$field,$pk,$selected=null,$order=null,$where=null, $value=null, $disabled=null){
     $ci = get_instance();
     $cmb = "<select name='$name' class='form-control form-control-sm' $disabled>";
     if($order){

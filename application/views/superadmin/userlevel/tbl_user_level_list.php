@@ -13,7 +13,8 @@
       <div class="col-xl-12 stretch-card grid-margin">
         <div class="card shadow mb-4">
           <div class="card-body">
-            <a href="<?= base_url()?>superadmin/userlevel/create" class="btn btn-success btn-sm">Tambah Pengguna</a>
+            <a href="<?= base_url()?>superadmin/userlevel/create" class="btn btn-primary btn-sm"> <i class="fas fa-plus"></i>  &nbsp; Tambah Pengguna</a>
+            <a href="<?= base_url()?>superadmin/userlevel" class="btn btn-success btn-sm"> <i class="fas fa-sync"></i>  &nbsp; Refresh Halaman</a>
 
             <!-- Alert -->
             <!-- end Alert -->

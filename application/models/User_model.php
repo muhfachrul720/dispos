@@ -90,6 +90,21 @@ class User_model extends CI_Model
         $this->db->delete($this->table);
     }
 
+    // other
+    public function get_peninjau($where)
+    {
+        $this->db->select('us.id as usid, us.username, lv.name as lvname');
+        $this->db->from('tbl_user as us');
+        $this->db->join('tbl_user_level as lv', 'us.user_level = lv.id');
+
+        foreach($where as $key){
+            $this->db->where($key);
+        }
+        
+        $this->db->order_by('us.id', 'ASC');
+        return $this->db->get();
+    }
+
 }
 
 /* End of file User_model.php */

@@ -10,7 +10,7 @@
             $this->db->where('submenu', $menu->id);
             $submenu = $this->db->get('tbl_menu');
             if($submenu->num_rows() > 0){
-        echo    '<li class="nav-item has-treeview menu-open">
+        echo    '<li class="nav-item has-treeview">
                 <a href="#" class="nav-link">
                     <i class="nav-icon '.$menu->icon.'"></i>
                     <p>
