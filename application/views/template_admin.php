@@ -38,6 +38,10 @@
   #example tr td:not(:last-child) {
     padding-top: 10px !important;
   }
+
+  label {
+    font-weight:100 !important;
+  }
 </style>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -73,7 +77,7 @@
     <a href="index3.html" class="brand-link">
       <img src="<?= base_url()?>assets/admin_lte2/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
-      <span class="brand-text font-weight-light">AdminLTE 3</span>
+      <span class="brand-text font-weight-light">DISPOSISIBerkas</span>
     </a>
 
     <!-- Sidebar -->
@@ -81,10 +85,10 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="<?= base_url()?>assets/admin_lte2/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+          <img src="<?= base_url()?>upload/foto_profil/<?= $this->session->userdata('images')?>" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="<?= base_url()?>assets/admin_lte2/d-block"><?= $this->session->userdata('username')?></a>
+          <a href="<?= base_url()?>profile" class="<?= base_url()?>assets/admin_lte2/d-block"><?= $this->session->userdata('nama_lengkap') != null ? $this->session->userdata('nama_lengkap') : $this->session->userdata('username')?></a>
         </div>
       </div>
 
@@ -109,7 +113,7 @@
     </section>
     <!-- /.content -->
   </div>
-  <!-- /.content-wrapper -->
+  <!-- /.content-wrapper --> 
   <footer class="main-footer">
       <small>Copyright Potato</small>
   </footer>
@@ -162,6 +166,7 @@
 <script src="<?= base_url()?>assets/admin_lte2/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
 <script src="<?= base_url()?>assets/admin_lte2/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
 <script src="<?= base_url()?>assets/admin_lte2/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+
 
 </body>
 </html>

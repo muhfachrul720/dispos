@@ -31,6 +31,8 @@ Class Auth extends CI_Controller{
                     redirect('superadmin/Dashboard');
                 } else if ($user['user_level'] > 1 && $user['user_level'] <= 9) {
                     redirect('operator/Dashboard');
+                } else {
+                    redirect('regular/Dashboard');
                 }
 
             }else{
@@ -38,7 +40,7 @@ Class Auth extends CI_Controller{
             }
         }else{
             $this->session->set_flashdata('status_login','username atau password yang anda input salah');
-            // redirect('Auth');
+            redirect('Auth');
         }
     }
     
