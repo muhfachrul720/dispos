@@ -7,6 +7,7 @@
             parent::__construct();
             $this->load->model('M_pengajuan');
             $this->load->model('M_alur');
+            $this->load->model('User_model');
 
         }
 
@@ -37,7 +38,7 @@
             $this->template->load('template_admin','operator/list', $data);
         }
 
-        public function form_tinjau()
+        public function form_tinjau($idaju)
         {
             $level = $this->session->userdata('user_level');
             $where = array();
@@ -47,13 +48,12 @@
                 array_push($where, array('us.user_level' => $al['level_receive']));
             }
 
-            var_dump($where);
-            die;
+            $data['permohonan'] = $this->M_pengajuan->get_detail_tinjauan($idaju);
+            $data['riwayat'] = $this->M_pengajuan->
+            $data['peninjau'] = $this->User_model->get_peninjau($where)->result_array();
+            $data['title'] = 'Tinjau Permohonan';
 
-            // $where = array(
-            //     array('us.user_level' => 4), 
-            // );
-
+            $this->template->load('template_admin','operator/form', $data);
         }
 
     }
