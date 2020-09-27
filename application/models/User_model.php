@@ -98,7 +98,7 @@ class User_model extends CI_Model
         $this->db->join('tbl_user_level as lv', 'us.user_level = lv.id');
 
         foreach($where as $key){
-            $this->db->where($key);
+            $this->db->or_where($key);
         }
         
         $this->db->order_by('us.id', 'ASC');

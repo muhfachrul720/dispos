@@ -28,6 +28,48 @@
         }
 
         // Get
+        public function get_aju_sender($id)
+        {
+            $this->db->select('rw.id_pengajuan, us.user_level');
+            $this->db->from('tbl_riwayat_perjalanan as rw');
+            $this->db->join('tbl_user as us', 'rw.id_user = us.id');
+            $this->db->where('rw.id', $id);
+            return $this->db->get();
+        }
+
+        public function get_kecamatan($id)
+        {
+            $this->db->select('cm.kecamatan, cm.id');
+            $this->db->from('tbl_kecamatan as cm');
+            $this->db->join('tbl_desa as ds', 'ds.id = cm.id_desa');
+            $this->db->where('cm.id_desa', $id);
+
+            return $this->db->get();
+        }
+
+        public function get_pengajuan_all($check = false)
+        {   
+            $this->db->select('max(aw.id)');
+            $this->db->from('tbl_riwayat_perjalanan as aw');
+            $this->db->group_by('aw.id_pengajuan');
+            $max = $this->db->get_compiled_select();
+
+            // MainSelect
+            $this->db->select('br.*, br.id as brid, lv.name as posisi_akhir, aw.nama_lengkap');
+
+            $this->db->from('tbl_riwayat_perjalanan as rw');
+            $this->db->join('tbl_pengajuan_berkas as br', 'rw.id_pengajuan = br.id');
+            $this->db->join('tbl_user as us', 'us.id = rw.id_user');
+            $this->db->join('tbl_user_level as lv', 'us.user_level = lv.id');
+            $this->db->join('tbl_user as aw', 'aw.id = br.id_user');
+
+            if($check == true){$this->db->where("br.permit", 1);};
+            $this->db->where("rw.id IN($max)");
+            $this->db->where("br.softdelete", 0);
+
+            return $this->db->get();
+        }
+
         public function get_pengajuan($id)
         {   
             $this->db->select('max(aw.id)');
@@ -45,11 +87,12 @@
             $this->db->join('tbl_user as aw', 'aw.id = br.id_user');
 
             $this->db->where("rw.id IN($max) AND br.id_user = $id");
+            $this->db->where("br.softdelete", 0);
 
             return $this->db->get();
         }
 
-        public function get_riwayat()
+        public function get_riwayat($id = null)
         {
             $this->db->select('br.*, rw.id as rwid, rw.waktu as rwaktu, YEAR(rw.waktu) as tahun, rw.keterangan, lv.name as posisi_akhir, aw.nama_lengkap');
             $this->db->from('tbl_riwayat_perjalanan as rw');
@@ -59,13 +102,19 @@
             $this->db->join('tbl_user_level as lv', 'us.user_level = lv.id');
             $this->db->join('tbl_user as aw', 'aw.id = br.id_user');
 
+            if($id){
+                $this->db->where('id_pengajuan', $id);
+            }
+
+            $this->db->where("br.softdelete", 0);
+            $this->db->order_by('rw.id', 'DESC');
             return $this->db->get();
         }
 
         public function get_tinjauan($id, $place = null)
         {
              // MainSelect
-            $this->db->select('br.*, lv.name as posisi_akhir, aw.nama_lengkap, YEAR(rw.waktu) as tahun');
+            $this->db->select('br.*, rw.id as rwid, lv.name as posisi_akhir, aw.nama_lengkap, YEAR(rw.waktu) as tahun');
 
             $this->db->from('tbl_riwayat_perjalanan as rw');
             $this->db->join('tbl_pengajuan_berkas as br', 'rw.id_pengajuan = br.id');
@@ -85,9 +134,11 @@
 
         public function get_detail_tinjauan($id)
         {
-            $this->db->select('br.*');
-            $this->db->from('tbl_pengajuan_berkas');
-            $this->db->where();
+            $this->db->select('br.*, cm.id_desa as desa, cm.kecamatan, cm.id as idcmt');
+            $this->db->from('tbl_pengajuan_berkas as br');
+            $this->db->join('tbl_kecamatan as cm', 'br.desa_kecamatan = cm.id');
+            $this->db->where('br.id', $id);
+            return $this->db->get();
         }
 
     }

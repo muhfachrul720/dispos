@@ -1,4 +1,3 @@
-
 <div class="content-header">
   <div class="container-fluid px-4">
     <div class="row mb-2">
@@ -26,35 +25,35 @@
           <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-striped table-bordered table-sm text-center" style="width:100%; font-size:12px" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Nama Pemohon</th>
-                        <th>Tahun</th>
-                        <th>Tanggal</th>
-                        <th>Jatuh Tempo</th>
-                        <th>Posisi Terakhir</th>
-                        <th>Status</th>
-                        <th>Detail</th>
-                    </tr>
-                </thead>
+                  <thead>
+                      <tr>
+                          <th>No</th>
+                          <th>Nama Pemohon</th>
+                          <th>Tahun</th>
+                          <th>Tanggal</th>
+                          <th>Jatuh Tempo</th>
+                          <th>Posisi Terakhir</th>
+                          <th>Status</th>
+                          <th>Detail</th>
+                      </tr>
+                  </thead>
 
-                <tbody>
-                    <?php $no = 1;
-                    foreach ($riwayat as $key => $val) { ?>
-                        <tr>
-                            <td><?= $no ?></td>
-                            <td><?= $val['nama_lengkap']?></td>
-                            <td><?= $val['tahun']?></td>
-                            <td><?= $val['rwaktu']?></td>
-                            <td><?= $val['jatuh_tempo']?></td>
-                            <td><?= $val['posisi_akhir']?></td>
-                            <td><?= generate_status($val['rwaktu'], $val['jatuh_tempo']) ?></td>
-                            <td><a href="<?= base_url()?>riwayat/detail_pengajuan" class="btn btn-primary btn-sm">Detail</a></td>
-                        </tr>
-                    <?php $no++;
-                    } ?>
-                </tbody>
+                  <tbody>
+                      <?php $no = 1;
+                      foreach ($riwayat as $key => $val) { ?>
+                          <tr>
+                              <td><?= $no ?></td>
+                              <td><?= $val['nama_pemilik']?></td>
+                              <td><?= $val['tahun']?></td>
+                              <td><?= $val['rwaktu']?></td>
+                              <td><?= $val['jatuh_tempo']?></td>
+                              <td><?= $val['posisi_akhir']?></td>
+                              <td><?= generate_status($val['rwaktu'], $val['jatuh_tempo']) ?></td>
+                              <td><a href="<?= base_url()?>riwayat/detail_pengajuan/<?= $val['id']?>" class="btn btn-primary btn-sm">Detail</a></td>
+                          </tr>
+                      <?php $no++;
+                      } ?>
+                  </tbody>
                 </table>
             </div>
           </div>

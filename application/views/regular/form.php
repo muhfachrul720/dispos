@@ -30,9 +30,17 @@
                         <label for="">Nama Pemilik</label>  &nbsp; <?= form_error('owner')?>
                         <input type="text" name="owner" id="" class="form-control form-control-sm" placeholder="Masukkan Pemilik..">
                     </div>
-                    <div class="form-group">
-                        <label for="">Desa Kecamatan</label>  &nbsp; <?= form_error('camat')?>
-                        <?= cmb_dinamis('camat', 'tbl_desa', 'nama', 'id', '', 'DESC') ?>
+                    <div class="form-group row">
+                        <div class="col-6">
+                            <label for="">Desa</label>  &nbsp; <?= form_error('camat')?>
+                            <?= cmb_dinamis('', 'tbl_desa', 'nama', 'id', '', 'DESC', null, 'camat') ?>
+                        </div>
+                        <div class="col-6">
+                            <label for="">Kecamatan</label>  &nbsp; <?= form_error('camat')?>
+                            <select name="camat" id="optCamat" class="form-control form-control-sm" disabled>
+                                <option value="0">Silahkan Memilih Desa Terlebih Dahulu</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-6">
@@ -44,7 +52,7 @@
                         </div>
                         <div class="col-6">
                             <label for="">Jenis Hak</label>  &nbsp; <?= form_error('jenishak')?>
-                            <?= cmb_dinamis('jenishak', 'tbl_jenis_hak', 'nama', 'id', '', 'DESC') ?>
+                            <?= cmb_dinamis('jenishak', 'tbl_hak_permohonan', 'nama', 'id', '', 'DESC') ?>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -59,7 +67,7 @@
                         <div class="col-2">
                             <label for="">.</label>
                             <br>
-                            <button class="btn btn-info btn-sm w-100" id="timeSet">Atur Waktu</button>
+                            <button class="btn btn-info btn-sm w-100" id="timeSet" type="button"> Atur Waktu</button>
                         </div>
                     </div>
                     <hr>
@@ -75,7 +83,7 @@
             </div>
         </div>
         <div class="col-3">
-            <div class="card">
+            <!-- <div class="card">
                 <div class="card-body">
                     <label for="fileUp" class="file_upload" style="width:100%; padding:50px 0px; border:dashed 4px #318cb8; text-align:center; cursor:pointer">
                         <i class="fas fa-file" style="font-size:38px; color:#318cb8;"></i>
@@ -83,10 +91,8 @@
                     </label>
                     <input type="file" id="fileUp" name="fileUp" style="display:none" accept="application/pdf">
                     <span class="btn btn-danger btn-sm w-100 mt-3"><i class="fas fa-times"></i></span>
-                    <!--  <i class="fas fa-check"></i> -->
-
                 </div>
-            </div>
+            </div> -->
 
             <p><small>Silahkan Untuk Menekan tombol Dibawah Apabila Telah Mengisi dan Mengupload File Secara Keseluruhan</small></p>
 
@@ -106,9 +112,30 @@
         $('.timeSet').attr('readonly', false);
     });
 
-    $('#fileUp').on('change', function(){
-        var base = $(this).next();
-        base.removeClass('btn-danger').addClass('btn-success');
-        base.find('i').removeClass('fa-times').addClass('fa-check');
+    $('#camat').on('change', function(){
+        var id = $(this).val();
+        $.ajax({
+            url : '<?=base_url()?>regular/pengajuan/get_kecamatan',
+            type : "POST",
+            data : {id : id},
+            dataType : 'json',
+            success : function(data){
+                var html = '';
+                var i;
+                for(i=0; i<data.length; i++){
+                    html += '<option value='+data[i].id+'>'+data[i].kecamatan+'</option>';
+                }
+                $('#optCamat').html(html);
+                $('#optCamat').prop('disabled', false);
+            }
+        });
+        return false;
+        // console.log(id);
     });
+
+    // $('#fileUp').on('change', function(){
+    //     var base = $(this).next();
+    //     base.removeClass('btn-danger').addClass('btn-success');
+    //     base.find('i').removeClass('fa-times').addClass('fa-check');
+    // });
 </script>

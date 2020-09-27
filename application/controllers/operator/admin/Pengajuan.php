@@ -38,40 +38,36 @@
             }
         }
 
-        // 
-
         public function index()
         {
-            $data['riwayat'] = $this->M_pengajuan->get_pengajuan($this->session->userdata('id'))->result_array();
+            $check = $this->session->userdata('user_level') == 4 ? true : false;
+
+            $data['riwayat'] = $this->M_pengajuan->get_pengajuan_all($check)->result_array();
             $data['title'] = 'Dashboard Pengajuan';
 
-            $this->template->load('template_admin','regular/list', $data);
+            $this->template->load('template_admin','operator/admin/list', $data);
         }
 
-        public function get_kecamatan()
+        public function update_permit()
         {
             $post = $this->input->post();
+            $permit = $post['permit'] != 'FALSE' ? 1 : 0;
 
-            $data = $this->M_pengajuan->get_kecamatan($post['id'])->result();
-            echo json_encode($data);
+            $this->M_pengajuan->update('tbl_pengajuan_berkas', array('id' => $post['id']), array('permit' => $permit));
         }
 
-        public function form_insert()
-        {   
-            $data['title'] = 'Tambahkan Pengajuan';
-            $where = array(
-                array('us.user_level' => 4), 
-            );
+        public function form_edit($id)
+        {
+            $data = $this->M_pengajuan->get_detail_tinjauan($id)->row_array();;
+            $data['riwayat'] = $this->M_pengajuan->get_riwayat($id)->result_array();
+            $data['title'] = 'Detail Pengajuan';
 
-            $data['peninjau'] = $this->User_model->get_peninjau($where)->result_array();
-
-            $this->template->load('template_admin','regular/form', $data);
+            $this->template->load('template_admin','operator/admin/form', $data);
         }
 
-        public function insert()
+        public function update()
         {
             $post = $this->input->post();
-            $idus = $this->session->userdata('id');
 
             $this->rules($post);
 
@@ -83,35 +79,25 @@
                     'jenis_hak' => $post['jenishak'],
                     'desa_kecamatan' => $post['camat'],
                     'nama_pemilik' => $post['owner'],
-                    'waktu' => $post['date'].' '.$post['time'],
-                    'jatuh_tempo' => date('Y-m-d',strtotime('+7 days', strtotime($post['date']))).' '.$post['time'],
                     'jenis_permohonan' => $post['jenismohon'],
-                    'id_user' => $idus,
                 );
 
-                if($idaju = $this->M_pengajuan->insert('tbl_pengajuan_berkas', $data)){
-                    
-                    $riwayat = array(
-                        'waktu' =>  $data['waktu'], 
-                        'id_user' => $idus, 
-                        'next_user' => $post['peninjau'], 
-                        'id_pengajuan' => $idaju, 
-                        'keterangan' => 'Permohonan Dibuat', 
-                    );
-
-                    $this->M_pengajuan->insert('tbl_riwayat_perjalanan', $riwayat);
-
-                    $this->session->set_flashdata('msg', 'Permohonan berhasil diajukan mohon menunggu');
-                    redirect('regular/pengajuan');
+                if($idaju = $this->M_pengajuan->update('tbl_pengajuan_berkas', array('id' => $post['id']), $data)){
+                    redirect('operator/admin/pengajuan');
                 }
                 else {
-                    echo 'FAK';
+                    echo 'Gagal Silahakan Kembali';
                 }
             }
             else {
-                $this->form_insert();
+                redirect('operator/admin/pengajuan');
             }
         }
 
+        public function delete($id)
+        {
+            $this->M_pengajuan->update('tbl_pengajuan_berkas', array('id' => $id), array('softdelete' => 1));
+            redirect('operator/admin/pengajuan');
+        }
     }
-?> 
+?>

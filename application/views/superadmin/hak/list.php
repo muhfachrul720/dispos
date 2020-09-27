@@ -3,7 +3,7 @@
     <div class="row mb-2">
       <div class="col-sm-12">
         <h1 class="m-0 text-dark"><b><?= $title ?></b></h1>
-        <p>Data Berikut Merupakan Kumpulan Pengajuan Berkas, Yang telah diajukan Sebelumnya</p>
+        <p>Menu Untuk mengelola Data Desa / Kecamatan</p>
       </div><!-- /.col -->
     </div><!-- /.row -->
   </div><!-- /.container-fluid -->
@@ -14,16 +14,15 @@
       <div class="col-xl-12 stretch-card grid-margin">
         <div class="card shadow mb-4">
           <div class="card-body">
-            <a href="<?= base_url()?>regular/pengajuan/form_insert" class="btn btn-primary btn-sm"> <i class="fas fa-plus"></i>  &nbsp; Tambahkan Pengajuan</a>
-            <a href="<?= base_url()?>regular/pengajuan" class="btn btn-success btn-sm"> <i class="fas fa-sync"></i>  &nbsp; Refresh Halaman</a>
+            <a href="<?= base_url()?>superadmin/permohonan/form_hak" class="btn btn-primary btn-sm"> <i class="fas fa-plus"></i>  &nbsp; Tambahkan Data</a>
+            <a href="" class="btn btn-success btn-sm"> <i class="fas fa-sync"></i>  &nbsp; Refresh Halaman</a>
 
             <?php if($alert = $this->session->flashdata('msg') != null) { ?>
                 <script>
                   $(document).ready(function(){
                     $(document).Toasts('create', {
                       class: 'bg-success', 
-                      title: 'Pengajuan Permohonan',
-                      body: 'Permohonan Berhasil Dibuat'
+                      body: 'Permohonan Berhasil Ditinjau'
                     });
                   });
                 </script>
@@ -41,27 +40,21 @@
               <thead>
                 <tr>
                   <th>No</th>
-                  <th>Nama Pemohon</th>
-                  <th>Waktu Pengajuan</th>
-                  <th>Jatuh Tempo</th>
-                  <th>Posisi Terakhir</th>
-                  <th>Cetak</th>
-                  <th>Detail</th>
+                  <th>Nama Desa</th>
+                  <th>Aksi</th>
                 </tr>
               </thead>
 
               <tbody>
                 <?php $no = 1;
-                  foreach ($riwayat as $key => $val) { ?>
-                      <tr>
-                          <td><?= $no ?></td>
-                          <td><?= $val['nama_pemilik']?></td>
-                          <td><?= $val['waktu']?></td>
-                          <td><?= $val['jatuh_tempo']?></td>
-                          <td><?= $val['posisi_akhir']?></td>
-                          <td><a href="" class="btn btn-danger btn-sm"><i class="fas fa-print"></i> &nbsp; Cetak Berkas</a></td>
-                          <td><a href="<?= base_url()?>riwayat/detail_pengajuan/<?= $val['id']?>" class="btn btn-primary btn-sm">Detail</a></td>
-                      </tr>
+                  foreach ($desa as $key => $val) { ?>
+                    <tr>
+                        <td><?= $no ?></td>
+                        <td><?= $val['nama']?></td>
+                        <td>
+                            <a href="<?= base_url()?>superadmin/permohonan/tinjau_hak/<?= $val['id'] ?>" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a> <a href="<?= base_url()?>superadmin/permohonan/delete_hak/<?= $val['id']?>" class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
                   <?php $no++;
                   } ?>    
               </tbody>

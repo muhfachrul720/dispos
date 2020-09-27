@@ -13,12 +13,17 @@
         {
             $data['title'] = 'Riwayat Perjalanan';
             $data['riwayat'] = $this->M_pengajuan->get_riwayat()->result_array();
+
             $this->template->load('template_admin','riwayat_list', $data);
         }
-
-        public function detail_pengajuan()
+        
+        public function detail_pengajuan($id)
         {
-            # code...
+            $data = $this->M_pengajuan->get_detail_tinjauan($id)->row_array();;
+            $data['riwayat'] = $this->M_pengajuan->get_riwayat($id)->result_array();
+            $data['title'] = 'Detail Pengajuan';
+
+            $this->template->load('template_admin','detail', $data);
         }
     }
 
