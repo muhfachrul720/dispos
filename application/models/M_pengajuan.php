@@ -87,7 +87,7 @@
         {
             $this->db->select('br.*');
             $this->db->from('tbl_pengajuan_berkas');
-            $this->db->where();
+            $this->db->where( "id", $id );
         }
 
     }
