@@ -27,35 +27,35 @@
         }
 
         // Get
-        public function get_all_desa()
-        {
-            $this->db->select('*');
-            $this->db->from('tbl_desa');
-            return $this->db->get();
-        }
-
-        public function get_desa_byid($id)
-        {
-            $this->db->select('*');
-            $this->db->from('tbl_desa');
-            $this->db->where('id', $id);
-            return $this->db->get();   
-        }
-
         public function get_all_kecamatan()
         {
-            $this->db->select('kc.*, ds.nama as nama_desa');
-            $this->db->from('tbl_kecamatan as kc');
-            $this->db->join('tbl_desa as ds', 'ds.id = kc.id_desa');
-
+            $this->db->select('*');
+            $this->db->from('tbl_kecamatan');
             return $this->db->get();
         }
 
         public function get_kecamatan_byid($id)
         {
-            $this->db->select('kc.*, ds.nama as nama_desa');
+            $this->db->select('*');
+            $this->db->from('tbl_kecamatan');
+            $this->db->where('id', $id);
+            return $this->db->get();   
+        }
+
+        public function get_all_desa()
+        {
+            $this->db->select('kc.kecamatan, ds.*');
             $this->db->from('tbl_kecamatan as kc');
-            $this->db->join('tbl_desa as ds', 'ds.id = kc.id_desa');
+            $this->db->join('tbl_desa as ds', 'ds.id_camat = kc.id');
+
+            return $this->db->get();
+        }
+
+        public function get_desa_byid($id)
+        {
+            $this->db->select('kc.kecamatan, ds.*');
+            $this->db->from('tbl_kecamatan as kc');
+            $this->db->join('tbl_desa as ds', 'ds.id_camat = kc.id');
 
             $this->db->where('kc.id', $id);
             return $this->db->get();   
