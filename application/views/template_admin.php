@@ -33,6 +33,12 @@
 
   <script src="<?= base_url()?>assets/admin_lte2/plugins/jquery/jquery.min.js"></script>
 
+  <!-- QrCode -->
+  <!-- <script src="<?= base_url()?>assets/scanqr/js/WebCodeCam.js"></script>
+  <script src="<?= base_url()?>assets/scanqr/js/qrcodelib.js"></script>
+	<script src="<?= base_url()?>assets/scanqr/js/DecoderWorker.js"></script> -->
+
+
 </head>
 <style>
   #example tr td:not(:last-child) {

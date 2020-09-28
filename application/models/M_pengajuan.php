@@ -39,10 +39,10 @@
 
         public function get_kecamatan($id)
         {
-            $this->db->select('cm.kecamatan, cm.id');
-            $this->db->from('tbl_kecamatan as cm');
-            $this->db->join('tbl_desa as ds', 'ds.id = cm.id_desa');
-            $this->db->where('cm.id_desa', $id);
+            $this->db->select('cm.nama, cm.id');
+            $this->db->from('tbl_desa as cm');
+            $this->db->join('tbl_kecamatan as ds', 'ds.id = cm.id_camat');
+            $this->db->where('cm.id_camat', $id);
 
             return $this->db->get();
         }
@@ -134,9 +134,9 @@
 
         public function get_detail_tinjauan($id)
         {
-            $this->db->select('br.*, cm.id_desa as desa, cm.kecamatan, cm.id as idcmt');
+            $this->db->select('br.*, cm.id_camat as desa, cm.nama, cm.id as idcmt');
             $this->db->from('tbl_pengajuan_berkas as br');
-            $this->db->join('tbl_kecamatan as cm', 'br.desa_kecamatan = cm.id');
+            $this->db->join('tbl_desa as cm', 'br.desa_kecamatan = cm.id');
             $this->db->where('br.id', $id);
             return $this->db->get();
         }

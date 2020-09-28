@@ -34,12 +34,12 @@
                     <div class="form-group row">
                         <div class="col-6">
                             <label for="">Desa</label>  &nbsp; <?= form_error('camat')?>
-                            <?= cmb_dinamis('', 'tbl_desa', 'nama', 'id', $desa, 'DESC', null, 'camat') ?>
+                            <?= cmb_dinamis('', 'tbl_kecamatan', 'kecamatan', 'id', $desa, 'DESC', null, 'camat') ?>
                         </div>
                         <div class="col-6">
                             <label for="">Kecamatan</label>  &nbsp; <?= form_error('camat')?>
                             <select name="camat" id="optCamat" class="form-control form-control-sm">
-                                <option value="<?= $idcmt ?>"><?= $kecamatan ?></option>
+                                <option value="<?= $idcmt ?>"><?= $nama ?></option>
                             </select>
                         </div>
                     </div>
@@ -148,8 +148,9 @@
             success : function(data){
                 var html = '';
                 var i;
+                html+= '<option value="<?= $idcmt ?>"><?= $nama ?></option>';
                 for(i=0; i<data.length; i++){
-                    html += '<option value='+data[i].id+'>'+data[i].kecamatan+'</option>';
+                    html += '<option value='+data[i].id+'>'+data[i].nama+'</option>';
                 }
                 $('#optCamat').html(html);
                 $('#optCamat').prop('disabled', false);

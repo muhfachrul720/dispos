@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 27, 2020 at 04:29 AM
+-- Generation Time: Sep 28, 2020 at 03:27 AM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.2.20
 
@@ -56,6 +56,7 @@ INSERT INTO `tbl_alur_berkas` (`id`, `level_sender`, `level_now`, `level_receive
 
 CREATE TABLE `tbl_desa` (
   `id` int(11) NOT NULL,
+  `id_camat` int(11) NOT NULL,
   `nama` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -63,10 +64,10 @@ CREATE TABLE `tbl_desa` (
 -- Dumping data for table `tbl_desa`
 --
 
-INSERT INTO `tbl_desa` (`id`, `nama`) VALUES
-(1, 'Desa Monarki'),
-(2, 'Desa Binongko'),
-(4, 'sadasdas');
+INSERT INTO `tbl_desa` (`id`, `id_camat`, `nama`) VALUES
+(1, 1, 'Desa Monarki'),
+(2, 2, 'Desa Binongko'),
+(4, 2, 'sadasdas');
 
 -- --------------------------------------------------------
 
@@ -156,7 +157,6 @@ INSERT INTO `tbl_jenis_permohonan` (`id`, `nama`) VALUES
 
 CREATE TABLE `tbl_kecamatan` (
   `id` int(11) NOT NULL,
-  `id_desa` int(11) NOT NULL,
   `kecamatan` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -164,10 +164,10 @@ CREATE TABLE `tbl_kecamatan` (
 -- Dumping data for table `tbl_kecamatan`
 --
 
-INSERT INTO `tbl_kecamatan` (`id`, `id_desa`, `kecamatan`) VALUES
-(1, 1, 'Monarki Den Wara'),
-(2, 1, 'Kecamatan'),
-(3, 2, 'Juara');
+INSERT INTO `tbl_kecamatan` (`id`, `kecamatan`) VALUES
+(1, 'Monarki Den Wara'),
+(2, 'Kecamatan'),
+(3, 'Juara');
 
 -- --------------------------------------------------------
 
@@ -240,8 +240,10 @@ INSERT INTO `tbl_pengajuan_berkas` (`id`, `no_berkas`, `no_hak`, `jenis_hak`, `d
 (17, '2312321', '1232 ', 1, 2, 'Mrs Edward ', '2020-09-24 01:09:18', '2020-10-01 01:09:18', 1, NULL, 0, '1', 13),
 (18, '23213 213123 2312', '12322231', 2, 1, 'Kilimanjaro', '2020-09-25 10:09:09', '2020-10-02 10:09:09', 4, NULL, 0, '1', 13),
 (19, '123213', '2121', 2, 1, 'Stalin Fierdherdman', '2020-09-25 11:09:21', '2020-10-02 11:09:21', 4, NULL, 1, '0', 13),
-(20, '12321', '2131', 1, 4, 'Budi Budiman', '2020-09-25 11:09:47', '2020-10-02 11:09:47', 1, NULL, 1, '0', 13),
-(21, '12312 23123 23123', '1232 2312 233122', 1, 2, 'Alphones Elrich', '2020-09-26 10:09:52', '2020-10-03 10:09:52', 1, NULL, 0, '0', 14);
+(20, '12321', '2131', 1, 1, 'Budi Budiman', '2020-09-25 11:09:47', '2020-10-02 11:09:47', 1, NULL, 1, '0', 13),
+(21, '12312 23123 23123', '1232 2312 233122', 1, 2, 'Alphones Elrich', '2020-09-26 10:09:52', '2020-10-03 10:09:52', 1, NULL, 0, '0', 14),
+(22, '992992', '12e1232', 1, 2, 'Musdar', '2020-09-28 08:09:01', '2020-10-05 08:09:01', 1, NULL, 0, '0', 13),
+(23, '123213', '2312313', 1, 2, 'Oleng Kapten', '2020-09-28 09:09:07', '2020-10-05 09:09:07', 1, NULL, 0, '0', 13);
 
 -- --------------------------------------------------------
 
@@ -279,7 +281,9 @@ INSERT INTO `tbl_riwayat_perjalanan` (`id`, `waktu`, `id_user`, `next_user`, `id
 (44, '2020-09-25 11:09:21', 13, 15, 19, 0, 'Permohonan Dibuat'),
 (45, '2020-09-25 11:09:47', 13, 15, 20, 0, 'Permohonan Dibuat'),
 (46, '2020-09-25 11:09:31', 15, 20, 18, 0, ''),
-(47, '2020-09-26 10:09:52', 14, 15, 21, 0, 'Permohonan Dibuat');
+(47, '2020-09-26 10:09:52', 14, 15, 21, 0, 'Permohonan Dibuat'),
+(48, '2020-09-28 08:09:01', 13, 15, 22, 0, 'Permohonan Dibuat'),
+(49, '2020-09-28 09:09:07', 13, 15, 23, 0, 'Permohonan Dibuat');
 
 -- --------------------------------------------------------
 
@@ -458,13 +462,13 @@ ALTER TABLE `tbl_menu`
 -- AUTO_INCREMENT for table `tbl_pengajuan_berkas`
 --
 ALTER TABLE `tbl_pengajuan_berkas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `tbl_riwayat_perjalanan`
 --
 ALTER TABLE `tbl_riwayat_perjalanan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `tbl_user`

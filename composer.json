@@ -1,0 +1,12 @@
+{
+    "name": "cillin/dispos",
+    "authors": [
+        {
+            "name": "Muh Fachrul",
+            "email": "muhfachrul720@gmail.com"
+        }
+    ],
+    "require": {
+        "mpdf/mpdf": "^8.0"
+    }
+}

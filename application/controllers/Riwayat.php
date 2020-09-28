@@ -19,7 +19,7 @@
         
         public function detail_pengajuan($id)
         {
-            $data = $this->M_pengajuan->get_detail_tinjauan($id)->row_array();;
+            $data = $this->M_pengajuan->get_detail_tinjauan($id)->row_array();
             $data['riwayat'] = $this->M_pengajuan->get_riwayat($id)->result_array();
             $data['title'] = 'Detail Pengajuan';
 
