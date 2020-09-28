@@ -36,12 +36,12 @@
                     <div class="form-group row">
                         <div class="col-6">
                             <label for="">Desa</label>  &nbsp; <?= form_error('camat')?>
-                            <?= cmb_dinamis('', 'tbl_desa', 'nama', 'id', $desa, 'DESC', 'disabled', 'camat') ?>
+                            <?= cmb_dinamis('', 'tbl_kecamatan', 'kecamatan', 'id', $desa, 'DESC', 'disabled', 'camat') ?>
                         </div>
                         <div class="col-6">
                             <label for="">Kecamatan</label>  &nbsp; <?= form_error('camat')?>
                             <select name="camat" id="optCamat" class="form-control form-control-sm" disabled>
-                                <option value="<?= $idcmt ?>"><?= $kecamatan ?></option>
+                                <option value="<?= $idcmt ?>"><?= $nama ?></option>
                             </select>
                         </div>
                     </div>
@@ -82,44 +82,60 @@
             </div>
         </div>
         <div class="col-5">
-            <div class="card">
-                <div class="card-body">
-                <table class="table table-striped table-bordered table-sm text-center" style="width:100%; font-size:12px" id="dataTable" width="100%" cellspacing="0">
-                  <thead>
-                      <tr>
-                          <th>No</th>
-                          <th>Nama Pemohon</th>
-                          <th>Tahun</th>
-                          <th>Tanggal</th>
-                          <th>Jatuh Tempo</th>
-                          <th>Posisi Terakhir</th>
-                      </tr>
-                  </thead>
-
-                  <tbody>
-                      <?php $no = 1;
-                      foreach ($riwayat as $key => $val) { ?>
-                          <tr>
-                              <td><?= $no ?></td>
-                              <td><?= $val['nama_lengkap']?></td>
-                              <td><?= $val['tahun']?></td>
-                              <td><?= $val['rwaktu']?></td>
-                              <td><?= $val['jatuh_tempo']?></td>
-                              <td><?= $val['posisi_akhir']?></td>
-                          </tr>
-                      <?php $no++;
-                      } ?>
-                  </tbody>
-                </table>
-
-                <script type="text/javascript">
-                $(document).ready(function() {
-                    $('#dataTable').DataTable({searching:false});
-                });
-                </script>
-
+           <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col pt-1"><span style=>Scan Barcode</span></div>
+                                <div class="col" style="text-align:right"> <button type="button" class="btn btn-primary btn-sm w-100" data-toggle="modal" data-target="#modal-sm">
+                                Scan Qr Code
+                            </button></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                        <table class="table table-striped table-bordered table-sm text-center" style="width:100%; font-size:12px" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama Pemohon</th>
+                                <th>Tahun</th>
+                                <th>Tanggal</th>
+                                <th>Jatuh Tempo</th>
+                                <th>Posisi Terakhir</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <?php $no = 1;
+                            foreach ($riwayat as $key => $val) { ?>
+                                <tr>
+                                    <td><?= $no ?></td>
+                                    <td><?= $val['nama_lengkap']?></td>
+                                    <td><?= $val['tahun']?></td>
+                                    <td><?= $val['rwaktu']?></td>
+                                    <td><?= $val['jatuh_tempo']?></td>
+                                    <td><?= $val['posisi_akhir']?></td>
+                                </tr>
+                            <?php $no++;
+                            } ?>
+                        </tbody>
+                        </table>
+
+                        <script type="text/javascript">
+                        $(document).ready(function() {
+                            $('#dataTable').DataTable({searching:false});
+                        });
+                        </script>
+
+                        </div>
+                    </div>
+                </div>
+           </div>                     
         </div>
     </div>
     <div class="row">
@@ -134,7 +150,7 @@
                             <?= form_dropdown('status', array('1' => 'Disetujui', '2' => 'Ditolak'), '', array('class' => 'form-control form-control-sm')); ?>
                             <hr>
                             <small>Sebelum Menekan Tombol Verifikasi Pastikan Berkas, dan Pilihan Persetujuan Telah Benar </small>
-                            <input type="submit" class="btn btn-sm btn-success w-100 mt-3" value="Verifikasi">
+                            <input type="submit" id="verif" class="btn btn-sm btn-secondary w-100 mt-3" value="Silahkan Scanning QR CODE" disabled>
                         </div>
                     </div>
                 </div>
@@ -144,11 +160,104 @@
     <?= form_close()?>
 </div>
 
+<div class="modal fade" id="modal-sm">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Scan QR</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <section class='content' id="demo-content">
+                    <div class='row'>
+                        <div class='col-xs-12'>
+                            <div class='box'>
+                                <div class='box-header'></div>
+                                <div class='box-body'>
+                                    <?php
+                                    $attributes = array('id' => 'button');?>
+                                    <div id="sourceSelectPanel" style="display:none">
+                                        <label for="sourceSelect">Change video source:</label>
+                                        <select id="sourceSelect" style="max-width:400px"></select>
+                                    </div>
+                                    <div>
+                                        <video id="video" width="280" height="280" style="border: 1px solid gray; margin:auto"></video>
+                                    </div>
+                                    <textarea hidden="" name="" id="result" readonly></textarea>
+                                    <span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+
+<script type="text/javascript" src="<?php echo base_url()?>assets/zxing/zxing.min.js"></script>
 <script>
+    // scanner qr
+    window.addEventListener('load', function () {
+        let selectedDeviceId;
+        let audio = new Audio("<?= base_url()?>assets/zxing/audio/beep.mp3");
+        const codeReader = new ZXing.BrowserQRCodeReader()
+        console.log('ZXing code reader initialized')
+        codeReader.getVideoInputDevices()
+        .then((videoInputDevices) => {
+            const sourceSelect = document.getElementById('sourceSelect')
+            selectedDeviceId = videoInputDevices[0].deviceId
+            if (videoInputDevices.length >= 1) {
+                videoInputDevices.forEach((element) => {
+                    const sourceOption = document.createElement('option')
+                    sourceOption.text = element.label
+                    sourceOption.value = element.deviceId
+                    sourceSelect.appendChild(sourceOption)
+                })
+                sourceSelect.onchange = () => {
+                    selectedDeviceId = sourceSelect.value;
+                };
+                const sourceSelectPanel = document.getElementById('sourceSelectPanel')
+                sourceSelectPanel.style.display = 'block'
+            }
+            codeReader.decodeFromInputVideoDevice(selectedDeviceId, 'video').then((result) => {
+                console.log(result)
+                document.getElementById('result').textContent = result.text
+                if(result != null){
+                    audio.play();
+                    if(result.text == <?= $no_berkas?>){
+                        alert('QR Code Cocok');
+                        $('#modal-sm').modal('hide');
+                        $('#verif').removeClass('btn-secondary').addClass('btn-success');
+                        $('#verif').val('Verifikasi');
+                        $('#verif').prop('disabled', false);
+                    } else {
+                        alert('QR Code tidak sama');
+                        window.location.reload();
+                    }
+                }
+            }).catch((err) => {
+                console.error(err)
+                document.getElementById('result').textContent = err
+            })
+            console.log(`Started continous decode from camera with id ${selectedDeviceId}`)
+        })
+        .catch((err) => {
+            console.error(err)
+        })
+    })
+
+
+    //timeset
     $('#timeSet').on('click', function(){
         $('.timeSet').attr('readonly', false);
     });
 
+    // ajax get desa
     $('#camat').on('change', function(){
         var id = $(this).val();
         $.ajax({
@@ -169,10 +278,4 @@
         return false;
         // console.log(id);
     });
-
-    // $('#fileUp').on('change', function(){
-    //     var base = $(this).next();
-    //     base.removeClass('btn-danger').addClass('btn-success');
-    //     base.find('i').removeClass('fa-times').addClass('fa-check');
-    // });
 </script>

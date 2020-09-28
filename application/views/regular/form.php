@@ -32,13 +32,13 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-6">
-                            <label for="">Desa</label>  &nbsp; <?= form_error('camat')?>
-                            <?= cmb_dinamis('', 'tbl_desa', 'nama', 'id', '', 'DESC', null, 'camat') ?>
+                            <label for="">Kecamatan</label>  &nbsp; <?= form_error('camat')?>
+                            <?= cmb_dinamis('', 'tbl_kecamatan', 'kecamatan', 'id', '', 'DESC', null, 'camat') ?>
                         </div>
                         <div class="col-6">
-                            <label for="">Kecamatan</label>  &nbsp; <?= form_error('camat')?>
+                            <label for="">Desa</label>  &nbsp; <?= form_error('camat')?>
                             <select name="camat" id="optCamat" class="form-control form-control-sm" disabled>
-                                <option value="0">Silahkan Memilih Desa Terlebih Dahulu</option>
+                                <option value="0">Silahkan Memilih Kecamatan Terlebih Dahulu</option>
                             </select>
                         </div>
                     </div>
@@ -123,7 +123,7 @@
                 var html = '';
                 var i;
                 for(i=0; i<data.length; i++){
-                    html += '<option value='+data[i].id+'>'+data[i].kecamatan+'</option>';
+                    html += '<option value='+data[i].id+'>'+data[i].nama+'</option>';
                 }
                 $('#optCamat').html(html);
                 $('#optCamat').prop('disabled', false);
