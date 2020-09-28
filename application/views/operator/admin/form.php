@@ -90,7 +90,7 @@
                       foreach ($riwayat as $key => $val) { ?>
                           <tr>
                               <td><?= $no ?></td>
-                              <td><?= $val['nama_lengkap']?></td>
+                              <td><?= $val['nama_pemilik']?></td>
                               <td><?= $val['tahun']?></td>
                               <td><?= $val['rwaktu']?></td>
                               <td><?= $val['jatuh_tempo']?></td>
