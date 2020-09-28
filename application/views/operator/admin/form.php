@@ -3,7 +3,7 @@
     <div class="row mb-2">
       <div class="col-sm-12">
         <h1 class="m-0 text-dark"><b><?= $title ?></b></h1>
-        <p>Silahkan Menambahkan Pengajuan</p>
+        <p>Informasi Mengenai Pengajuan</p>
       </div><!-- /.col -->
     </div><!-- /.row -->
   </div><!-- /.container-fluid -->
@@ -11,10 +11,8 @@
 
 <div class="container-fluid px-4">
 
-    <?= form_open_multipart('operator/verifikasi/tinjau_action')?>
-    <?= form_hidden('idbrk', $id)?>
-    <?= form_hidden('idrw', $idriwayat)?>
-    
+    <?= form_open_multipart('operator/admin/pengajuan/update')?>
+    <?= form_hidden('id', $id)?>
     <div class="row">
         <div class="col-7">
             <div class="card">
@@ -22,25 +20,25 @@
                     <div class="form-group row">
                         <div class="col-6">
                             <label for="">No Hak</label> &nbsp; <?= form_error('hak')?>
-                            <input type="text" class="form-control form-control-sm" placeholder="Masukkan Nomor.." value="<?= $no_hak ?>" disabled>
+                            <input type="text" name="hak" class="form-control form-control-sm" placeholder="Masukkan Nomor.." value="<?= $no_hak ?>">
                         </div>
                         <div class="col-6">
                             <label for="">No Berkas</label> &nbsp; <?= form_error('berkas')?>
-                            <input type="text" class="form-control form-control-sm" placeholder="Masukkan Nomor.." value="<?= $no_berkas ?>" disabled>
+                            <input type="text" name="berkas" class="form-control form-control-sm" placeholder="Masukkan Nomor.." value="<?= $no_berkas ?>">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="">Nama Pemilik</label>  &nbsp; <?= form_error('owner')?>
-                        <input type="text" class="form-control form-control-sm" placeholder="Masukkan Pemilik.." value="<?= $nama_pemilik ?>" disabled>
+                        <input type="text" name="owner" class="form-control form-control-sm" placeholder="Masukkan Pemilik.." value="<?= $nama_pemilik ?>">
                     </div>
                     <div class="form-group row">
                         <div class="col-6">
                             <label for="">Desa</label>  &nbsp; <?= form_error('camat')?>
-                            <?= cmb_dinamis('', 'tbl_desa', 'nama', 'id', $desa, 'DESC', 'disabled', 'camat') ?>
+                            <?= cmb_dinamis('', 'tbl_desa', 'nama', 'id', $desa, 'DESC', null, 'camat') ?>
                         </div>
                         <div class="col-6">
                             <label for="">Kecamatan</label>  &nbsp; <?= form_error('camat')?>
-                            <select name="camat" id="optCamat" class="form-control form-control-sm" disabled>
+                            <select name="camat" id="optCamat" class="form-control form-control-sm">
                                 <option value="<?= $idcmt ?>"><?= $kecamatan ?></option>
                             </select>
                         </div>
@@ -48,11 +46,11 @@
                     <div class="form-group row">
                         <div class="col-6">
                             <label for="">Jenis Permohonan</label>  &nbsp; <?= form_error('jenismohon')?>
-                            <?= cmb_dinamis('jenismohon', 'tbl_jenis_permohonan', 'nama', 'id', $jenis_permohonan, 'DESC', 'disabled') ?>
+                            <?= cmb_dinamis('jenismohon', 'tbl_jenis_permohonan', 'nama', 'id', $jenis_permohonan, 'DESC') ?>
                         </div>
                         <div class="col-6">
                             <label for="">Jenis Hak</label>  &nbsp; <?= form_error('jenishak')?>
-                            <?= cmb_dinamis('jenishak', 'tbl_hak_permohonan', 'nama', 'id', $jenis_hak, 'DESC', 'disabled') ?>
+                            <?= cmb_dinamis('jenishak', 'tbl_hak_permohonan', 'nama', 'id', $jenis_hak, 'DESC') ?>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -68,15 +66,6 @@
                             <label for="">Jatuh Tempo</label>  &nbsp; <?= form_error('time')?>
                             <input type="text" value="<?= $jatuh_tempo ?>" class="form-control form-control-sm" disabled>
                         </div>
-                    </div>
-                    <hr>
-                    <div class="form-group">
-                        <label for="">Peninjau Berkas</label>
-                        <select name="peninjau" id="" class="form-control form-control-sm">
-                            <?php foreach($peninjau as $p) {?>
-                                <option value="<?= $p['usid'] ?>"><?= $p['username'].' / '.$p['lvname']?></option>
-                            <?php } ?>
-                        </select>
                     </div>
                 </div>
             </div>
@@ -126,17 +115,8 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-6">
-                            <textarea name="ket" id="" cols="30" rows="6" class="form-control form-control-sm" placeholder="Keterangan"></textarea>
-                        </div>
-                        <div class="col-6">
-                            <?= form_dropdown('status', array('1' => 'Disetujui', '2' => 'Ditolak'), '', array('class' => 'form-control form-control-sm')); ?>
-                            <hr>
-                            <small>Sebelum Menekan Tombol Verifikasi Pastikan Berkas, dan Pilihan Persetujuan Telah Benar </small>
-                            <input type="submit" class="btn btn-sm btn-success w-100 mt-3" value="Verifikasi">
-                        </div>
-                    </div>
+                    <small>Sebelum Menekan Tombol Verifikasi Pastikan Berkas, dan Pilihan Persetujuan Telah Benar </small>
+                    <input type="submit" class="btn btn-sm btn-success w-100 mt-3" value="Simpan Perubahan">
                 </div>
             </div>
         </div>
@@ -145,12 +125,21 @@
 </div>
 
 <script>
+    $(document).ready(function(){
+        var id = $('#camat').val();
+        get_camat(id);
+    });
+
     $('#timeSet').on('click', function(){
         $('.timeSet').attr('readonly', false);
     });
 
     $('#camat').on('change', function(){
         var id = $(this).val();
+        get_camat(id);
+    });
+
+    function get_camat(id){
         $.ajax({
             url : '<?=base_url()?>regular/pengajuan/get_kecamatan',
             type : "POST",
@@ -166,9 +155,7 @@
                 $('#optCamat').prop('disabled', false);
             }
         });
-        return false;
-        // console.log(id);
-    });
+    }
 
     // $('#fileUp').on('change', function(){
     //     var base = $(this).next();

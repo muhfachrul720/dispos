@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 24, 2020 at 04:27 AM
+-- Generation Time: Sep 27, 2020 at 04:29 AM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.2.20
 
@@ -31,6 +31,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `tbl_alur_berkas` (
   `id` int(11) NOT NULL,
   `level_sender` int(11) NOT NULL,
+  `level_now` int(11) NOT NULL,
   `level_receive` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -38,9 +39,14 @@ CREATE TABLE `tbl_alur_berkas` (
 -- Dumping data for table `tbl_alur_berkas`
 --
 
-INSERT INTO `tbl_alur_berkas` (`id`, `level_sender`, `level_receive`) VALUES
-(1, 4, 5),
-(2, 4, 8);
+INSERT INTO `tbl_alur_berkas` (`id`, `level_sender`, `level_now`, `level_receive`) VALUES
+(1, 10, 4, 5),
+(2, 4, 5, 6),
+(3, 5, 6, 4),
+(4, 6, 4, 8),
+(5, 4, 8, 9),
+(6, 8, 9, 6),
+(7, 9, 6, 7);
 
 -- --------------------------------------------------------
 
@@ -58,7 +64,9 @@ CREATE TABLE `tbl_desa` (
 --
 
 INSERT INTO `tbl_desa` (`id`, `nama`) VALUES
-(1, 'Desa Kalang kabut');
+(1, 'Desa Monarki'),
+(2, 'Desa Binongko'),
+(4, 'sadasdas');
 
 -- --------------------------------------------------------
 
@@ -93,25 +101,30 @@ INSERT INTO `tbl_hak_akses` (`id`, `user_level`, `menu`) VALUES
 (16, 8, 9),
 (17, 9, 9),
 (18, 10, 12),
-(19, 10, 13);
+(19, 10, 13),
+(20, 1, 14),
+(23, 1, 17),
+(24, 4, 20),
+(25, 9, 20);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_jenis_hak`
+-- Table structure for table `tbl_hak_permohonan`
 --
 
-CREATE TABLE `tbl_jenis_hak` (
+CREATE TABLE `tbl_hak_permohonan` (
   `id` int(11) NOT NULL,
   `nama` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tbl_jenis_hak`
+-- Dumping data for table `tbl_hak_permohonan`
 --
 
-INSERT INTO `tbl_jenis_hak` (`id`, `nama`) VALUES
-(1, 'Hak Pertama');
+INSERT INTO `tbl_hak_permohonan` (`id`, `nama`) VALUES
+(1, 'Hak Pertama'),
+(2, 'Hak ke enam');
 
 -- --------------------------------------------------------
 
@@ -129,7 +142,32 @@ CREATE TABLE `tbl_jenis_permohonan` (
 --
 
 INSERT INTO `tbl_jenis_permohonan` (`id`, `nama`) VALUES
-(1, 'Memohon Belas Kasih');
+(1, 'Memohon Belas Kasih'),
+(2, 'Elementario'),
+(4, 'jenis ke 2'),
+(8, 'Hak Ke dua'),
+(9, 'Hak Ke dua');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_kecamatan`
+--
+
+CREATE TABLE `tbl_kecamatan` (
+  `id` int(11) NOT NULL,
+  `id_desa` int(11) NOT NULL,
+  `kecamatan` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_kecamatan`
+--
+
+INSERT INTO `tbl_kecamatan` (`id`, `id_desa`, `kecamatan`) VALUES
+(1, 1, 'Monarki Den Wara'),
+(2, 1, 'Kecamatan'),
+(3, 2, 'Juara');
 
 -- --------------------------------------------------------
 
@@ -154,14 +192,21 @@ INSERT INTO `tbl_menu` (`id`, `nama`, `url`, `icon`, `submenu`) VALUES
 (2, 'Kelola Level Pengguna', 'superadmin/userlevel', 'fas fa-layer-group', 0),
 (3, 'Kelola Menu', 'superadmin/menu', 'fas fa-archive', 0),
 (4, 'Verifikasi Berkas', '#', 'fas fa-archive', 0),
-(5, 'Loket Pendaftaran', 'operator/Verifikasi/verif_loketpendaftaran', 'fas fa-archive', 4),
-(6, 'Pelaksana Subseksi', '#', 'fas fa-archive', 10),
-(7, 'Petugas Pengolah', '#', 'fas fa-archive', 10),
-(8, 'Kepala Kantor Pertanahan', 'operator/Verifikasi/verif_kepalakantortanah', 'fas fa-archive', 4),
-(9, 'Verifikasi Berkas', 'operator/Verifikasi/verif_all', 'fas fa-archive', 0),
+(5, 'Loket Pendaftaran', 'operator/verifikasi/verif_loketpendaftaran', 'fas fa-archive', 4),
+(6, 'Pelaksana Subseksi', 'operator/verifikasi/verif_pelaksanasubseksi', 'fas fa-archive', 4),
+(7, 'Petugas Pengolah', 'operator/verifikasi/verif_petugaspengolah', 'fas fa-archive', 10),
+(8, 'Kepala Kantor Pertanahan', 'operator/verifikasi/verif_kepalakantortanah', 'fas fa-archive', 10),
+(9, 'Verifikasi Berkas', 'operator/verifikasi/verif_all', 'fas fa-archive', 0),
 (10, 'Verifikasi Berkas', '#', 'fas fa-archive', 0),
-(12, 'Pengajuan Peralihan Hak', 'Regular/pengajuan', 'fas fa-upload', 0),
-(13, 'Riwayat Perjalanan', 'Riwayat', 'fas fa-archive', 0);
+(12, 'Pengajuan Peralihan Hak', 'regular/pengajuan', 'fas fa-upload', 0),
+(13, 'Riwayat Perjalanan', 'riwayat', 'fas fa-archive', 0),
+(14, 'Managemen Desa/Kecamatan', '#', 'fas fa-archive', 0),
+(15, 'Jenis Permohonan', 'superadmin/permohonan/list_jenis_permohonan', 'fas fa-archive', 17),
+(16, 'Hak Permohonan', 'superadmin/permohonan/list_hak_permohonan', 'fas fa-archive', 17),
+(17, 'Managemen Permohonan', '#', 'fas fa-archive', 0),
+(18, 'Desa', 'superadmin/desa/list_desa', 'fas fa-archive', 14),
+(19, 'Kecamatan', 'superadmin/desa/list_kecamatan', 'fas fa-archive', 14),
+(20, 'Managemen Berkas', 'operator/admin/pengajuan', 'fas fa-archive', 0);
 
 -- --------------------------------------------------------
 
@@ -175,11 +220,13 @@ CREATE TABLE `tbl_pengajuan_berkas` (
   `no_hak` varchar(255) NOT NULL,
   `jenis_hak` int(11) NOT NULL,
   `desa_kecamatan` int(11) NOT NULL,
-  `nama_pemilik` int(11) NOT NULL,
+  `nama_pemilik` varchar(255) NOT NULL,
   `waktu` datetime NOT NULL DEFAULT current_timestamp(),
   `jatuh_tempo` datetime DEFAULT NULL,
   `jenis_permohonan` int(11) NOT NULL,
-  `id_berkas` int(11) DEFAULT NULL,
+  `qr_code` varchar(255) DEFAULT NULL,
+  `permit` int(11) NOT NULL COMMENT '1 = true, 0 = false',
+  `softdelete` varchar(255) NOT NULL DEFAULT '0' COMMENT '-1 = delete , 0 = true',
   `id_user` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -187,12 +234,14 @@ CREATE TABLE `tbl_pengajuan_berkas` (
 -- Dumping data for table `tbl_pengajuan_berkas`
 --
 
-INSERT INTO `tbl_pengajuan_berkas` (`id`, `no_berkas`, `no_hak`, `jenis_hak`, `desa_kecamatan`, `nama_pemilik`, `waktu`, `jatuh_tempo`, `jenis_permohonan`, `id_berkas`, `id_user`) VALUES
-(8, '21321321', '12232121', 1, 1, 0, '2020-09-23 11:09:53', '2020-09-30 11:09:53', 1, NULL, 14),
-(9, '23212211', '123213213', 1, 1, 0, '2020-09-23 11:09:30', '2020-09-30 11:09:30', 1, NULL, 14),
-(10, '21321312', '21321321', 1, 1, 0, '2020-09-23 12:09:15', '2020-09-30 12:09:15', 1, NULL, 13),
-(11, '1231321', '123123', 1, 1, 0, '2020-09-23 02:09:40', '2020-09-30 02:09:40', 1, NULL, 13),
-(12, '23123122321', '123122231', 1, 1, 0, '2020-09-24 10:09:52', '2020-10-01 10:09:52', 1, NULL, 13);
+INSERT INTO `tbl_pengajuan_berkas` (`id`, `no_berkas`, `no_hak`, `jenis_hak`, `desa_kecamatan`, `nama_pemilik`, `waktu`, `jatuh_tempo`, `jenis_permohonan`, `qr_code`, `permit`, `softdelete`, `id_user`) VALUES
+(15, '2322 122 3222', '12232 22312 32212', 1, 1, 'Munawarman Trisakti', '2020-09-24 12:09:35', '2020-10-01 12:09:35', 1, NULL, 0, '1', 13),
+(16, '1322', '13232 ', 1, 1, 'MiawAug', '2020-09-24 12:09:19', '2020-10-01 12:09:19', 1, NULL, 0, '0', 14),
+(17, '2312321', '1232 ', 1, 2, 'Mrs Edward ', '2020-09-24 01:09:18', '2020-10-01 01:09:18', 1, NULL, 0, '1', 13),
+(18, '23213 213123 2312', '12322231', 2, 1, 'Kilimanjaro', '2020-09-25 10:09:09', '2020-10-02 10:09:09', 4, NULL, 0, '1', 13),
+(19, '123213', '2121', 2, 1, 'Stalin Fierdherdman', '2020-09-25 11:09:21', '2020-10-02 11:09:21', 4, NULL, 1, '0', 13),
+(20, '12321', '2131', 1, 4, 'Budi Budiman', '2020-09-25 11:09:47', '2020-10-02 11:09:47', 1, NULL, 1, '0', 13),
+(21, '12312 23123 23123', '1232 2312 233122', 1, 2, 'Alphones Elrich', '2020-09-26 10:09:52', '2020-10-03 10:09:52', 1, NULL, 0, '0', 14);
 
 -- --------------------------------------------------------
 
@@ -215,14 +264,22 @@ CREATE TABLE `tbl_riwayat_perjalanan` (
 --
 
 INSERT INTO `tbl_riwayat_perjalanan` (`id`, `waktu`, `id_user`, `next_user`, `id_pengajuan`, `status`, `keterangan`) VALUES
-(7, '2020-09-23 11:09:53', 14, 0, 8, 0, 'Permohonan Dibuat'),
-(8, '2020-09-25 07:17:38', 10, 0, 8, 0, 'Diverifikasi Kasubsi'),
-(9, '2020-09-23 11:09:30', 14, 0, 9, 0, 'Permohonan Dibuat'),
-(10, '2020-09-29 13:11:51', 12, 0, 8, 0, 'Diverifikaiasi'),
-(11, '2020-09-23 12:09:15', 13, 0, 10, 0, 'Permohonan Dibuat'),
-(12, '2020-09-23 02:09:40', 13, 15, 11, 1, 'Permohonan Dibuat'),
-(13, '2020-09-26 06:21:27', 15, 16, 11, 0, 'Telah diverif Kasubsi\r\n'),
-(14, '2020-09-24 10:09:52', 13, 15, 12, 0, 'Permohonan Dibuat');
+(32, '2020-09-24 12:09:35', 13, 15, 15, 1, 'Permohonan Dibuat'),
+(33, '2020-09-24 12:09:11', 15, 20, 15, 1, ''),
+(34, '2020-09-24 12:09:31', 20, 19, 15, 1, ''),
+(35, '2020-09-24 12:09:56', 19, 15, 15, 1, ''),
+(36, '2020-09-24 12:09:09', 15, 17, 15, 1, ''),
+(37, '2020-09-24 12:09:33', 17, 16, 15, 1, ''),
+(38, '2020-09-24 12:09:01', 16, 19, 15, 1, ''),
+(39, '2020-09-24 12:09:23', 19, 18, 15, 0, ''),
+(40, '2020-09-24 12:09:19', 14, 15, 16, 2, 'Permohonan Dibuat'),
+(41, '2020-09-24 01:09:18', 13, 15, 17, 1, 'Permohonan Dibuat'),
+(42, '2020-09-24 01:09:50', 15, 20, 17, 0, ''),
+(43, '2020-09-25 10:09:09', 13, 15, 18, 1, 'Permohonan Dibuat'),
+(44, '2020-09-25 11:09:21', 13, 15, 19, 0, 'Permohonan Dibuat'),
+(45, '2020-09-25 11:09:47', 13, 15, 20, 0, 'Permohonan Dibuat'),
+(46, '2020-09-25 11:09:31', 15, 20, 18, 0, ''),
+(47, '2020-09-26 10:09:52', 14, 15, 21, 0, 'Permohonan Dibuat');
 
 -- --------------------------------------------------------
 
@@ -248,8 +305,8 @@ INSERT INTO `tbl_user` (`id`, `username`, `nama_lengkap`, `email`, `password`, `
 (1, 'Superadmin', 'Munawarman', 'itsapotato@uho.ac.id', '$2y$04$9VVmFs68Yiw/fKlyJu7ELuYBK5.PxcVbkp0wBgJh611OWKY1HDPbe', 'default.png 	', 1),
 (7, 'FUBUKI !!', 'Sudarsono', 'felix@uho.ac.id', '$2y$04$D5wJKzYQri6PDpCCOWDmReVOwb0RKXQEKGl.zxJYW6Cv93bN6gIia', 'Ehz9KHSX0AA-QCV.jpg', 2),
 (13, 'pendaftar', 'Munawarman', 'pendaftar@uho.ac.id', '$2y$04$DeqRnGnbzKSYtYPxlfC9jO3ouH8DYZ5QbVIAU802KkdUdltcOsVw.', '8d81da21c2c45ba79d62afc05d86cac0.png', 10),
-(14, 'pendaftar2', 'Kiri', 'pendaftar@uho.ac.id', '$2y$04$Spzbd50USqWZ4S37/iaUeOZ1jhnRw/6XyhXg1m6OCyYQhZj210YH2', 'default.png 	', 10),
-(15, 'KasubsiPPAT', NULL, 'PPAT@uho.ac.id', '$2y$04$yb3ACnAakfBwTLrZvBo5te/YGCRpDHtbYL4NUo5tG4h/DmtOP.aSy', 'default.png 	', 4),
+(14, 'pendaftar2', 'Stalin Fierherdman', 'pendaftar@uho.ac.id', '$2y$04$Spzbd50USqWZ4S37/iaUeOZ1jhnRw/6XyhXg1m6OCyYQhZj210YH2', 'default.png 	', 10),
+(15, 'KasubsiPPAT', 'Kasubsi PPAT', 'PPAT@uho.ac.id', '$2y$04$yb3ACnAakfBwTLrZvBo5te/YGCRpDHtbYL4NUo5tG4h/DmtOP.aSy', 'default.png 	', 4),
 (16, 'KepalaPertanahan', NULL, 'PPAT@uho.ac.id', '$2y$04$PU7I0jMa1jbGhAw/hpvU.uipz9VQf7Xx1SnbD8HxZg8UihXq7LHiC', 'default.png 	', 9),
 (17, 'KepalaHukum', NULL, 'PPAT@uho.ac.id', '$2y$04$f3e3yiOeO2CGj2YGS849O.b5OXJGFlsg6o8849RHTL941vBE/tEoa', 'default.png 	', 8),
 (18, 'LoketSerah', NULL, 'PPAT@uho.ac.id', '$2y$04$ISf5y4zHCRci.g4b9geUtulYKINVz.wdcnXJM0PwNj7.ChvO4bmle', 'default.png 	', 7),
@@ -304,15 +361,21 @@ ALTER TABLE `tbl_hak_akses`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tbl_jenis_hak`
+-- Indexes for table `tbl_hak_permohonan`
 --
-ALTER TABLE `tbl_jenis_hak`
+ALTER TABLE `tbl_hak_permohonan`
   ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `tbl_jenis_permohonan`
 --
 ALTER TABLE `tbl_jenis_permohonan`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_kecamatan`
+--
+ALTER TABLE `tbl_kecamatan`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -353,49 +416,55 @@ ALTER TABLE `tbl_user_level`
 -- AUTO_INCREMENT for table `tbl_alur_berkas`
 --
 ALTER TABLE `tbl_alur_berkas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `tbl_desa`
 --
 ALTER TABLE `tbl_desa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tbl_hak_akses`
 --
 ALTER TABLE `tbl_hak_akses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
--- AUTO_INCREMENT for table `tbl_jenis_hak`
+-- AUTO_INCREMENT for table `tbl_hak_permohonan`
 --
-ALTER TABLE `tbl_jenis_hak`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `tbl_hak_permohonan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tbl_jenis_permohonan`
 --
 ALTER TABLE `tbl_jenis_permohonan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `tbl_kecamatan`
+--
+ALTER TABLE `tbl_kecamatan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tbl_menu`
 --
 ALTER TABLE `tbl_menu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `tbl_pengajuan_berkas`
 --
 ALTER TABLE `tbl_pengajuan_berkas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `tbl_riwayat_perjalanan`
 --
 ALTER TABLE `tbl_riwayat_perjalanan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT for table `tbl_user`

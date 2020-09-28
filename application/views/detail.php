@@ -3,7 +3,7 @@
     <div class="row mb-2">
       <div class="col-sm-12">
         <h1 class="m-0 text-dark"><b><?= $title ?></b></h1>
-        <p>Silahkan Menambahkan Pengajuan</p>
+        <p>Informasi Mengenai Pengajuan</p>
       </div><!-- /.col -->
     </div><!-- /.row -->
   </div><!-- /.container-fluid -->
@@ -12,9 +12,6 @@
 <div class="container-fluid px-4">
 
     <?= form_open_multipart('operator/verifikasi/tinjau_action')?>
-    <?= form_hidden('idbrk', $id)?>
-    <?= form_hidden('idrw', $idriwayat)?>
-    
     <div class="row">
         <div class="col-7">
             <div class="card">
@@ -69,15 +66,6 @@
                             <input type="text" value="<?= $jatuh_tempo ?>" class="form-control form-control-sm" disabled>
                         </div>
                     </div>
-                    <hr>
-                    <div class="form-group">
-                        <label for="">Peninjau Berkas</label>
-                        <select name="peninjau" id="" class="form-control form-control-sm">
-                            <?php foreach($peninjau as $p) {?>
-                                <option value="<?= $p['usid'] ?>"><?= $p['username'].' / '.$p['lvname']?></option>
-                            <?php } ?>
-                        </select>
-                    </div>
                 </div>
             </div>
         </div>
@@ -122,25 +110,6 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-6">
-                            <textarea name="ket" id="" cols="30" rows="6" class="form-control form-control-sm" placeholder="Keterangan"></textarea>
-                        </div>
-                        <div class="col-6">
-                            <?= form_dropdown('status', array('1' => 'Disetujui', '2' => 'Ditolak'), '', array('class' => 'form-control form-control-sm')); ?>
-                            <hr>
-                            <small>Sebelum Menekan Tombol Verifikasi Pastikan Berkas, dan Pilihan Persetujuan Telah Benar </small>
-                            <input type="submit" class="btn btn-sm btn-success w-100 mt-3" value="Verifikasi">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <?= form_close()?>
 </div>
 
@@ -149,30 +118,9 @@
         $('.timeSet').attr('readonly', false);
     });
 
-    $('#camat').on('change', function(){
-        var id = $(this).val();
-        $.ajax({
-            url : '<?=base_url()?>regular/pengajuan/get_kecamatan',
-            type : "POST",
-            data : {id : id},
-            dataType : 'json',
-            success : function(data){
-                var html = '';
-                var i;
-                for(i=0; i<data.length; i++){
-                    html += '<option value='+data[i].id+'>'+data[i].kecamatan+'</option>';
-                }
-                $('#optCamat').html(html);
-                $('#optCamat').prop('disabled', false);
-            }
-        });
-        return false;
-        // console.log(id);
+    $('#fileUp').on('change', function(){
+        var base = $(this).next();
+        base.removeClass('btn-danger').addClass('btn-success');
+        base.find('i').removeClass('fa-times').addClass('fa-check');
     });
-
-    // $('#fileUp').on('change', function(){
-    //     var base = $(this).next();
-    //     base.removeClass('btn-danger').addClass('btn-success');
-    //     base.find('i').removeClass('fa-times').addClass('fa-check');
-    // });
 </script>

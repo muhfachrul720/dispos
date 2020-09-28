@@ -28,11 +28,12 @@
         }
 
         // Get
-        public function get_receiver($level)
+        public function get_receiver($level, $now)
         {
             $this->db->select('al.*');
             $this->db->from('tbl_alur_berkas as al');
             $this->db->where('level_sender', $level); 
+            $this->db->where('level_now', $now); 
             return $this->db->get();
         }
     }
