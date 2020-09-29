@@ -139,9 +139,21 @@
 
         public function get_detail_tinjauan($id)
         {
-            $this->db->select('br.*, cm.id_camat as desa, cm.nama, cm.id as idcmt');
+            $this->db->select('*, cm.id_camat as desa, cm.nama, cm.id as idcmt');
             $this->db->from('tbl_pengajuan_berkas as br');
             $this->db->join('tbl_desa as cm', 'br.desa_kecamatan = cm.id');
+            $this->db->where('br.id', $id);
+            return $this->db->get();
+        }
+
+        public function get_detail_pdf($id)
+        {
+            $this->db->select('*, cm.id_camat as desa, cm.nama, cm.id as idcmt, jn.nama as jenis, hk.nama as hak');
+            $this->db->from('tbl_pengajuan_berkas as br');
+            $this->db->join('tbl_desa as cm', 'br.desa_kecamatan = cm.id');
+            $this->db->join('tbl_kecamatan as d', 'cm.id_camat = d.id');
+            $this->db->join('tbl_jenis_permohonan as jn', 'br.jenis_permohonan = jn.id');
+            $this->db->join('tbl_hak_permohonan as hk', 'br.jenis_hak = hk.id');
             $this->db->where('br.id', $id);
             return $this->db->get();
         }

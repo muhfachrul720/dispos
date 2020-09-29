@@ -26,8 +26,11 @@
 
         public function print_berkas($id)
         {
-            $data = $this->M_pengajuan->get_detail_tinjauan($id)->row_array();
+            $data = $this->M_pengajuan->get_detail_pdf($id)->row_array();
 
+            // var_dump($data);
+            // die;
+            
             if(!file_exists('./upload/qrcode/'.$data['no_berkas'].'.png')){
                 $this->generate_qrcode($data);
             }
