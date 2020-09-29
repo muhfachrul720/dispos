@@ -30,7 +30,9 @@ Class Auth extends CI_Controller{
                 $this->session->set_userdata($user); 
                 if ($user['user_level'] == 1) {
                     redirect('superadmin/dashboard');
-                } else if ($user['user_level'] > 1 && $user['user_level'] <= 9) {
+                } else if ($user['user_level'] ==  4 || $user['user_level'] == 9) {
+                    redirect('operator/admin/dashboard');
+                } else if ($user['user_level'] > 4  && $user['user_level'] < 9) {
                     redirect('operator/dashboard');
                 } else {
                     redirect('regular/dashboard');

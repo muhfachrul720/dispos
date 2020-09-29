@@ -201,7 +201,16 @@ class Userlevel extends CI_Controller
         $this->load->view('superadmin/userlevel/tbl_user_level_doc',$data);
     }
 
+        public function _count($table)
+        {
+            $this->db->select('cn.id');
+            $this->db->from($table.' as cn');
+            return $this->db->get();
+        }
+
 }
+
+        
 
 /* End of file Userlevel.php */
 /* Location: ./application/controllers/Userlevel.php */

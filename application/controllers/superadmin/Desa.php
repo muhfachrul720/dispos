@@ -37,9 +37,9 @@ class Desa extends Admin_Controller
             );
 
             if($this->M_desa->insert('tbl_kecamatan', $data)){
-                $this->list_kecamatan();
+                redirect('superadmin/desa/list_kecamatan');
             } else {
-                $this->list_kecamatan();
+                redirect('superadmin/desa/list_kecamatan');
             };
 
         } else {
@@ -68,9 +68,9 @@ class Desa extends Admin_Controller
             );
 
             if($this->M_desa->update('tbl_kecamatan', array('id' => $post['id']), $data)){
-                $this->list_kecamatan();
+                redirect('superadmin/desa/list_kecamatan');
             } else {
-                $this->list_kecamatan();
+                redirect('superadmin/desa/list_kecamatan');
             };
 
         } else {
@@ -81,7 +81,7 @@ class Desa extends Admin_Controller
     public function delete_kecamatan($id)
     {
         $this->M_desa->delete('tbl_kecamatan', array('id' => $id));
-        $this->list_kecamatan();
+        redirect('superadmin/desa/list_kecamatan');
     }
 
     // Kecamatan
@@ -114,9 +114,9 @@ class Desa extends Admin_Controller
             );
 
             if($this->M_desa->insert('tbl_desa', $data)){
-                $this->list_desa();
+                redirect('superadmin/desa/list_desa');
             } else {
-                $this->list_desa();
+                redirect('superadmin/desa/list_desa');
             };
 
         } else {
@@ -147,9 +147,9 @@ class Desa extends Admin_Controller
             );
 
             if($this->M_desa->update('tbl_desa', array('id' => $post['id']), $data)){
-                $this->list_desa();
+                redirect('superadmin/desa/list_desa');
             } else {
-                $this->list_desa();
+                redirect('superadmin/desa/list_desa');
             };
 
         } else {
@@ -160,7 +160,7 @@ class Desa extends Admin_Controller
     public function delete_desa($id)
     {
         $this->M_desa->delete('tbl_desa', array('id' => $id));
-        $this->list_desa();
+        redirect('superadmin/desa/list_desa');
     }
 }
 

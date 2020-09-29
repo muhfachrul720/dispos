@@ -21,7 +21,7 @@
 <body class="hold-transition login-page" style="background-image:<?= base_url()?>assets/img/back.jpg">
 <div class="login-box">
   <div class="login-logo">
-    <a href="../../index2.html"><b>DISPOSISI</b>Berkas</a>
+    <a href="../../index2.html">Sistem Monitoring<b> DOKUMEN</b></a>
   </div>
   <!-- /.login-logo -->
   <div class="card">

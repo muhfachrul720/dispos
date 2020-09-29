@@ -57,5 +57,12 @@
             return $this->db->get();   
         }
 
+        public function _count($table)
+        {
+            $this->db->select('cn.id');
+            $this->db->from($table.' as cn');
+            return $this->db->get();
+        }
+
     }
 ?>
