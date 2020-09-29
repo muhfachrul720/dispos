@@ -88,14 +88,12 @@
                       <?php $no = 1;
                       foreach ($riwayat as $key => $val) {   
                           $color = generate_color($val['waktu'], $val['rwaktu']);
-
-                          var_dump($color);
                       ?>
                           <tr style="color:<?= $color ?>">
                               <td><?= $no ?></td>
                               <td><?= $val['nama_pemilik']?></td>
                               <td><?= $val['tahun']?></td>
-                              <td><?= generate_color($val['waktu'], $val['rwaktu']) ?></td>
+                              <td><?= $val['rwaktu'] ?></td>
                               <td><?= $val['jatuh_tempo']?></td>
                               <td><?= $val['posisi_akhir']?></td>
                           </tr>
