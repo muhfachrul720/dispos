@@ -57,8 +57,15 @@
             $this->db->from('tbl_kecamatan as kc');
             $this->db->join('tbl_desa as ds', 'ds.id_camat = kc.id');
 
-            $this->db->where('kc.id', $id);
+            $this->db->where('ds.id', $id);
             return $this->db->get();   
+        }
+
+        public function _count($table)
+        {
+            $this->db->select('cn.id');
+            $this->db->from($table.' as cn');
+            return $this->db->get();
         }
     }
 ?>

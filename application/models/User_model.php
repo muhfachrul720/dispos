@@ -105,6 +105,13 @@ class User_model extends CI_Model
         return $this->db->get();
     }
 
+    public function _count($table)
+    {
+        $this->db->select('cn.id');
+        $this->db->from($table.' as cn');
+        return $this->db->get();
+    }
+
 }
 
 /* End of file User_model.php */

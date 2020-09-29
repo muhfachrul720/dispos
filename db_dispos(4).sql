@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 28, 2020 at 03:27 AM
+-- Generation Time: Sep 29, 2020 at 03:33 AM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.2.20
 
@@ -65,9 +65,10 @@ CREATE TABLE `tbl_desa` (
 --
 
 INSERT INTO `tbl_desa` (`id`, `id_camat`, `nama`) VALUES
-(1, 1, 'Desa Monarki'),
+(1, 1, 'Desa Wohooo\''),
 (2, 2, 'Desa Binongko'),
-(4, 2, 'sadasdas');
+(6, 2, 'Hello'),
+(7, 2, 'Hello');
 
 -- --------------------------------------------------------
 
@@ -91,22 +92,30 @@ INSERT INTO `tbl_hak_akses` (`id`, `user_level`, `menu`) VALUES
 (3, 1, 3),
 (6, 4, 4),
 (7, 6, 10),
-(8, 4, 13),
-(9, 5, 13),
-(10, 6, 13),
-(11, 7, 13),
-(12, 8, 13),
-(13, 9, 13),
-(14, 5, 9),
+(8, 4, 1009),
+(9, 5, 1009),
+(10, 6, 1009),
+(11, 7, 1009),
+(12, 8, 1009),
+(13, 9, 1009),
+(14, 5, 23),
 (15, 7, 9),
 (16, 8, 9),
-(17, 9, 9),
+(17, 9, 4),
 (18, 10, 12),
-(19, 10, 13),
+(19, 10, 1009),
 (20, 1, 14),
 (23, 1, 17),
 (24, 4, 20),
-(25, 9, 20);
+(25, 9, 23),
+(26, 1, 21),
+(27, 4, 24),
+(28, 5, 9),
+(29, 6, 9),
+(30, 7, 23),
+(31, 8, 23),
+(32, 9, 24),
+(33, 10, 13);
 
 -- --------------------------------------------------------
 
@@ -167,7 +176,7 @@ CREATE TABLE `tbl_kecamatan` (
 INSERT INTO `tbl_kecamatan` (`id`, `kecamatan`) VALUES
 (1, 'Monarki Den Wara'),
 (2, 'Kecamatan'),
-(3, 'Juara');
+(3, 'Camat Sial');
 
 -- --------------------------------------------------------
 
@@ -188,25 +197,28 @@ CREATE TABLE `tbl_menu` (
 --
 
 INSERT INTO `tbl_menu` (`id`, `nama`, `url`, `icon`, `submenu`) VALUES
-(1, 'Kelola Pengguna', 'superadmin/user', 'fas fa-address-card', 0),
-(2, 'Kelola Level Pengguna', 'superadmin/userlevel', 'fas fa-layer-group', 0),
-(3, 'Kelola Menu', 'superadmin/menu', 'fas fa-archive', 0),
-(4, 'Verifikasi Berkas', '#', 'fas fa-archive', 0),
-(5, 'Loket Pendaftaran', 'operator/verifikasi/verif_loketpendaftaran', 'fas fa-archive', 4),
-(6, 'Pelaksana Subseksi', 'operator/verifikasi/verif_pelaksanasubseksi', 'fas fa-archive', 4),
-(7, 'Petugas Pengolah', 'operator/verifikasi/verif_petugaspengolah', 'fas fa-archive', 10),
-(8, 'Kepala Kantor Pertanahan', 'operator/verifikasi/verif_kepalakantortanah', 'fas fa-archive', 10),
-(9, 'Verifikasi Berkas', 'operator/verifikasi/verif_all', 'fas fa-archive', 0),
+(1, 'Dashboard', 'superadmin/dashboard', 'fas fa-home', 0),
+(2, 'Kelola Pengguna', 'superadmin/user\r\n', 'fas fa-user', 0),
+(3, 'Kelola Level Pengguna', 'superadmin/userlevel', 'fas fa-layer-group', 0),
+(4, 'Dashboard', 'operator/admin/dashboard', 'fas fa-home', 0),
+(5, 'Loket Pendaftaran', 'operator/verifikasi/verif_loketpendaftaran', 'fas fa-archive', 20),
+(6, 'Pelaksana Subseksi', 'operator/verifikasi/verif_pelaksanasubseksi', 'fas fa-archive', 20),
+(9, 'Dashboard', 'operator/dashboard', 'fas fa-home', 0),
 (10, 'Verifikasi Berkas', '#', 'fas fa-archive', 0),
-(12, 'Pengajuan Peralihan Hak', 'regular/pengajuan', 'fas fa-upload', 0),
-(13, 'Riwayat Perjalanan', 'riwayat', 'fas fa-archive', 0),
+(12, 'Dashboard', 'regular/dashboard', 'fas fa-home', 0),
+(13, 'Pengajuan Peralihan Hak', 'regular/pengajuan', 'fas fa-upload', 0),
 (14, 'Managemen Desa/Kecamatan', '#', 'fas fa-archive', 0),
 (15, 'Jenis Permohonan', 'superadmin/permohonan/list_jenis_permohonan', 'fas fa-archive', 17),
 (16, 'Hak Permohonan', 'superadmin/permohonan/list_hak_permohonan', 'fas fa-archive', 17),
 (17, 'Managemen Permohonan', '#', 'fas fa-archive', 0),
 (18, 'Desa', 'superadmin/desa/list_desa', 'fas fa-archive', 14),
 (19, 'Kecamatan', 'superadmin/desa/list_kecamatan', 'fas fa-archive', 14),
-(20, 'Managemen Berkas', 'operator/admin/pengajuan', 'fas fa-archive', 0);
+(20, 'Verifikasi Berkas', '#', 'fas fa-archive', 0),
+(23, 'Verifikasi Berkas', 'operator/verifikasi/verif_all', 'fas fa-archive', 0),
+(24, 'Managemen Berkas', 'operator/admin/pengajuan', 'fas fa-archive', 0),
+(100, 'Petugas Pengolah', 'operator/verifikasi/verif_petugaspengolah', 'fas fa-archive', 10),
+(101, 'Kepala Kantor Pertanahan', 'operator/verifikasi/verif_kepalakantortanah', 'fas fa-archive', 10),
+(1009, 'Riwayat Perjalanan', 'riwayat', 'fas fa-archive', 0);
 
 -- --------------------------------------------------------
 
@@ -276,14 +288,18 @@ INSERT INTO `tbl_riwayat_perjalanan` (`id`, `waktu`, `id_user`, `next_user`, `id
 (39, '2020-09-24 12:09:23', 19, 18, 15, 0, ''),
 (40, '2020-09-24 12:09:19', 14, 15, 16, 2, 'Permohonan Dibuat'),
 (41, '2020-09-24 01:09:18', 13, 15, 17, 1, 'Permohonan Dibuat'),
-(42, '2020-09-24 01:09:50', 15, 20, 17, 0, ''),
+(42, '2020-09-24 01:09:50', 15, 20, 17, 1, ''),
 (43, '2020-09-25 10:09:09', 13, 15, 18, 1, 'Permohonan Dibuat'),
 (44, '2020-09-25 11:09:21', 13, 15, 19, 0, 'Permohonan Dibuat'),
 (45, '2020-09-25 11:09:47', 13, 15, 20, 0, 'Permohonan Dibuat'),
 (46, '2020-09-25 11:09:31', 15, 20, 18, 0, ''),
 (47, '2020-09-26 10:09:52', 14, 15, 21, 0, 'Permohonan Dibuat'),
 (48, '2020-09-28 08:09:01', 13, 15, 22, 0, 'Permohonan Dibuat'),
-(49, '2020-09-28 09:09:07', 13, 15, 23, 0, 'Permohonan Dibuat');
+(49, '2020-09-28 09:09:07', 13, 15, 23, 0, 'Permohonan Dibuat'),
+(50, '2020-09-24 01:09:50', 20, 19, 17, 1, ''),
+(51, '2020-09-24 01:09:50', 19, 17, 17, 1, ''),
+(52, '2020-09-24 01:09:50', 17, 16, 17, 1, ''),
+(53, '2020-09-24 01:09:50', 16, 19, 17, 0, '');
 
 -- --------------------------------------------------------
 
@@ -426,13 +442,13 @@ ALTER TABLE `tbl_alur_berkas`
 -- AUTO_INCREMENT for table `tbl_desa`
 --
 ALTER TABLE `tbl_desa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `tbl_hak_akses`
 --
 ALTER TABLE `tbl_hak_akses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `tbl_hak_permohonan`
@@ -450,13 +466,13 @@ ALTER TABLE `tbl_jenis_permohonan`
 -- AUTO_INCREMENT for table `tbl_kecamatan`
 --
 ALTER TABLE `tbl_kecamatan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tbl_menu`
 --
 ALTER TABLE `tbl_menu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10003;
 
 --
 -- AUTO_INCREMENT for table `tbl_pengajuan_berkas`
@@ -468,7 +484,7 @@ ALTER TABLE `tbl_pengajuan_berkas`
 -- AUTO_INCREMENT for table `tbl_riwayat_perjalanan`
 --
 ALTER TABLE `tbl_riwayat_perjalanan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT for table `tbl_user`

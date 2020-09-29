@@ -2,7 +2,7 @@
 
     <?php 
         $user_level = $this->session->userdata('user_level');
-        $sql = "SELECT mn.* FROM tbl_hak_akses as ak JOIN tbl_menu as mn ON ak.menu = mn.id WHERE ak.user_level = $user_level";
+        $sql = "SELECT mn.* FROM tbl_hak_akses as ak JOIN tbl_menu as mn ON ak.menu = mn.id WHERE ak.user_level = $user_level ORDER BY mn.id ,'DESC'";
 
         $main_menu = $this->db->query($sql)->result();
 

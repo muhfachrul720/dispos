@@ -141,6 +141,25 @@
             return $this->db->get();
         }
 
+        public function _count($table)
+        {
+            $this->db->select('cn.id');
+            $this->db->from($table.' as cn');
+            $this->db->where('softdelete', 0);
+            return $this->db->get();
+        }
+
+        public function _countbyid($table, $id)
+        {
+            $this->db->select('cn.id');
+            $this->db->from($table.' as cn');
+            $this->db->where('id_user', $id);
+            $this->db->where('softdelete', 0);
+
+            return $this->db->get();
+        }
+        
+
     }
 
 ?>
