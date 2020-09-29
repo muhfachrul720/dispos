@@ -62,11 +62,11 @@
                           <td><a href="<?= base_url()?>riwayat/detail_pengajuan/<?= $val['id']?>" class="btn btn-primary btn-sm">Detail</a></td>
                           <td>
                               <a href="<?=base_url()?>operator/admin/pengajuan/form_edit/<?= $val['brid']?>" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                              <?php if($this->session->userdata('user_level') == 9) {?>
+                              <?php if($this->session->userdata('user_level') == 9 || $this->session->userdata('user_level') == 8) {?>
                                     <a href="<?=base_url()?>operator/admin/pengajuan/delete/<?= $val['brid']?>" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
                               <?php };?>
                           </td>
-                          <?php if($this->session->userdata('user_level') == 9) {?>
+                          <?php if($this->session->userdata('user_level') == 9 || $this->session->userdata('user_level') == 8) {?>
                           <td>
                             <div class="icheck-primary d-inline">
                                 <?php if($val['permit'] != 0) {?>
