@@ -11,6 +11,14 @@
 
         public function index()
         {
+            $data['riwayat'] = $this->M_pengajuan->get_pengajuan()->result_array();
+            $data['title'] = 'Dashboard Pengajuan';
+
+            $this->template->load('template_admin','riwayat_list', $data);
+        }
+
+        public function riwayat()
+        {
             $data['title'] = 'Riwayat Perjalanan';
             $data['riwayat'] = $this->M_pengajuan->get_riwayat()->result_array();
 
