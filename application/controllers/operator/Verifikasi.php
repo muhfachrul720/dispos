@@ -96,7 +96,11 @@
                 // Make New Riwayat
                 $this->M_pengajuan->insert('tbl_riwayat_perjalanan', $data);
     
-                redirect('operator/dashboard');
+                if($this->session->userdata('user_level') == 4 || $this->session->userdata('user_level') == 9){
+                    redirect('operator/admin/dashboard');
+                } else {
+                    redirect('operator/dashboard');
+                }
             }
             else {
                 redirect('operator/dashboard');

@@ -70,7 +70,7 @@
             return $this->db->get();
         }
 
-        public function get_pengajuan($id)
+        public function get_pengajuan($id = null)
         {   
             $this->db->select('max(aw.id)');
             $this->db->from('tbl_riwayat_perjalanan as aw');
@@ -78,7 +78,7 @@
             $max = $this->db->get_compiled_select();
 
             // MainSelect
-            $this->db->select('br.*, lv.name as posisi_akhir, aw.nama_lengkap');
+            $this->db->select('br.*, lv.name as posisi_akhir, aw.nama_lengkap, rw.waktu as rwaktu');
 
             $this->db->from('tbl_riwayat_perjalanan as rw');
             $this->db->join('tbl_pengajuan_berkas as br', 'rw.id_pengajuan = br.id');
@@ -86,7 +86,12 @@
             $this->db->join('tbl_user_level as lv', 'us.user_level = lv.id');
             $this->db->join('tbl_user as aw', 'aw.id = br.id_user');
 
-            $this->db->where("rw.id IN($max) AND br.id_user = $id");
+            if($id != null){
+                $this->db->where("rw.id IN($max) AND br.id_user = $id");
+            }
+            else {
+                $this->db->where("rw.id IN($max)");
+            }
             $this->db->where("br.softdelete", 0);
 
             return $this->db->get();
