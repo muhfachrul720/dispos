@@ -83,16 +83,6 @@
             </div>
         </div>
         <div class="col-3">
-            <!-- <div class="card">
-                <div class="card-body">
-                    <label for="fileUp" class="file_upload" style="width:100%; padding:50px 0px; border:dashed 4px #318cb8; text-align:center; cursor:pointer">
-                        <i class="fas fa-file" style="font-size:38px; color:#318cb8;"></i>
-                        <br> <small>Upload File</small>
-                    </label>
-                    <input type="file" id="fileUp" name="fileUp" style="display:none" accept="application/pdf">
-                    <span class="btn btn-danger btn-sm w-100 mt-3"><i class="fas fa-times"></i></span>
-                </div>
-            </div> -->
 
             <p><small>Silahkan Untuk Menekan tombol Dibawah Apabila Telah Mengisi dan Mengupload File Secara Keseluruhan</small></p>
 

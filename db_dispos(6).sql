@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 30, 2020 at 08:14 AM
+-- Generation Time: Sep 30, 2020 at 09:35 AM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.2.20
 
@@ -100,7 +100,7 @@ INSERT INTO `tbl_hak_akses` (`id`, `user_level`, `menu`) VALUES
 (13, 9, 1009),
 (14, 5, 23),
 (15, 7, 9),
-(16, 8, 9),
+(16, 8, 4),
 (17, 9, 4),
 (18, 10, 12),
 (19, 10, 1009),
@@ -248,9 +248,7 @@ CREATE TABLE `tbl_pengajuan_berkas` (
 --
 
 INSERT INTO `tbl_pengajuan_berkas` (`id`, `no_berkas`, `no_hak`, `jenis_hak`, `desa_kecamatan`, `nama_pemilik`, `waktu`, `jatuh_tempo`, `jenis_permohonan`, `qr_code`, `permit`, `softdelete`, `id_user`) VALUES
-(24, '119992322', '12323122', 1, 6, 'Helllo', '2020-09-29 02:09:51', '2020-10-06 02:09:51', 1, NULL, 0, '0', 14),
-(25, '09923221', '1232231212', 1, 7, 'Iroha Nakiri', '2020-09-29 02:09:30', '2020-10-06 02:09:30', 1, NULL, 1, '0', 13),
-(26, '213123', '213123', 1, 7, 'Kuan', '2020-09-29 04:09:48', '2020-10-06 04:09:48', 1, NULL, 0, '0', 13);
+(27, '2312312321', '1232123', 1, 6, 'Nur', '2020-09-30 02:09:46', '2020-10-07 02:09:46', 1, NULL, 0, '0', 13);
 
 -- --------------------------------------------------------
 
@@ -273,11 +271,15 @@ CREATE TABLE `tbl_riwayat_perjalanan` (
 --
 
 INSERT INTO `tbl_riwayat_perjalanan` (`id`, `waktu`, `id_user`, `next_user`, `id_pengajuan`, `status`, `keterangan`) VALUES
-(54, '2020-09-29 02:09:51', 14, 15, 24, 1, 'Permohonan Dibuat'),
-(55, '2020-09-29 02:09:02', 15, 20, 24, 0, ''),
-(56, '2020-09-29 02:09:30', 13, 15, 25, 1, 'Permohonan Dibuat'),
-(57, '2020-10-10 00:00:00', 15, 20, 25, 0, ''),
-(58, '2020-09-29 04:09:48', 13, 15, 26, 0, 'Permohonan Dibuat');
+(60, '2020-09-30 02:09:46', 13, 15, 27, 1, 'Permohonan Dibuat'),
+(62, '2020-09-30 03:09:47', 15, 20, 27, 1, ''),
+(63, '2020-09-30 03:09:25', 20, 19, 27, 1, ''),
+(64, '2020-09-30 03:09:50', 19, 15, 27, 1, ''),
+(65, '2020-09-30 03:09:33', 15, 17, 27, 1, ''),
+(66, '2020-09-30 03:09:54', 17, 16, 27, 1, ''),
+(67, '2020-09-30 03:09:21', 16, 19, 27, 1, ''),
+(68, '2020-09-30 03:09:53', 19, 18, 27, 1, ''),
+(69, '2020-09-30 03:09:22', 18, 1, 27, 0, '');
 
 -- --------------------------------------------------------
 
@@ -456,13 +458,13 @@ ALTER TABLE `tbl_menu`
 -- AUTO_INCREMENT for table `tbl_pengajuan_berkas`
 --
 ALTER TABLE `tbl_pengajuan_berkas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `tbl_riwayat_perjalanan`
 --
 ALTER TABLE `tbl_riwayat_perjalanan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- AUTO_INCREMENT for table `tbl_user`

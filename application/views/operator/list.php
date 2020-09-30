@@ -39,6 +39,7 @@
               <thead>
                 <tr>
                   <th>No</th>
+                  <th>No Berkas</th>
                   <th>Nama Pemohon</th>
                   <th>Tahun</th>
                   <th>Tanggal Mulai</th>
@@ -53,6 +54,7 @@
                   foreach ($verif as $key => $val) { ?>
                     <tr>
                         <td><?= $no ?></td>
+                        <td><?= $val['no_berkas']?></td>
                         <td><?= $val['nama_pemilik']?></td>
                         <td><?= $val['tahun']?></td>
                         <td><?= $val['waktu']?></td>

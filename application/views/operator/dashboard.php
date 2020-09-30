@@ -13,7 +13,7 @@
     <div class="row">
 
             <div class="col-12 col-sm-6 col-md-12">
-                <div class="info-box">
+                <a href="<?= site_url()?>riwayat" class="info-box" style="color:black">
                     <span class="info-box-icon bg-success elevation-1"><i class="fas fa-archive"></i></span>
 
                     <div class="info-box-content">
@@ -23,13 +23,12 @@
                         <small>pengajuan</small>
                     </span>
                     </div>
-                </div>
+                </a>
             </div>
 
-
-        <?php if(isset($verif_loket)) {?> 
+            <?php if(isset($edit)) {?> 
             <div class="col-12 col-sm-6 col-md-4">
-                <div class="info-box">
+                <a href="<?= site_url()?>operator/admin/pengajuan" class="info-box" style="color:black">
                     <span class="info-box-icon bg-info elevation-1"><i class="fas fa-archive"></i></span>
 
                     <div class="info-box-content">
@@ -39,13 +38,13 @@
                         <small>pengajuan</small>
                     </span>
                     </div>
-                </div>
+                </a>
             </div>
             <?php };?> 
 
             <?php if(isset($verif_loket)) {?> 
             <div class="col-12 col-sm-6 col-md-4">
-                <div class="info-box">
+                <a href="<?= site_url()?>operator/verifikasi/verif_loketpendaftaran" class="info-box" style="color:black">
                     <span class="info-box-icon bg-info elevation-1"><i class="fas fa-upload"></i></span>
 
                     <div class="info-box-content">
@@ -55,11 +54,11 @@
                         <small>pengajuan</small>
                     </span>
                     </div>
-                </div>
+                </a>
             </div>
 
             <div class="col-12 col-sm-6 col-md-4">
-                <div class="info-box">
+                <a href="<?= site_url()?>operator/verifikasi/verif_pelaksanasubseksi" class="info-box" style="color:black">
                     <span class="info-box-icon bg-info elevation-1"><i class="fas fa-upload"></i></span>
 
                     <div class="info-box-content">
@@ -69,13 +68,13 @@
                         <small>pengajuan</small>
                     </span>
                     </div>
-                </div>
+                </a>
             </div>
             <?php };?> 
 
             <?php if(isset($verif_tanah)) {?> 
             <div class="col-12 col-sm-6 col-md-6">
-                <div class="info-box">
+                <a href="<?= site_url()?>operator/verifikasi/verif_petugaspengolah" class="info-box" style="color:black">
                     <span class="info-box-icon bg-info elevation-1"><i class="fas fa-upload"></i></span>
 
                     <div class="info-box-content">
@@ -85,11 +84,11 @@
                         <small>pengajuan</small>
                     </span>
                     </div>
-                </div>
+                </a>
             </div>
 
             <div class="col-12 col-sm-6 col-md-6">
-                <div class="info-box">
+                <a href="<?= site_url()?>operator/verifikasi/verif_kepalakantortanah" class="info-box" style="color:black">
                     <span class="info-box-icon bg-info elevation-1"><i class="fas fa-upload"></i></span>
 
                     <div class="info-box-content">
@@ -99,7 +98,7 @@
                         <small>pengajuan</small>
                     </span>
                     </div>
-                </div>
+                </a>
             </div>
             <?php };?> 
 

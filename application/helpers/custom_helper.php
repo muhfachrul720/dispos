@@ -1,5 +1,5 @@
 <?php
-function generate_status($time, $endtime)
+function generate_status($time, $endtime, $last)
 {
     $d4 =  new DateTime($time);
     $limit4 = $d4->modify('+4 days')->format('Y-m-d h:m:s');
@@ -8,11 +8,14 @@ function generate_status($time, $endtime)
     $limit7 = $d7->modify('+7 days')->format('Y-m-d h:m:s');
 
     if($endtime > $limit7){
-        echo '<span class="badge badge-danger" style="font-size:12px">Terlambat 7 Hari</span>';
+        $text = $last == 7 ? 'Telah Selesai' : 'Terlambat 7 Hari';
+        echo '<span class="badge badge-danger" style="font-size:12px">'.$text.'</span>';
     } else if($endtime > $limit4) {
-        echo '<span class="badge badge-warning" style="font-size:12px">Terlambat 4 Hari</span>';
+        $text = $last == 7 ? 'Telah Selesai' : 'Terlambat 4 Hari';
+        echo '<span class="badge badge-warning" style="font-size:12px">'.$text.'</span>';
     } else {
-        echo '<span class="badge badge-success" style="font-size:12px">Tepat Waktu</span>';
+        $text = $last == 7 ? 'Telah Selesai' : 'Tepat Waktu';
+        echo '<span class="badge badge-success" style="font-size:12px">'.$text.'</span>';
     }
 }
 
