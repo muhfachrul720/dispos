@@ -41,6 +41,7 @@
                 <tr>
                   <th>No</th>
                   <th>Nama Desa</th>
+                  <th>Nama Kecamatan</th>
                   <th>Aksi</th>
                 </tr>
               </thead>

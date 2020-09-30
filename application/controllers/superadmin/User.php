@@ -112,7 +112,7 @@ class User extends CI_Controller
                 $data = array(
 		'username'     => $this->input->post('username',TRUE),
 		'email'         => $this->input->post('email',TRUE),
-        'password'      => $hashPassword,
+        // 'password'      => $hashPassword,
         'user_level' => $this->input->post('id_user_level',TRUE)
         );
             }else{
@@ -124,7 +124,7 @@ class User extends CI_Controller
                 $data = array(
 		'username'     => $this->input->post('username',TRUE),
 		'email'         => $this->input->post('email',TRUE),
-        'password'      => $hashPassword,
+        // 'password'      => $hashPassword,
         'images'        =>$foto['file_name'],
 		'user_level' => $this->input->post('id_user_level',TRUE),
                 );
@@ -132,7 +132,11 @@ class User extends CI_Controller
                 $this->session->set_userdata('images',$foto['file_name']);
             
             }
-            
+
+            if($password){
+                $data['password'] = $hashPassword;
+            }
+
             $this->User_model->update($this->input->post('id_users', TRUE), $data);
             $this->session->set_flashdata('message', 'Update Record Success');
             redirect(site_url('superadmin/user'));

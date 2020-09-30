@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Disposisi Surat</title>
+  <title>Sistem Monitoring</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -81,7 +81,7 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
-      <div class="brand-text font-weight-light px-4">Sistem Monitoring <br> Dokumen</div>
+      <div class="brand-text font-weight-light px-4">Sistem Informasi Monitoring Pelayanan <br> Pertanahan</div>
     </a>
 
     <!-- Sidebar -->
