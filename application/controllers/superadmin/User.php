@@ -115,32 +115,32 @@ class User extends CI_Controller
                 $hashPassword = password_hash($password, PASSWORD_BCRYPT, $options);
                 
                 $data = array(
-                    'username' => $this->input->post('username', TRUE),
-                    'email' => $this->input->post('email', TRUE),
-                    // 'password' => $hashPassword,
-                    'user_level' => $this->input->post('id_user_level', TRUE)
-                );
-            } else {
-                
-                $password     = $this->input->post('password', TRUE);
-                $options      = array(
-                    "cost" => 4
-                );
-                $hashPassword = password_hash($password, PASSWORD_BCRYPT, $options);
-                
+		'username'     => $this->input->post('username',TRUE),
+		'email'         => $this->input->post('email',TRUE),
+        // 'password'      => $hashPassword,
+        'user_level' => $this->input->post('id_user_level',TRUE)
+        );
+            }else{
+
+            $password       = $this->input->post('password',TRUE);
+            $options        = array("cost"=>4);
+            $hashPassword   = password_hash($password,PASSWORD_BCRYPT,$options);
+
                 $data = array(
-                    'username' => $this->input->post('username', TRUE),
-                    'email' => $this->input->post('email', TRUE),
-                    // 'password' => $hashPassword,
-                    'images' => $foto['file_name'],
-                    'user_level' => $this->input->post('id_user_level', TRUE)
+		'username'     => $this->input->post('username',TRUE),
+		'email'         => $this->input->post('email',TRUE),
+        // 'password'      => $hashPassword,
+        'images'        =>$foto['file_name'],
+		'user_level' => $this->input->post('id_user_level',TRUE),
                 );
                 // ubah foto profil yang aktif
                 $this->session->set_userdata('images', $foto['file_name']);
             }
-            if( $password )
+
+            if($password){
                 $data['password'] = $hashPassword;
-            
+            }
+
             $this->User_model->update($this->input->post('id_users', TRUE), $data);
             $this->session->set_flashdata('message', 'Update Record Success');
             redirect(site_url('superadmin/user'));

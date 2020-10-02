@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 29, 2020 at 03:33 AM
+-- Generation Time: Sep 30, 2020 at 08:14 AM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.2.20
 
@@ -115,7 +115,8 @@ INSERT INTO `tbl_hak_akses` (`id`, `user_level`, `menu`) VALUES
 (30, 7, 23),
 (31, 8, 23),
 (32, 9, 24),
-(33, 10, 13);
+(33, 10, 13),
+(34, 8, 24);
 
 -- --------------------------------------------------------
 
@@ -247,15 +248,9 @@ CREATE TABLE `tbl_pengajuan_berkas` (
 --
 
 INSERT INTO `tbl_pengajuan_berkas` (`id`, `no_berkas`, `no_hak`, `jenis_hak`, `desa_kecamatan`, `nama_pemilik`, `waktu`, `jatuh_tempo`, `jenis_permohonan`, `qr_code`, `permit`, `softdelete`, `id_user`) VALUES
-(15, '2322 122 3222', '12232 22312 32212', 1, 1, 'Munawarman Trisakti', '2020-09-24 12:09:35', '2020-10-01 12:09:35', 1, NULL, 0, '1', 13),
-(16, '1322', '13232 ', 1, 1, 'MiawAug', '2020-09-24 12:09:19', '2020-10-01 12:09:19', 1, NULL, 0, '0', 14),
-(17, '2312321', '1232 ', 1, 2, 'Mrs Edward ', '2020-09-24 01:09:18', '2020-10-01 01:09:18', 1, NULL, 0, '1', 13),
-(18, '23213 213123 2312', '12322231', 2, 1, 'Kilimanjaro', '2020-09-25 10:09:09', '2020-10-02 10:09:09', 4, NULL, 0, '1', 13),
-(19, '123213', '2121', 2, 1, 'Stalin Fierdherdman', '2020-09-25 11:09:21', '2020-10-02 11:09:21', 4, NULL, 1, '0', 13),
-(20, '12321', '2131', 1, 1, 'Budi Budiman', '2020-09-25 11:09:47', '2020-10-02 11:09:47', 1, NULL, 1, '0', 13),
-(21, '12312 23123 23123', '1232 2312 233122', 1, 2, 'Alphones Elrich', '2020-09-26 10:09:52', '2020-10-03 10:09:52', 1, NULL, 0, '0', 14),
-(22, '992992', '12e1232', 1, 2, 'Musdar', '2020-09-28 08:09:01', '2020-10-05 08:09:01', 1, NULL, 0, '0', 13),
-(23, '123213', '2312313', 1, 2, 'Oleng Kapten', '2020-09-28 09:09:07', '2020-10-05 09:09:07', 1, NULL, 0, '0', 13);
+(24, '119992322', '12323122', 1, 6, 'Helllo', '2020-09-29 02:09:51', '2020-10-06 02:09:51', 1, NULL, 0, '0', 14),
+(25, '09923221', '1232231212', 1, 7, 'Iroha Nakiri', '2020-09-29 02:09:30', '2020-10-06 02:09:30', 1, NULL, 1, '0', 13),
+(26, '213123', '213123', 1, 7, 'Kuan', '2020-09-29 04:09:48', '2020-10-06 04:09:48', 1, NULL, 0, '0', 13);
 
 -- --------------------------------------------------------
 
@@ -278,28 +273,11 @@ CREATE TABLE `tbl_riwayat_perjalanan` (
 --
 
 INSERT INTO `tbl_riwayat_perjalanan` (`id`, `waktu`, `id_user`, `next_user`, `id_pengajuan`, `status`, `keterangan`) VALUES
-(32, '2020-09-24 12:09:35', 13, 15, 15, 1, 'Permohonan Dibuat'),
-(33, '2020-09-24 12:09:11', 15, 20, 15, 1, ''),
-(34, '2020-09-24 12:09:31', 20, 19, 15, 1, ''),
-(35, '2020-09-24 12:09:56', 19, 15, 15, 1, ''),
-(36, '2020-09-24 12:09:09', 15, 17, 15, 1, ''),
-(37, '2020-09-24 12:09:33', 17, 16, 15, 1, ''),
-(38, '2020-09-24 12:09:01', 16, 19, 15, 1, ''),
-(39, '2020-09-24 12:09:23', 19, 18, 15, 0, ''),
-(40, '2020-09-24 12:09:19', 14, 15, 16, 2, 'Permohonan Dibuat'),
-(41, '2020-09-24 01:09:18', 13, 15, 17, 1, 'Permohonan Dibuat'),
-(42, '2020-09-24 01:09:50', 15, 20, 17, 1, ''),
-(43, '2020-09-25 10:09:09', 13, 15, 18, 1, 'Permohonan Dibuat'),
-(44, '2020-09-25 11:09:21', 13, 15, 19, 0, 'Permohonan Dibuat'),
-(45, '2020-09-25 11:09:47', 13, 15, 20, 0, 'Permohonan Dibuat'),
-(46, '2020-09-25 11:09:31', 15, 20, 18, 0, ''),
-(47, '2020-09-26 10:09:52', 14, 15, 21, 0, 'Permohonan Dibuat'),
-(48, '2020-09-28 08:09:01', 13, 15, 22, 0, 'Permohonan Dibuat'),
-(49, '2020-09-28 09:09:07', 13, 15, 23, 0, 'Permohonan Dibuat'),
-(50, '2020-09-24 01:09:50', 20, 19, 17, 1, ''),
-(51, '2020-09-24 01:09:50', 19, 17, 17, 1, ''),
-(52, '2020-09-24 01:09:50', 17, 16, 17, 1, ''),
-(53, '2020-09-24 01:09:50', 16, 19, 17, 0, '');
+(54, '2020-09-29 02:09:51', 14, 15, 24, 1, 'Permohonan Dibuat'),
+(55, '2020-09-29 02:09:02', 15, 20, 24, 0, ''),
+(56, '2020-09-29 02:09:30', 13, 15, 25, 1, 'Permohonan Dibuat'),
+(57, '2020-10-10 00:00:00', 15, 20, 25, 0, ''),
+(58, '2020-09-29 04:09:48', 13, 15, 26, 0, 'Permohonan Dibuat');
 
 -- --------------------------------------------------------
 
@@ -331,7 +309,7 @@ INSERT INTO `tbl_user` (`id`, `username`, `nama_lengkap`, `email`, `password`, `
 (17, 'KepalaHukum', NULL, 'PPAT@uho.ac.id', '$2y$04$f3e3yiOeO2CGj2YGS849O.b5OXJGFlsg6o8849RHTL941vBE/tEoa', 'default.png 	', 8),
 (18, 'LoketSerah', NULL, 'PPAT@uho.ac.id', '$2y$04$ISf5y4zHCRci.g4b9geUtulYKINVz.wdcnXJM0PwNj7.ChvO4bmle', 'default.png 	', 7),
 (19, 'PelaksanaSubseksi', NULL, 'PPAT@uho.ac.id', '$2y$04$ldRTDNDS6CcYfkYywiUisuZY1c3g.MXEuVG5whu5adHbmqmd7ACE2', 'default.png 	', 6),
-(20, 'PetugasPengolah1', NULL, 'PPAT@uho.ac.id', '$2y$04$Ow7WwfbhvixySzfyDCZJDu82QjpJHbYa/KyfsRUSL6ZBZP9U8Clsy', 'default.png 	', 5);
+(20, 'PetugasPengolah1', NULL, 'PPAT@uho.ac.id', '$2y$04$wDHc.334QeIk4UeFT.p9jeaUG3UhaQt1WL5c1.yxTWa4Em1duehcq', 'default.png 	', 5);
 
 -- --------------------------------------------------------
 
@@ -448,7 +426,7 @@ ALTER TABLE `tbl_desa`
 -- AUTO_INCREMENT for table `tbl_hak_akses`
 --
 ALTER TABLE `tbl_hak_akses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `tbl_hak_permohonan`
@@ -472,19 +450,19 @@ ALTER TABLE `tbl_kecamatan`
 -- AUTO_INCREMENT for table `tbl_menu`
 --
 ALTER TABLE `tbl_menu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10003;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10004;
 
 --
 -- AUTO_INCREMENT for table `tbl_pengajuan_berkas`
 --
 ALTER TABLE `tbl_pengajuan_berkas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `tbl_riwayat_perjalanan`
 --
 ALTER TABLE `tbl_riwayat_perjalanan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `tbl_user`

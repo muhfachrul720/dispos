@@ -39,7 +39,7 @@
 
             $html = $this->load->view('regular/print_qrcode', $data, true);
 
-            $pdfFilePath = 'Print Berkas.pdf';
+            $pdfFilePath = $data['no_berkas'].'.pdf';
 
             $mpdf->AddPageByArray([
                 'margin-top' => '5',
