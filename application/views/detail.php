@@ -76,10 +76,10 @@
                   <thead>
                       <tr>
                           <th>No</th>
-                          <th>Nama Pemohon</th>
-                          <th>Tahun</th>
+                          <!-- <th>Nama Pemohon</th> -->
+                          <!-- <th>Tahun</th> -->
                           <th>Tanggal</th>
-                          <th>Jatuh Tempo</th>
+                          <!-- <th>Jatuh Tempo</th> -->
                           <th>Posisi Terakhir</th>
                       </tr>
                   </thead>
@@ -91,10 +91,10 @@
                       ?>
                           <tr style="color:<?= $color ?>">
                               <td><?= $no ?></td>
-                              <td><?= $val['nama_pemilik']?></td>
-                              <td><?= $val['tahun']?></td>
+                              <!-- <td><?= $val['nama_pemilik']?></td>
+                              <td><?= $val['tahun']?></td> -->
                               <td><?= $val['rwaktu'] ?></td>
-                              <td><?= $val['jatuh_tempo']?></td>
+                              <!-- <td><?= $val['jatuh_tempo']?></td> -->
                               <td><?= $val['posisi_akhir']?></td>
                           </tr>
                       <?php $no++;

@@ -41,6 +41,7 @@
               <thead>
                 <tr>
                   <th>No</th>
+                  <th>No Berkas</th>
                   <th>Nama Pemohon</th>
                   <th>Waktu Pengajuan</th>
                   <th>Jatuh Tempo</th>
@@ -55,6 +56,7 @@
                   foreach ($riwayat as $key => $val) { ?>
                       <tr>
                           <td><?= $no ?></td>
+                          <td><?= $val['no_berkas']?></td>
                           <td><?= $val['nama_pemilik']?></td>
                           <td><?= $val['waktu']?></td>
                           <td><?= $val['jatuh_tempo']?></td>

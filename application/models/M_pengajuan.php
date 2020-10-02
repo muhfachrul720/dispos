@@ -78,7 +78,7 @@
             $max = $this->db->get_compiled_select();
 
             // MainSelect
-            $this->db->select('br.*, lv.name as posisi_akhir, aw.nama_lengkap, rw.waktu as rwaktu');
+            $this->db->select('br.*, lv.name as posisi_akhir, aw.nama_lengkap, rw.waktu as rwaktu, lv.id as id_akhir');
 
             $this->db->from('tbl_riwayat_perjalanan as rw');
             $this->db->join('tbl_pengajuan_berkas as br', 'rw.id_pengajuan = br.id');
@@ -101,7 +101,6 @@
         {
             $this->db->select('br.*, rw.id as rwid, rw.waktu as rwaktu, YEAR(rw.waktu) as tahun, rw.keterangan, lv.name as posisi_akhir, aw.nama_lengkap');
             $this->db->from('tbl_riwayat_perjalanan as rw');
-
             $this->db->join('tbl_pengajuan_berkas as br', 'rw.id_pengajuan = br.id');
             $this->db->join('tbl_user as us', 'us.id = rw.id_user');
             $this->db->join('tbl_user_level as lv', 'us.user_level = lv.id');
@@ -139,7 +138,7 @@
 
         public function get_detail_tinjauan($id)
         {
-            $this->db->select('*, cm.id_camat as desa, cm.nama, cm.id as idcmt');
+            $this->db->select('br.*, cm.id_camat as desa, cm.nama, cm.id as idcmt');
             $this->db->from('tbl_pengajuan_berkas as br');
             $this->db->join('tbl_desa as cm', 'br.desa_kecamatan = cm.id');
             $this->db->where('br.id', $id);

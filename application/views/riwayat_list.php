@@ -41,6 +41,7 @@
               <thead>
                 <tr>
                   <th>No</th>
+                  <th>No Berkas</th>
                   <th>Nama Pemohon</th>
                   <th>Waktu Pengajuan</th>
                   <th>Waktu Terakhir Ditinjau</th>
@@ -55,12 +56,13 @@
                   foreach ($riwayat as $key => $val) { ?>
                       <tr>
                           <td><?= $no ?></td>
+                          <td><?= $val['no_berkas']?></td>
                           <td><?= $val['nama_pemilik']?></td>
                           <td><?= $val['waktu']?></td>
                           <!-- <td><?= $val['jatuh_tempo']?></td> -->
                           <td><?= $val['rwaktu']?></td>
                           <td><?= $val['posisi_akhir']?></td>
-                          <td><?= generate_status($val['waktu'], $val['rwaktu']) ?></td>
+                          <td><?= generate_status($val['waktu'], $val['rwaktu'], $val['id_akhir']) ?></td>
                           <td><a href="<?= base_url()?>riwayat/detail_pengajuan/<?= $val['id']?>" class="btn btn-primary btn-sm">Detail</a></td>
                       </tr>
                   <?php $no++;
