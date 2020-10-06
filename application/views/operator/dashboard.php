@@ -13,7 +13,7 @@
     <div class="row">
 
             <div class="col-12 col-sm-6 col-md-4">
-                <a href="<?= site_url()?>regular/pengajuan" class="info-box" style="color:black">
+                <a href="<?= site_url()?>riwayat" class="info-box" style="color:black">
                     <span class="info-box-icon bg-info elevation-1"><i class="fas fa-archive"></i></span>
 
                     <div class="info-box-content">
@@ -27,7 +27,7 @@
             </div>
 
             <div class="col-12 col-sm-6 col-md-4">
-                <a href="<?= site_url()?>regular/pengajuan" class="info-box" style="color:black">
+                <a href="<?= site_url()?>riwayat" class="info-box" style="color:black">
                     <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-archive"></i></span>
 
                     <div class="info-box-content">
@@ -41,7 +41,7 @@
             </div>
 
             <div class="col-12 col-sm-6 col-md-4">
-                <a href="<?= site_url()?>regular/pengajuan" class="info-box" style="color:black">
+                <a href="<?= site_url()?>riwayat" class="info-box" style="color:black">
                     <span class="info-box-icon bg-success elevation-1"><i class="fas fa-archive"></i></span>
 
                     <div class="info-box-content">
