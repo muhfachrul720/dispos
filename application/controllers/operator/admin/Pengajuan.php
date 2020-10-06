@@ -100,4 +100,3 @@
             redirect('operator/admin/pengajuan');
         }
     }
-?>

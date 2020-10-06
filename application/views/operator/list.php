@@ -51,8 +51,11 @@
 
               <tbody>
                 <?php $no = 1;
-                  foreach ($verif as $key => $val) { ?>
-                    <tr>
+                  foreach ($verif as $key => $val) { 
+                        // echo json_encode( $val );die;
+                        $color = generate_color(date("Y:m:d H:i:s"), $val['jatuh_tempo'] );
+                  ?>
+                    <tr style="color:<?= $color ?>" >
                         <td><?= $no ?></td>
                         <td><?= $val['no_berkas']?></td>
                         <td><?= $val['nama_pemilik']?></td>

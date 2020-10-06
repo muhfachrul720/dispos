@@ -147,7 +147,7 @@
 
         public function get_detail_pdf($id)
         {
-            $this->db->select('*, cm.id_camat as desa, cm.nama, cm.id as idcmt, jn.nama as jenis, hk.nama as hak');
+            $this->db->select('*, cm.nama as desa, cm.nama, cm.id as idcmt, jn.nama as jenis, hk.nama as hak');
             $this->db->from('tbl_pengajuan_berkas as br');
             $this->db->join('tbl_desa as cm', 'br.desa_kecamatan = cm.id');
             $this->db->join('tbl_kecamatan as d', 'cm.id_camat = d.id');
@@ -171,6 +171,29 @@
             $this->db->from($table.' as cn');
             $this->db->where('id_user', $id);
             $this->db->where('softdelete', 0);
+
+            return $this->db->get();
+        }
+
+        public function count_pengajuan()
+        {
+            $this->db->select('max(aw.id)');
+            $this->db->from('tbl_riwayat_perjalanan as aw');
+            $this->db->group_by('aw.id_pengajuan');
+            $max = $this->db->get_compiled_select();
+
+            // MainSelect
+            $this->db->select('br.id, lv.name, lv.id as lvid');
+
+            $this->db->from('tbl_riwayat_perjalanan as rw');
+            $this->db->join('tbl_pengajuan_berkas as br', 'rw.id_pengajuan = br.id');
+            $this->db->join('tbl_user as us', 'us.id = rw.id_user');
+            $this->db->join('tbl_user_level as lv', 'us.user_level = lv.id');
+            $this->db->join('tbl_user as aw', 'aw.id = br.id_user');
+
+            $this->db->where("rw.id IN($max)");
+
+            $this->db->where("br.softdelete", 0);
 
             return $this->db->get();
         }

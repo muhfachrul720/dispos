@@ -38,6 +38,10 @@ Class Auth extends CI_Controller{
                     redirect('regular/dashboard');
                 }
             }else{
+<<<<<<< HEAD
+=======
+
+>>>>>>> dc703db8433b8ec59010aef6be86834f8a2d5e52
                 redirect('auth');
             }
         }else{

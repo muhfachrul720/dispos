@@ -22,26 +22,35 @@ class Profile extends User_Controller {
         $idus = $this->session->userdata('id');
         $oldimg = $this->session->userdata('images');
 
-        $this->rules($post);
+        $this->form_validation->set_rules('name', 'nama_lengkap', 'required|trim');
 
         if($this->form_validation->run() != FALSE){
+
+            $hashpass = password_hash($this->input->post('newpass'), PASSWORD_BCRYPT, array('cost' => 4));
 
             if($_FILES['images']['name'] != null){
                 $path = './upload/foto_profil';
                 $file = $this->file_upload($path, 'images');
-            }   
+            } 
 
             $data = array(
                 'nama_lengkap' => $post['name'],
                 'images' => isset($file) ? $file['file_name'] : $oldimg,
             );
 
+            if($post['newpass']){
+                $data['password'] = $hashpass;
+            };
+
             $this->User_model->update($idus, $data);
 
-            $this->index();
-
+            // redirect('profile');
+            redirect('auth/logout');
+            // $this->index();
+            
         } else {
-            $this->index();
+            redirect('profile');
+            // $this->index();
         }
 
     }

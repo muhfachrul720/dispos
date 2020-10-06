@@ -62,7 +62,7 @@
                         </div>
                         <div class="col-5">
                             <label for="">.</label>  &nbsp; <?= form_error('time')?>
-                            <input type="time" name="time" id="" class="form-control form-control-sm timeSet" placeholder="Masukkan Nomor.." value="<?= date('h:m:s')?>" readonly>
+                            <input type="time" name="time" id="" class="form-control form-control-sm timeSet" placeholder="Masukkan Nomor.." value="<?= date('H:i:s')?>" readonly>
                         </div>
                         <div class="col-2">
                             <label for="">.</label>

@@ -16,12 +16,12 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <p><small>Form Untuk Menambahkan Jenis Permohonan</small></p>
+                    <p><small>Form Untuk Menambahkan Jenis Hak</small></p>
                     
                     <div class="form-group row">
                         <label for="inputPassword3" class="col-sm-2 col-form-label">Jenis Hak</label>
                         <div class="col-sm-10">
-                        <input type="text" class="form-control form-control-sm mt-1" required id="inputPassword3" placeholder="Masukkan Jenis Permohonan ... " name="name" value="<?= $nama ?>">
+                        <input type="text" class="form-control form-control-sm mt-1" required id="inputPassword3" placeholder="Masukkan Jenis Hak ... " name="name" value="<?= $nama ?>">
                         <small><?php echo form_error('name') ?></small>
                         </div>
                     </div>

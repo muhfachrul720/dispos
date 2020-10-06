@@ -3,7 +3,7 @@
     <div class="row mb-2">
       <div class="col-sm-12">
         <h1 class="m-0 text-dark"><b><?= $title ?></b></h1>
-        <p>Menu Untuk mengelola Data Desa / Kecamatan</p>
+        <p>Menu Untuk mengelola Data Jenis Hak</p>
       </div><!-- /.col -->
     </div><!-- /.row -->
   </div><!-- /.container-fluid -->
@@ -40,7 +40,7 @@
               <thead>
                 <tr>
                   <th>No</th>
-                  <th>Nama Desa</th>
+                  <th>Jenis Hak</th>
                   <th>Aksi</th>
                 </tr>
               </thead>

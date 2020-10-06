@@ -103,8 +103,13 @@ $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
 	'username' => 'root',
+<<<<<<< HEAD
 	'password' => 'Alan!234',
 	'database' => 'db_dispos',
+=======
+	'password' => '',
+	'database' => 'db_dispos_new',
+>>>>>>> dc703db8433b8ec59010aef6be86834f8a2d5e52
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

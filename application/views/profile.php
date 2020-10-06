@@ -22,10 +22,16 @@
                         <label for="">Nama Lengkap</label> <?= form_error('name')?>
                         <input type="text" name="name" class="form-control form-control-sm" placeholder="Silahkan Memasukkan Nama Lengkap" value="<?= $profile->nama_lengkap?>">
                     </div>
-                    <div class="form-group">
-                        <label for="">Foto Profil</label> 
-                        <div><label for="fileUp" class="btn btn-primary btn-sm">Upload Foto</label></div>
-                        <input type="file" name="images" style="display:none" id="fileUp" placeholder="Silahkan Memasukkan Nama Lengkap" accept="image/*">
+                    <div class="form-group row">
+                        <div class="col-8">
+                            <label for="">Ganti Password</label> <?= form_error('name')?>
+                            <input type="text" name="newpass" class="form-control form-control-sm" placeholder="Silahkan Memasukkan Password.." value="">
+                        </div>
+                        <div class="col-4">
+                            <label for="">Foto Profil</label> 
+                            <div><label for="fileUp" class="btn btn-primary btn-sm">Upload Foto</label></div>
+                            <input type="file" name="images" style="display:none" id="fileUp" placeholder="Silahkan Memasukkan Nama Lengkap" accept="image/*">
+                        </div>
                     </div>
                 </div>
             </div>

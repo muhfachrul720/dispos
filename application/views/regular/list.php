@@ -61,7 +61,7 @@
                           <td><?= $val['waktu']?></td>
                           <td><?= $val['jatuh_tempo']?></td>
                           <td><?= $val['posisi_akhir']?></td>
-                          <td><a href="<?= base_url()?>regular/cetakqr/print_berkas/<?= $val['id']?>" class="btn btn-danger btn-sm"><i class="fas fa-print"></i> &nbsp; Cetak Berkas</a></td>
+                          <td><a target="_blank" href="<?= base_url()?>regular/cetakqr/print_berkas/<?= $val['id']?>" class="btn btn-danger btn-sm"><i class="fas fa-print"></i> &nbsp; Cetak Berkas</a></td>
                           <td><a href="<?= base_url()?>riwayat/detail_pengajuan/<?= $val['id']?>" class="btn btn-primary btn-sm">Detail</a></td>
                       </tr>
                   <?php $no++;

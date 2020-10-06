@@ -12,11 +12,23 @@
         {
             $id = $this->session->userdata('id');
             $check = $this->session->userdata('user_level') == 4 ? true : false;
+            $count = $this->m_pengajuan->count_pengajuan('tbl_pengajuan_berkas');
+            $done = 0; $process = 0; $all = $count->num_rows();
+
+            foreach($count->result() as $c){
+                if($c->lvid == 7){$done++;}
+                else {$process++;}
+            }
+
+
 
             $data = array(
                 'title' => 'Dashboard Admin Operator',
                 'berkas' => $this->m_pengajuan->get_tinjauan($id)->num_rows(),
                 'edit' => $this->m_pengajuan->get_pengajuan_all($check)->num_rows(),
+                'done' => $done,
+                'process' => $process,
+                'all' => $all,
             );
 
             if($this->session->userdata('user_level') == 4){
@@ -28,4 +40,3 @@
         }
 
     }
-?> 
