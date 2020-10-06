@@ -18,7 +18,7 @@
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
-<body class="hold-transition login-page" style="background-image:<?= base_url()?>assets/img/back.jpg">
+<body class="hold-transition login-page" style="background-image:url( '<?= base_url()?>assets/img/back.jpg' ); background-repeat: no-repeat, repeat; background-size: cover;">
 <div class="login-box">
   <div class="login-logo">
     <a href="../../index2.html">Sistem Monitoring<b> DOKUMEN</b></a>
