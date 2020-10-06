@@ -58,11 +58,11 @@
                     <div class="form-group row">
                         <div class="col-4">
                             <label for="">Waktu</label>  &nbsp; <?= form_error('date')?>
-                            <input type="date" name="date" id="" class="form-control form-control-sm timeSet" placeholder="Masukkan Nomor.." value="<?= date('Y-m-d') ?>" value="<?= explode(' ', $waktu)[0] ?>" disabled>
+                            <input type="date" name="date" id="" class="form-control form-control-sm timeSet" placeholder="Masukkan Nomor.." value="<?= explode(' ', $waktu)[0] ?>" disabled>
                         </div>
                         <div class="col-4">
                             <label for="">.</label>  &nbsp; <?= form_error('time')?>
-                            <input type="time" name="time" id="" class="form-control form-control-sm timeSet" placeholder="Masukkan Nomor.." value="<?= date('h:m:s')?>" value="<?= explode(' ', $waktu)[1] ?>" disabled>
+                            <input type="time" name="time" id="" class="form-control form-control-sm timeSet" placeholder="Masukkan Nomor.." value="<?= explode(' ', $waktu)[1] ?>" disabled>
                         </div>
                         <div class="col-4">
                             <label for="">Jatuh Tempo</label>  &nbsp; <?= form_error('time')?>
@@ -70,7 +70,11 @@
                         </div>
                     </div>
                     <hr>
-                    <div class="form-group">
+                    <?php if($this->session->userdata('user_level') == 7) {?>
+                        <div class="form-group" style="display:none;">
+                    <?php } else {?>
+                        <div class="form-group">
+                    <?php };?>
                         <label for="">Peninjau Berkas</label>
                         <select name="peninjau" id="" class="form-control form-control-sm">
                             <?php foreach($peninjau as $p) {?>
@@ -113,7 +117,7 @@
                         <tbody>
                             <?php $no = 1;
                             foreach ($riwayat as $key => $val) {   
-                                $color = generate_color($val['waktu'], $val['rwaktu']);
+                                $color = generate_color($val['rwaktu'], $val['jatuh_tempo']);
                             ?>
                                 <tr style="color:<?= $color ?>">
                                     <td><?= $no ?></td>
@@ -203,6 +207,10 @@
 
 <script type="text/javascript" src="<?php echo base_url()?>assets/zxing/zxing.min.js"></script>
 <script>
+    var text = '<?= $this->session->userdata('user_level') == 7 ? 'Telah Selesai' : 'Verifikasi'?>';
+
+    console.log(text);
+
     // scanner qr
     window.addEventListener('load', function () {
         let selectedDeviceId;
@@ -235,7 +243,7 @@
                         alert('QR Code Cocok');
                         $('#modal-sm').modal('hide');
                         $('#verif').removeClass('btn-secondary').addClass('btn-success');
-                        $('#verif').val('Verifikasi');
+                        $('#verif').val(text);
                         $('#verif').prop('disabled', false);
                     } else {
                         alert('QR Code tidak sama');

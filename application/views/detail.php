@@ -55,11 +55,11 @@
                     <div class="form-group row">
                         <div class="col-4">
                             <label for="">Waktu</label>  &nbsp; <?= form_error('date')?>
-                            <input type="date" name="date" id="" class="form-control form-control-sm timeSet" placeholder="Masukkan Nomor.." value="<?= date('Y-m-d') ?>" value="<?= explode(' ', $waktu)[0] ?>" disabled>
+                            <input type="date" name="date" id="" class="form-control form-control-sm timeSet" placeholder="Masukkan Nomor.." value="<?= explode(' ', $waktu)[0] ?>" disabled>
                         </div>
                         <div class="col-4">
                             <label for="">.</label>  &nbsp; <?= form_error('time')?>
-                            <input type="time" name="time" id="" class="form-control form-control-sm timeSet" placeholder="Masukkan Nomor.." value="<?= date('h:m:s')?>" value="<?= explode(' ', $waktu)[1] ?>" disabled>
+                            <input type="time" name="time" id="" class="form-control form-control-sm timeSet" placeholder="Masukkan Nomor.." value="<?= explode(' ', $waktu)[1] ?>" disabled>
                         </div>
                         <div class="col-4">
                             <label for="">Jatuh Tempo</label>  &nbsp; <?= form_error('time')?>
@@ -87,7 +87,7 @@
                   <tbody>
                       <?php $no = 1;
                       foreach ($riwayat as $key => $val) {   
-                          $color = generate_color($val['waktu'], $val['rwaktu']);
+                          $color = generate_color($val['rwaktu'], $val['jatuh_tempo']);
                       ?>
                           <tr style="color:<?= $color ?>">
                               <td><?= $no ?></td>

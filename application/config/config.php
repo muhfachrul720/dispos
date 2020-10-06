@@ -25,7 +25,8 @@ date_default_timezone_set('Asia/makassar');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost/dispos';
+$config['base_url'] = 'http://localhost/dispos/';
+// $config['base_url'] = 'https://sitopan.com/';
 // $config['base_url'] = 'http://localhost/sisfak/';
 
 /*
@@ -38,7 +39,7 @@ $config['base_url'] = 'http://localhost/dispos';
 | variable so that it is blank.
 |
 */
-$config['index_page'] = '';
+$config['index_page'] = 'index.php';
 
 /*
 |--------------------------------------------------------------------------

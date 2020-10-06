@@ -1,13 +1,15 @@
 <?php
 Class Auth extends CI_Controller{
     
-    
-    
+    public function __construct() {
+        parent::__construct();
+
+    }
     function index(){
         if($this->session->userdata('')){
 
         }
-        $this->load->view('Auth/login');
+        $this->load->view('auth/login');
     }
     
     public function cheklogin(){
@@ -25,7 +27,6 @@ Class Auth extends CI_Controller{
         if($users->num_rows()>0){
             $user = $users->row_array();
             if(password_verify($password,$user['password'])){
-                
                 $this->session->set_userdata($user); 
                 if ($user['user_level'] == 1) {
                     redirect('superadmin/dashboard');
@@ -36,19 +37,19 @@ Class Auth extends CI_Controller{
                 } else {
                     redirect('regular/dashboard');
                 }
-
             }else{
-                redirect('Auth');
+
+                redirect('auth');
             }
         }else{
             $this->session->set_flashdata('status_login','username atau password yang anda input salah');
-            redirect('Auth');
+            redirect('auth');
         }
     }
     
     function logout(){
         $this->session->sess_destroy();
         $this->session->set_flashdata('status_login','Anda sudah berhasil keluar dari aplikasi');
-        redirect('Auth');
+        redirect('auth');
     }
 }

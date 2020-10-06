@@ -12,14 +12,14 @@ class Permohonan extends Admin_Controller
     public function list_jenis_permohonan()
     {
         $data['desa'] = $this->M_permohonan->get_all_jenis()->result_array();
-        $data['title'] = 'Managemen Jenis Dan Hak Permohonan';
+        $data['title'] = 'Kelola Jenis Permohonan';
         $this->template->load('template_admin','superadmin/jenis/list', $data);   
     }
 
     public function form_permohonan()
     {
         $data = array('id' => 'hel', 'nama' => '');
-        $data['title'] = 'Managemen Jenis Dan Hak Permohonan';
+        $data['title'] = 'Kelola Jenis Permohonan';
         $data['action'] = 'superadmin/permohonan/insert_jenis';
 
         $this->template->load('template_admin','superadmin/jenis/form', $data);   
@@ -51,7 +51,7 @@ class Permohonan extends Admin_Controller
     {
         $data = $this->M_permohonan->get_jenis_byid($id)->row_array();
         $data['action'] = 'superadmin/permohonan/action_tinjau_jenis';
-        $data['title'] = 'Managemen Jenis Dan Hak Permohonan';
+        $data['title'] = 'Kelola Jenis Permohonan';
 
         $this->template->load('template_admin','superadmin/jenis/form', $data);   
     }
@@ -84,18 +84,18 @@ class Permohonan extends Admin_Controller
         $this->list_jenis_permohonan();
     }
 
-    // Kecamatan
+    // Jenis Hak
     public function list_hak_permohonan()
     {
         $data['desa'] = $this->M_permohonan->get_all_hak()->result_array();
-        $data['title'] = 'Managemen Jenis Dan Hak Permohonan';
+        $data['title'] = 'Kelola Jenis Hak';
         $this->template->load('template_admin','superadmin/hak/list', $data);   
     }
 
     public function form_hak()
     {
         $data = array('id' => 'hel', 'nama' => '');
-        $data['title'] = 'Managemen Jenis Dan Hak Permohonan';
+        $data['title'] = 'Kelola Jenis Hak';
         $data['action'] = 'superadmin/permohonan/insert_hak';
 
         $this->template->load('template_admin','superadmin/jenis/form', $data);   
@@ -127,7 +127,7 @@ class Permohonan extends Admin_Controller
     {
         $data = $this->M_permohonan->get_hak_byid($id)->row_array();
         $data['action'] = 'superadmin/permohonan/action_tinjau_hak';
-        $data['title'] = 'Managemen Jenis Dan Hak Permohonan';
+        $data['title'] = 'Kelola Jenis Hak';
 
         $this->template->load('template_admin','superadmin/jenis/form', $data);   
     }
@@ -160,5 +160,3 @@ class Permohonan extends Admin_Controller
         $this->list_hak_permohonan();
     }
 }
-
-?>

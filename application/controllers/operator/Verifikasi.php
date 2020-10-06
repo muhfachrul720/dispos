@@ -8,7 +8,6 @@
             $this->load->model('M_pengajuan');
             $this->load->model('M_alur');
             $this->load->model('User_model');
-
         }
 
         public function verif_all()
@@ -87,7 +86,7 @@
 
             if($post['status'] != 2){
                 $data = array(
-                    'waktu' => date('Y-m-d h:m:s'),
+                    'waktu' => date('Y-m-d H:i:s'),
                     'id_user' => $iduser,
                     'next_user' => $post['peninjau'],
                     'id_pengajuan' => $post['idbrk'],
@@ -109,4 +108,3 @@
         }
 
     }
-?> 

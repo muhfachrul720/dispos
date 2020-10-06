@@ -3,7 +3,6 @@
     class Dashboard extends Admin_Controller {
 
         public function __construct() {
-
             parent::__construct();
             $this->load->model('user_level_model');
             $this->load->model('user_model');
@@ -14,6 +13,7 @@
 
         public function index()
         {
+        
             $data = array(
                 'title' => 'Dashboard Admin',
                 'user_level' => $this->user_level_model->_count('tbl_user_level')->num_rows(),
@@ -28,4 +28,3 @@
         }
 
     }
-?> 

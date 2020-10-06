@@ -14,8 +14,8 @@
       <div class="col-xl-12 stretch-card grid-margin">
         <div class="card shadow mb-4">
           <div class="card-body">
-            <a href="<?= base_url()?>regular/pengajuan/form_insert" class="btn btn-primary btn-sm"> <i class="fas fa-plus"></i>  &nbsp; Tambahkan Pengajuan</a>
-            <a href="<?= base_url()?>regular/pengajuan" class="btn btn-success btn-sm"> <i class="fas fa-sync"></i>  &nbsp; Refresh Halaman</a>
+            <!--<a href="<?= base_url()?>regular/pengajuan/form_insert" class="btn btn-primary btn-sm"> <i class="fas fa-plus"></i>  &nbsp; Tambahkan Pengajuan</a>-->
+            <!--<a href="<?= base_url()?>regular/pengajuan" class="btn btn-success btn-sm"> <i class="fas fa-sync"></i>  &nbsp; Refresh Halaman</a>-->
 
             <?php if($alert = $this->session->flashdata('msg') != null) { ?>
                 <script>
@@ -62,7 +62,7 @@
                           <!-- <td><?= $val['jatuh_tempo']?></td> -->
                           <td><?= $val['rwaktu']?></td>
                           <td><?= $val['posisi_akhir']?></td>
-                          <td><?= generate_status($val['waktu'], $val['rwaktu'], $val['id_akhir']) ?></td>
+                          <td><?= generate_status($val['rwaktu'], $val['jatuh_tempo'] , $val['id_akhir']) ?></td>
                           <td><a href="<?= base_url()?>riwayat/detail_pengajuan/<?= $val['id']?>" class="btn btn-primary btn-sm">Detail</a></td>
                       </tr>
                   <?php $no++;
