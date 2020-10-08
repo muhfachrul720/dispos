@@ -54,7 +54,7 @@
                 </a>
             </div>
 
-            <div class="col-12 col-sm-6 col-md-12">
+            <!-- <div class="col-12 col-sm-6 col-md-12">
                 <a href="<?= site_url()?>riwayat" class="info-box" style="color:black">
                     <span class="info-box-icon bg-success elevation-1"><i class="fas fa-archive"></i></span>
 
@@ -66,7 +66,7 @@
                     </span>
                     </div>
                 </a>
-            </div>
+            </div> -->
 
             <?php if(isset($edit)) {?> 
             <div class="col-12 col-sm-6 col-md-4">
