@@ -55,7 +55,7 @@
             </div>
 
             <div class="col-12 col-sm-6 col-md-12">
-                <a href="<?= site_url()?>riwayat" class="info-box" style="color:black">
+                <a href="<?= site_url()?>operator/verifikasi/verif_all" class="info-box" style="color:black">
                     <span class="info-box-icon bg-success elevation-1"><i class="fas fa-archive"></i></span>
 
                     <div class="info-box-content">
