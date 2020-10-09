@@ -3,7 +3,7 @@
     <div class="row mb-2">
       <div class="col-sm-12">
         <h1 class="m-0 text-dark"><b><?= $title ?></b></h1>
-        <p>Menu Untuk mengelola Data Desa / Kecamatan</p>
+        <p>Menu Untuk mengelola Data Desa</p>
       </div><!-- /.col -->
     </div><!-- /.row -->
   </div><!-- /.container-fluid -->
@@ -15,7 +15,7 @@
         <div class="card shadow mb-4">
           <div class="card-body">
             <a href="<?= base_url()?>superadmin/desa/form_desa" class="btn btn-primary btn-sm"> <i class="fas fa-plus"></i>  &nbsp; Tambahkan Data</a>
-            <a href="<?= base_url()?>regular/pengajuan" class="btn btn-success btn-sm"> <i class="fas fa-sync"></i>  &nbsp; Refresh Halaman</a>
+            <a href="" class="btn btn-success btn-sm"> <i class="fas fa-sync"></i>  &nbsp; Refresh Halaman</a>
 
             <?php if($alert = $this->session->flashdata('msg') != null) { ?>
                 <script>
