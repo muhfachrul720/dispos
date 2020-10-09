@@ -12,14 +12,14 @@ class Desa extends Admin_Controller
     public function list_kecamatan()
     {
         $data['desa'] = $this->M_desa->get_all_kecamatan()->result_array();
-        $data['title'] = 'Kelola Desa / Kecamatan';
+        $data['title'] = 'Kelola Kecamatan';
         $this->template->load('template_admin','superadmin/kecamatan/list', $data);   
     }
 
     public function form_kecamatan()
     {
         $data = array('id' => 'hel', 'kecamatan' => '');
-        $data['title'] = 'Kelola Desa / Kecamatan';
+        $data['title'] = 'Tambah Kecamatan';
         $data['action'] = 'superadmin/desa/insert_kecamatan';
 
         $this->template->load('template_admin','superadmin/kecamatan/form', $data);   
@@ -51,7 +51,7 @@ class Desa extends Admin_Controller
     {
         $data = $this->M_desa->get_kecamatan_byid($id)->row_array();
         $data['action'] = 'superadmin/desa/action_tinjau_kecamatan';
-        $data['title'] = 'Kelola Desa / Kecamatan';
+        $data['title'] = 'Edit Kecamatan';
 
         $this->template->load('template_admin','superadmin/kecamatan/form', $data);   
     }
@@ -88,14 +88,14 @@ class Desa extends Admin_Controller
     public function list_desa()
     {
         $data['desa'] = $this->M_desa->get_all_desa()->result_array();
-        $data['title'] = 'Kelola Desa / Kecamatan';
+        $data['title'] = 'Kelola Desa';
         $this->template->load('template_admin','superadmin/desa/list', $data);   
     }
 
     public function form_desa()
     {
         $data = array('id' => 'hel', 'nama' => '', 'id_camat' => '');
-        $data['title'] = 'Kelola Desa / Kecamatan';
+        $data['title'] = 'Tambah Desa';
         $data['action'] = 'superadmin/desa/insert_desa';
 
         $this->template->load('template_admin','superadmin/desa/form', $data);   
@@ -129,7 +129,7 @@ class Desa extends Admin_Controller
         $data = $this->M_desa->get_desa_byid($id)->row_array();
 
         $data['action'] = 'superadmin/desa/action_tinjau_desa';
-        $data['title'] = 'Kelola Desa / Kecamatan';
+        $data['title'] = 'Edit Desa';
 
         $this->template->load('template_admin','superadmin/desa/form', $data);   
     }

@@ -16,7 +16,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <p><small>Form Untuk Menambahkan Desa</small></p>
+                    <!-- <p><small>Form Untuk Menambahkan Desa</small></p> -->
                     
                     <div class="form-group row">
                         <label for="inputPassword3" class="col-sm-2 col-form-label">Nama Kecamatan</label>

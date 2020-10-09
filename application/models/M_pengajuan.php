@@ -70,7 +70,7 @@
             return $this->db->get();
         }
 
-        public function get_pengajuan($id = null)
+        public function get_pengajuan($id = null, $status="all")
         {   
             $this->db->select('max(aw.id)');
             $this->db->from('tbl_riwayat_perjalanan as aw');
@@ -93,7 +93,15 @@
                 $this->db->where("rw.id IN($max)");
             }
             $this->db->where("br.softdelete", 0);
-
+            switch( $status )
+            {
+                case "process":
+                    $this->db->where( "lv.id !=", "7" );
+                    break;
+                case "done":
+                    $this->db->where( "lv.id =", "7" );
+                    break;
+            }
             return $this->db->get();
         }
 

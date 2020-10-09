@@ -13,7 +13,7 @@
     <div class="row">
 
             <div class="col-12 col-sm-6 col-md-4">
-                <a href="<?= site_url()?>regular/pengajuan" class="info-box" style="color:black">
+                <a href="<?= site_url()?>riwayat" class="info-box" style="color:black">
                     <span class="info-box-icon bg-info elevation-1"><i class="fas fa-archive"></i></span>
 
                     <div class="info-box-content">
@@ -27,7 +27,7 @@
             </div>
 
             <div class="col-12 col-sm-6 col-md-4">
-                <a href="<?= site_url()?>regular/pengajuan" class="info-box" style="color:black">
+                <a href="<?= site_url()?>riwayat?status=process" class="info-box" style="color:black">
                     <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-archive"></i></span>
 
                     <div class="info-box-content">
@@ -41,7 +41,7 @@
             </div>
 
             <div class="col-12 col-sm-6 col-md-4">
-                <a href="<?= site_url()?>regular/pengajuan" class="info-box" style="color:black">
+                <a href="<?= site_url()?>riwayat?status=done" class="info-box" style="color:black">
                     <span class="info-box-icon bg-success elevation-1"><i class="fas fa-archive"></i></span>
 
                     <div class="info-box-content">
@@ -55,11 +55,11 @@
             </div>
 
             <div class="col-12 col-sm-6 col-md-12">
-                <a href="<?= site_url()?>riwayat" class="info-box" style="color:black">
+                <a href="<?= site_url()?>operator/verifikasi/verif_all" class="info-box" style="color:black">
                     <span class="info-box-icon bg-success elevation-1"><i class="fas fa-archive"></i></span>
 
                     <div class="info-box-content">
-                    <span class="info-box-text">Total Pengajuan Berkas</span>
+                    <span class="info-box-text">Total Berkas Untuk Diverifikasi</span>
                     <span class="info-box-number">
                         <?= $berkas ?>
                         <small>pengajuan</small>

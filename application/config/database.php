@@ -77,8 +77,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 // 	'dsn'	=> '',
 // 	'hostname' => 'localhost',
 // 	'username' => 'root',
-// 	'password' => '',
-// 	'database' => 'db_bios',
+// 	'password' => 'Alan!234',
+// 	'database' => 'db_dispos',
 // 	'dbdriver' => 'mysqli',
 // 	'dbprefix' => '',
 // 	'pconnect' => FALSE,
@@ -102,14 +102,9 @@ $query_builder = TRUE;
 $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
-	'username' => 'root',
-<<<<<<< HEAD
-	'password' => 'Alan!234',
-	'database' => 'db_dispos',
-=======
-	'password' => '',
-	'database' => 'db_dispos_new',
->>>>>>> dc703db8433b8ec59010aef6be86834f8a2d5e52
+	'username' => 'sitw1128_admin',
+	'password' => 'Admin!234',
+	'database' => 'sitw1128_sitopan',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

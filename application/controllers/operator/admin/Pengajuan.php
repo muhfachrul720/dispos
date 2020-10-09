@@ -43,7 +43,7 @@
             $check = $this->session->userdata('user_level') == 4 ? true : false;
 
             $data['riwayat'] = $this->M_pengajuan->get_pengajuan_all($check)->result_array();
-            $data['title'] = 'Dashboard Pengajuan';
+            $data['title'] = 'Pengajuan';
 
             $this->template->load('template_admin','operator/admin/list', $data);
         }
