@@ -19,7 +19,7 @@ class Desa extends Admin_Controller
     public function form_kecamatan()
     {
         $data = array('id' => 'hel', 'kecamatan' => '');
-        $data['title'] = 'Kelola Kecamatan';
+        $data['title'] = 'Tambah Kecamatan';
         $data['action'] = 'superadmin/desa/insert_kecamatan';
 
         $this->template->load('template_admin','superadmin/kecamatan/form', $data);   
@@ -95,7 +95,7 @@ class Desa extends Admin_Controller
     public function form_desa()
     {
         $data = array('id' => 'hel', 'nama' => '', 'id_camat' => '');
-        $data['title'] = 'Kelola Desa';
+        $data['title'] = 'Tambah Desa';
         $data['action'] = 'superadmin/desa/insert_desa';
 
         $this->template->load('template_admin','superadmin/desa/form', $data);   
