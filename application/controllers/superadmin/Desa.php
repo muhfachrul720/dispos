@@ -51,7 +51,7 @@ class Desa extends Admin_Controller
     {
         $data = $this->M_desa->get_kecamatan_byid($id)->row_array();
         $data['action'] = 'superadmin/desa/action_tinjau_kecamatan';
-        $data['title'] = 'Kelola Kecamatan';
+        $data['title'] = 'Edit Kecamatan';
 
         $this->template->load('template_admin','superadmin/kecamatan/form', $data);   
     }
@@ -129,7 +129,7 @@ class Desa extends Admin_Controller
         $data = $this->M_desa->get_desa_byid($id)->row_array();
 
         $data['action'] = 'superadmin/desa/action_tinjau_desa';
-        $data['title'] = 'Kelola Desa';
+        $data['title'] = 'Edit Desa';
 
         $this->template->load('template_admin','superadmin/desa/form', $data);   
     }
