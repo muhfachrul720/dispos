@@ -70,7 +70,7 @@
             return $this->db->get();
         }
 
-        public function get_pengajuan($id = null)
+        public function get_pengajuan($id = null, $status="all")
         {   
             $this->db->select('max(aw.id)');
             $this->db->from('tbl_riwayat_perjalanan as aw');
@@ -93,7 +93,15 @@
                 $this->db->where("rw.id IN($max)");
             }
             $this->db->where("br.softdelete", 0);
-
+            switch( $status )
+            {
+                case "process":
+                    $this->db->where( "lv.id !=", "7" );
+                    break;
+                case "done":
+                    $this->db->where( "lv.id =", "7" );
+                    break;
+            }
             return $this->db->get();
         }
 
@@ -111,7 +119,7 @@
             }
 
             $this->db->where("br.softdelete", 0);
-            $this->db->order_by('rw.id', 'DESC');
+            $this->db->order_by('rw.id', 'ASC');
             return $this->db->get();
         }
 
@@ -197,8 +205,41 @@
 
             return $this->db->get();
         }
-        
 
+        public function get_recap($tahun)
+        {
+            $this->db->select('max(aw.id)');
+            $this->db->from('tbl_riwayat_perjalanan as aw');
+            $this->db->group_by('aw.id_pengajuan');
+            $max = $this->db->get_compiled_select();
+
+            // MainSelect
+            $this->db->select(
+                "
+                sum(case when lv.id = 7 then 1 else 0 end) as Selesai,
+                sum(case when lv.id != 7 then 1 else 0 end) as Proses, 
+                count(rw.id) as Total, 
+                date_format(br.waktu, '%M') as Bulan,
+                month(br.waktu) as bln 
+                "
+            );
+
+            $this->db->from('tbl_riwayat_perjalanan as rw');
+            $this->db->join('tbl_pengajuan_berkas as br', 'rw.id_pengajuan = br.id');
+            $this->db->join('tbl_user as us', 'us.id = rw.id_user');
+            $this->db->join('tbl_user_level as lv', 'us.user_level = lv.id');
+            $this->db->join('tbl_user as wa', 'wa.id = br.id_user');
+            
+            $this->db->where("rw.id IN($max)");
+            $this->db->where("br.softdelete", 0);
+            $this->db->where("year(br.waktu)", $tahun);
+            
+            $this->db->group_by('Bulan');
+            $this->db->order_by('Bulan','DESC');
+
+            return $this->db->get();
+        }
+        
     }
 
 ?>

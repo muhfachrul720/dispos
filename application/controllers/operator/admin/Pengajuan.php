@@ -43,7 +43,7 @@
             $check = $this->session->userdata('user_level') == 4 ? true : false;
 
             $data['riwayat'] = $this->M_pengajuan->get_pengajuan_all($check)->result_array();
-            $data['title'] = 'Dashboard Pengajuan';
+            $data['title'] = 'Pengajuan';
 
             $this->template->load('template_admin','operator/admin/list', $data);
         }
@@ -94,9 +94,11 @@
             }
         }
 
-        public function delete($id)
+        public function delete()
         {
-            $this->M_pengajuan->update('tbl_pengajuan_berkas', array('id' => $id), array('softdelete' => 1));
+            $post = $this->input->post();
+            // echo $post['id'];
+            $this->M_pengajuan->update('tbl_pengajuan_berkas', array('id' => $post['id']), array('softdelete' => 1));
             redirect('operator/admin/pengajuan');
         }
     }

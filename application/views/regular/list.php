@@ -15,7 +15,7 @@
         <div class="card shadow mb-4">
           <div class="card-body">
             <a href="<?= base_url()?>regular/pengajuan/form_insert" class="btn btn-primary btn-sm"> <i class="fas fa-plus"></i>  &nbsp; Tambahkan Pengajuan</a>
-            <a href="<?= base_url()?>regular/pengajuan" class="btn btn-success btn-sm"> <i class="fas fa-sync"></i>  &nbsp; Refresh Halaman</a>
+            <a href="" class="btn btn-success btn-sm"> <i class="fas fa-sync"></i>  &nbsp; Refresh Halaman</a>
 
             <?php if($alert = $this->session->flashdata('msg') != null) { ?>
                 <script>

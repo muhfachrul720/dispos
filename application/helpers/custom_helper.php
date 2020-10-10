@@ -53,14 +53,6 @@ function generate_color($time, $endtime)
     $endtime = $endtime->format('Y-m-d');
     $endtime =  new DateTime($endtime);
     
-    // $d4 =  new DateTime($time);
-    // $limit4 = $d4->modify('+4 days')->format('Y-m-d');
-
-    // $d7 =  new DateTime($time);
-    // $limit7 = $d7->modify('+7 days')->format('Y-m-d');
-    
-    // $a = strtotime($time_a);
-    // $b = strtotime($limit4);
     
     $interval = $time->diff($endtime);
     
@@ -68,13 +60,12 @@ function generate_color($time, $endtime)
     if($interval->invert == 1){
         $color = '#d00d1a';
     } 
-    else if($interval->invert == 0 && $interval->d <= 3 ) {
+    else if($interval->invert == 0 && $interval->d <= 2 ) {
         $color = '#f7a300';
     } 
+
+    // var_dump($interval);
     return $color;
-    // else {
-    //     return '#2e6514';
-    // }
 }
 
 
