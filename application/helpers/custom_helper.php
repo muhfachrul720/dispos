@@ -18,7 +18,7 @@ function generate_status($time, $endtime, $last)
         $text = $last == 7 ? 'Telah Selesai' : 'Sedang Diproses';
         $result = '<span class="badge badge-danger" style="font-size:12px">'.$text.'</span>';
     } 
-    else if($interval->invert == 0 && $interval->d <= 3 ) {
+    else if($interval->invert == 0 && $interval->d <= 1 ) {
         $text = $last == 7 ? 'Telah Selesai' : 'Sedang Diproses';
         $result = '<span class="badge badge-warning" style="font-size:12px">'.$text.'</span>';
     } 
@@ -60,7 +60,7 @@ function generate_color($time, $endtime)
     if($interval->invert == 1){
         $color = '#d00d1a';
     } 
-    else if($interval->invert == 0 && $interval->d <= 2 ) {
+    else if($interval->invert == 0 && $interval->d <= 1 ) {
         $color = '#f7a300';
     } 
 
