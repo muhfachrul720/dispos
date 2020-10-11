@@ -117,7 +117,7 @@
                         $date_start = date("Y-m-d");
                         $date_end = date("Y-m-d");
                         if( count( $riwayat ) > 0 ){
-                            $date_start = $riwayat[0]['rwaktu'];
+                            $date_start = $riwayat[0]['waktu'];
                             $date_end = $riwayat[ count( $riwayat ) - 1 ]['rwaktu'];
                         }
 
