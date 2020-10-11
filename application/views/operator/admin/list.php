@@ -65,7 +65,10 @@
                           <td>
                               <a href="<?=base_url()?>operator/admin/pengajuan/form_edit/<?= $val['brid']?>" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
                               <?php if($this->session->userdata('user_level') == 9 || $this->session->userdata('user_level') == 8) {?>
-                                    <a href="<?=base_url()?>operator/admin/pengajuan/delete/<?= $val['brid']?>" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
+                                <button type="button" class="btn btn-danger btn-sm delete" data-toggle="modal" data-target="#modal-sm" value="<?= $val['brid']?>">
+                                  <i class="fas fa-trash-alt"></i>
+                                </button>
+                                    <!-- <a href="<?=base_url()?>operator/admin/pengajuan/delete/<?= $val['brid']?>" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a> -->
                               <?php };?>
                           </td>
                           <?php if($this->session->userdata('user_level') == 9 || $this->session->userdata('user_level') == 8) {?>
@@ -90,13 +93,37 @@
       </div>
   </div>
 </div>
+
+<div class="modal fade" id="modal-sm">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-body">
+        Yakin Ingin Menghapus Pengajuan ?
+      </div>
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+        <?= form_open('operator/admin/pengajuan/delete')?>
+          <input type="hidden" value="" id="hiddenID" name="id">
+          <input type="submit" class="btn btn-primary" value="Hapus">
+        <?= form_close()?>
+
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
         
 <script>
   $(document).ready(function() {
     $('#dataTable').DataTable();
 } );
 
-
+$('.delete').on('click', function(){
+  var id = $(this).val();
+  $('#hiddenID').val(id);
+})
 
 $('.permission').on('change', function(){
 

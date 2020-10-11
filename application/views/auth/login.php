@@ -27,7 +27,11 @@
         <div class="login-logo">
             <a href="<?= site_url()?>">Sistem Informasi Monitoring Pelayanan Pertanahan</a>
           </div>
-        <!--<p class="login-box-msg">Login</p>-->
+        <!-- <p class="login-box-msg">Login</p> -->
+
+        <?php if($this->session->flashdata('status_login')) {?>
+          <div style="text-align:center; padding-bottom:10px;"><small style="color:red;">Gagal Login, Email dan Password salah</small></div>
+        <?php };?>
 
       <?=  form_open('Auth/cheklogin'); ?>
       <div class="input-group mb-3">

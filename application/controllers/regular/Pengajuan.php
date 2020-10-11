@@ -83,7 +83,7 @@
                     'desa_kecamatan' => $post['camat'],
                     'nama_pemilik' => $post['owner'],
                     'waktu' => $post['date'].' '.$post['time'],
-                    'jatuh_tempo' => date('Y-m-d',strtotime('+7 days', strtotime($post['date']))).' '.$post['time'],
+                    'jatuh_tempo' => date('Y-m-d',strtotime('+5 days', strtotime($post['date']))).' '.$post['time'],
                     'jenis_permohonan' => $post['jenismohon'],
                     'id_user' => $idus,
                 );

@@ -153,7 +153,7 @@
                             <textarea name="ket" id="" cols="30" rows="6" class="form-control form-control-sm" placeholder="Keterangan"></textarea>
                         </div>
                         <div class="col-6">
-                            <?= form_dropdown('status', array('1' => 'Disetujui', '2' => 'Ditolak'), '', array('class' => 'form-control form-control-sm')); ?>
+                            <?= form_dropdown('status', array('1' => 'Disetujui'), '', array('class' => 'form-control form-control-sm')); ?>
                             <hr>
                             <small>Sebelum Menekan Tombol Verifikasi Pastikan Berkas, dan Pilihan Persetujuan Telah Benar </small>
                             <input type="submit" id="verif" class="btn btn-sm btn-secondary w-100 mt-3" value="Silahkan Scanning QR CODE" disabled>
@@ -207,7 +207,7 @@
 
 <script type="text/javascript" src="<?php echo base_url()?>assets/zxing/zxing.min.js"></script>
 <script>
-    var text = '<?= $this->session->userdata('user_level') == 7 ? 'Telah Selesai' : 'Verifikasi'?>';
+    var text = '<?= $this->session->userdata('user_level') == 7 ? 'Telah Selesai' : 'Verifikasi'?>' ;
 
     console.log(text);
 

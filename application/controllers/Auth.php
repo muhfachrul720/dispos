@@ -38,10 +38,7 @@ Class Auth extends CI_Controller{
                     redirect('regular/dashboard');
                 }
             }else{
-<<<<<<< HEAD
-=======
-
->>>>>>> dc703db8433b8ec59010aef6be86834f8a2d5e52
+                $this->session->set_flashdata('status_login','username atau password yang anda input salah');
                 redirect('auth');
             }
         }else{
