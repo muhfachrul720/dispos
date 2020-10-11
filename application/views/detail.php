@@ -110,6 +110,31 @@
 
                 </div>
             </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                    <?php
+                        $date_start = date("Y-m-d");
+                        $date_end = date("Y-m-d");
+                        if( count( $riwayat ) > 0 ){
+                            $date_start = $riwayat[0];
+                            $date_end = $riwayat[ count( $riwayat ) - 1 ];
+                        }
+
+                        $time =  new DateTime($date_start);
+                        $time = $time->format('Y-m-d');
+                        $time =  new DateTime($time);
+                        
+                        $endtime =  new DateTime($date_end);
+                        $endtime = $endtime->format('Y-m-d');
+                        $endtime =  new DateTime($endtime);
+                        
+                        $interval = $time->diff($endtime);
+                        echo "Lama Prose : ".$interval->d." hari, ".$interval->h." jam"
+                    ?>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <?= form_close()?>
