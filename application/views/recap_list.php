@@ -19,7 +19,17 @@
             <div style="margin-bottom: 15px; text-align:right">
                 <small style="float:left">Hasil Rekap Pengajuan Tahun : <?= $tahun ?></small>
                 <label for="">Tahun :</label>
-                <input type="text" name="tahun" style="border-radius:5px; border:solid 1px gray; margin-left:20px; font-size:12px; padding:5px">
+                <!-- <input type="text" name="tahun" style="border-radius:5px; border:solid 1px gray; margin-left:20px; font-size:12px; padding:5px"> -->
+                <select name="tahun" id="">
+                  <?php
+                    for( $i = date("Y"); $i >= date("Y")-5; $i-- )
+                    {
+                      ?>
+                      <option <?= $i == $tahun ? "selected" : ""  ?> value="<?= $i?>"><?= $i?></option>
+                      <?php
+                    }
+                  ?>
+                </select>
                 <input type="submit" value="Tampilkan" class="btn btn-sm btn-primary">
             </div>
             <table class="table table-striped table-bordered table-sm text-center" style="width:100%; font-size:12px" id="dataTable" width="100%" cellspacing="0">
