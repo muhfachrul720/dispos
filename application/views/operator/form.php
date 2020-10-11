@@ -163,7 +163,7 @@
                                 $endtime =  new DateTime($endtime);
                                 
                                 $interval = $time->diff($endtime);
-                                echo "Lama Prose : ".$interval->d." hari, ".$interval->h." jam"
+                                echo "Lama Proses : ".$interval->d." hari";
                             ?>
                             </div>
                         </div>
