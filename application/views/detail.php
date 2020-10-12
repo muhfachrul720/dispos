@@ -111,8 +111,8 @@
                 </div>
             </div>
             <?php
-            if( count( $riwayat ) > 0 )
-                if( $riwayat[0]['id_akhir'] == 7 ) :
+                if( count( $riwayat ) >= 9 ):
+                // if( $riwayat[0]['id_akhir'] == 7 ) :
             ?>
                 <div class="card">
                     <div class="card-body">
