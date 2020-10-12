@@ -113,10 +113,8 @@
                                 <th>Posisi Terakhir</th>
                             </tr>
                         </thead>
-
                         <tbody>
                             <?php $no = 1;
-                            
                             foreach ($riwayat as $key => $val) {   
                                 $color = generate_color($val['rwaktu'], $val['jatuh_tempo']);
                             ?>
@@ -143,31 +141,39 @@
                     </div>
                 </div>
                 <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                            <?php
-                                $date_start = date("Y-m-d");
-                                $date_end = date("Y-m-d");
-                                if( count( $riwayat ) > 0 ){
-                                    $date_start = $riwayat[0]['waktu'];
-                                    $date_end = $riwayat[ count( $riwayat ) - 1 ]['rwaktu'];
-                                }
+                    
+                    <?php
+                    if( count( $riwayat ) > 0 )
+                        if( $riwayat[0]['id_akhir'] == 7 ) :
+                    ?>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                <?php
+                                    $date_start = date("Y-m-d");
+                                    $date_end = date("Y-m-d");
+                                    if( count( $riwayat ) > 0 ){
+                                        $date_start = $riwayat[0]['waktu'];
+                                        $date_end = $riwayat[ count( $riwayat ) - 1 ]['rwaktu'];
+                                    }
 
-                                $time =  new DateTime($date_start);
-                                $time = $time->format('Y-m-d');
-                                $time =  new DateTime($time);
-                                
-                                $endtime =  new DateTime($date_end);
-                                $endtime = $endtime->format('Y-m-d');
-                                $endtime =  new DateTime($endtime);
-                                
-                                $interval = $time->diff($endtime);
-                                echo "Lama Proses : ".$interval->d." hari";
-                            ?>
+                                    $time =  new DateTime($date_start);
+                                    $time = $time->format('Y-m-d');
+                                    $time =  new DateTime($time);
+                                    
+                                    $endtime =  new DateTime($date_end);
+                                    $endtime = $endtime->format('Y-m-d');
+                                    $endtime =  new DateTime($endtime);
+                                    
+                                    $interval = $time->diff($endtime);
+                                    echo "Lama Proses : ".$interval->d." hari";
+                                ?>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    <?php
+                        endif;
+                    ?>
                 </div>
            </div>                     
         </div>
